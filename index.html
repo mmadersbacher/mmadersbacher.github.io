@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Mario Madersbacher – IT Portfolio</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <canvas id="matrixCanvas" aria-hidden="true"></canvas>
+
+  <div class="content">
+    <header>
+      <h1>Mario Madersbacher</h1>
+      <p>Netzwerktechnik • Cybersecurity • Systemadministration</p>
+    </header>
+
+    <nav>
+      <ul>
+        <li><a href="#about">Über mich</a></li>
+        <li><a href="#projects">Projekte</a></li>
+        <li><a href="#skills">Fähigkeiten</a></li>
+        <li><a href="#contact">Kontakt</a></li>
+      </ul>
+    </nav>
+
+    <main>
+      <section id="about">
+        <h2>Über mich</h2>
+        <p>Ich bin Schüler der BHAK Schwaz mit IT-Schwerpunkt. Mein Fokus liegt auf Netzwerktechnik, Systemadministration und praxisnaher Cybersecurity. Durch eigenständige Projekte und stetiges Lernen baue ich mir eine fundierte technische Basis für eine spätere Karriere im Bereich IT-Security auf.</p>
+      </section>
+
+      <section id="projects">
+        <h2>Projekte</h2>
+
+        <article class="project-box">
+          <h3><a href="https://github.com/mmadersbacher/cisco-network-vlan-project" target="_blank" rel="noopener noreferrer">Cisco Netzwerkprojekt</a></h3>
+          <p>Planung und Aufbau eines Schulnetzwerks mit verschiedenen Nutzerbereichen (z. B. Schüler, Verwaltung, Server). Einrichtung von automatischer IP-Vergabe (DHCP), Namenauflösung (DNS) und Kommunikation zwischen den Bereichen mithilfe von Cisco Packet Tracer.</p>
+        </article>
+
+        <article class="project-box">
+          <h3><a href="https://github.com/mmadersbacher/python-hashcracker-1.0" target="_blank" rel="noopener noreferrer">Python Hash Cracker 1.0</a></h3>
+          <p>Ein vollwertiges Kommandozeilen-Tool zum Knacken von Passwort-Hashes mittels Brute-Force oder Dictionary-Angriff. Unterstützt MD5, SHA1, SHA256 und SHA512 sowie automatische Hash-Typ-Erkennung anhand der Länge. Fortschrittsanzeige über die <code>rich</code>-Bibliothek.</p>
+          <ul>
+            <li>Brute-Force mit frei definierbarem Zeichensatz und Passwortlänge</li>
+            <li>Dictionary-Angriff mit benutzerdefinierter Wortliste</li>
+            <li>Echtzeit-Fortschrittsanzeige mit Farb- und Balkenausgabe</li>
+            <li>CLI-gesteuert, dokumentiert und öffentlich auf GitHub verfügbar</li>
+          </ul>
+        </article>
+
+        <article class="project-box">
+          <h3><a href="https://github.com/mmadersbacher/NetRecon" target="_blank" rel="noopener noreferrer">NetRecon</a></h3>
+          <p>Professionelles Netzwerk-Scanning-Tool in Python, das Subnetze selbstständig erkennt oder manuell eingeben lässt. Erkennt Geräte per ARP-Scan, zeigt offene Ports via Banner-Scan, OS-Detection und liefert übersichtliche HTML-Reports mit interaktiven Diagrammen und Netzwerk-Topologie. Ideal für Sicherheits- und Netzwerkadministration.</p>
+          <ul>
+            <li>Automatische Subnetzerkennung mit Möglichkeit zur manuellen Eingabe</li>
+            <li>ARP-Scan zur Erkennung aktiver Hosts</li>
+            <li>Portscan mit Bannererkennung und OS-Detection</li>
+            <li>HTML-Report mit D3.js-Netzwerkgraph und Chart.js-Portstatistiken</li>
+            <li>Open Source auf GitHub – volle Kontrolle und Erweiterbarkeit</li>
+          </ul>
+        </article>
+
+      </section>
+
+      <section id="skills">
+        <h2>Fähigkeiten</h2>
+        <ul>
+          <li><strong>Python:</strong> Kleine Programme in der Eingabe-Konsole, einfache Tools zur Passwortprüfung</li>
+          <li><strong>Netzwerktechnik:</strong> Aufbau und Konfiguration von Netzwerken mit mehreren Bereichen (z. B. für Schüler, Lehrer, Server)</li>
+          <li><strong>Linux:</strong> Arbeiten im Terminal, Programme installieren, Benutzer anlegen, einfache Server einrichten</li>
+          <li><strong>HTML/CSS/JavaScript:</strong> Webseiten erstellen, gestalten und bedienbar machen – auch für Handy und PC</li>
+          <li><strong>Cybersecurity:</strong> Erste Erfahrungen mit Sicherheitslücken in Webseiten und Passwörter knacken zu Lernzwecken</li>
+          <li><strong>Systemadministration:</strong> Nutzerrechte verwalten, Computer vernetzen, Fehler finden und beheben</li>
+        </ul>
+      </section>
+
+      <section id="contact">
+        <h2>Kontakt</h2>
+        <p>Email: <a href="mailto:mario.madersbacher.2008@gmail.com">mario.madersbacher.2008@gmail.com</a></p>
+        <p>GitHub: <a href="https://github.com/mmadersbacher" target="_blank" rel="noopener noreferrer">github.com/mmadersbacher</a></p>
+      </section>
+    </main>
+
+    <footer>
+      <p>&copy; 2025 Mario Madersbacher – IT Portfolio</p>
+    </footer>
+  </div>
+
+  <script src="matrix.js" defer></script>
+</body>
+</html>
