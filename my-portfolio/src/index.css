@@ -1,0 +1,58 @@
+/* Tailwind – muss ganz oben stehen */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ===== Minimaler globaler Layer – NICHT Tailwind ausbremsen ===== */
+:root {
+  /* Systemschrift & Glättung – clean */
+  font-family: system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, "Helvetica Neue", Arial, "Noto Sans", "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+/* WICHTIG: Kein body-Flex/Center! */
+html, body, #root {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  background-color: #0A0F1A; /* dunkler Grundton deines Portfolios */
+  color: #e5e7eb;            /* Tailwind 'zinc-200' / 'gray-200' */
+}
+
+/* Neutrales Reset, damit Medien sauber skalieren */
+img, svg, video, canvas {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+/* Links/Button NICHT global restylen – Tailwind-Klassen nutzen.
+   Falls du Standard-Underline willst, dann nur:
+a { text-decoration-thickness: .08em; text-underline-offset: .2em; }
+*/
+
+/* ============================= */
+/*   Custom Keyframe-Animationen */
+/* ============================= */
+
+@keyframes ping-slow {
+  0%   { transform: scale(1);   opacity: .9; }
+  80%,
+  100% { transform: scale(1.6); opacity: 0;  }
+}
+.animate-ping-slow {
+  animation: ping-slow 2.5s cubic-bezier(0,0,.2,1) infinite;
+}
+
+@keyframes shine {
+  0%   { transform: translateX(-2%); opacity: .28; }
+  50%  { transform: translateX( 2%); opacity: .40; }
+  100% { transform: translateX(-2%); opacity: .28; }
+}
+.animate-shine {
+  animation: shine 8s ease-in-out infinite;
+}
