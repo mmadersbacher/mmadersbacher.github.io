@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="de">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Mario Madersbacher – IT Portfolio</title>
+    <!-- Core SEO -->
+    <meta name="description" content="Professionelles IT-Portfolio von Mario Madersbacher – Netzwerk- und Security-Tools, Projekte, Tech Stack. Keine Show, nur Substanz." />
+    <meta name="robots" content="index,follow" />
+    <meta name="theme-color" content="#151925" />
+    <!-- Social/OG Preview -->
+    <meta property="og:title" content="Mario Madersbacher – IT Portfolio" />
+    <meta property="og:description" content="Netzwerk-Tools, Security, Projekte. Direkt. Ehrlich. Technisch." />
+    <meta property="og:type" content="website" />
+    <meta property="og:image" content="/cover.png" />
+    <meta property="og:url" content="https://mmadersbacher.github.io/" />
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <!-- Fonts: Inter, 400/700 -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet" />
+    <!-- Tailwind CDN (nur für Dev, für Prod: mit PostCSS bundlen!) -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+      html, body { height: 100%; }
+      body { font-family: 'Inter', system-ui, sans-serif; }
+      @keyframes pulseUpDown {
+        0%, 100% { transform: translateY(0); opacity: 0.6; }
+        50% { transform: translateY(-8px); opacity: 1; }
+      }
+      .timeline-line {
+        position: absolute; left: 32px; width: 4px; background: linear-gradient(180deg,#4f46e5,#3b82f6);
+        border-radius: 10px; top: 0; bottom: 0;
+      }
+      .timeline-glow {
+        position: absolute; left: 50%; transform: translateX(-50%);
+        width: 16px; height: 16px; border-radius: 50%; background: #3b82f6;
+        box-shadow: 0 0 8px 4px #3b82f6aa, 0 0 15px 8px #3b82f6aa;
+        animation: pulseUpDown 2.5s ease-in-out infinite; pointer-events: none;
+        z-index: 10; filter: drop-shadow(0 0 4px #3b82f6aa);
+      }
+    </style>
+    <script type="module" crossorigin src="/assets/index-DskDhHDw.js"></script>
+  </head>
+  <body class="bg-[#151925] text-white min-h-screen antialiased">
+    <div id="root"></div>
+  </body>
+</html>
