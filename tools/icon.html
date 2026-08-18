@@ -1,0 +1,43 @@
+<!doctype html>
+<!--
+  Quelle für public/icon-32.png und public/apple-touch-icon.png.
+
+  Die Kachel ist fix 512x512 und klebt oben links — bewusst keine Viewport-Einheiten:
+  Chrome layoutet beim Screenshot gegen ein größeres Viewport als den Ausschnitt, mit
+  vmin/vw landet das Zeichen außerhalb des Bildes.
+
+  chrome --headless=new --force-device-scale-factor=1 --hide-scrollbars \
+    --default-background-color=00000000 --window-size=512,512 \
+    --screenshot=icon-512.png "file:///ABS/PFAD/tools/icon.html"
+
+  ?full=1 = randlos und deckend (so will es iOS) für apple-touch-icon.
+  Query-Strings brauchen die file:///-Form, ein nackter Windows-Pfad landet
+  sonst auf Chromes Fehlerseite. Danach auf 32 bzw. 180 px runterskalieren.
+-->
+<html lang="de">
+  <head>
+    <meta charset="utf-8" />
+    <title>Icon</title>
+    <style>
+      * { margin: 0; padding: 0; }
+      html, body { background: transparent; }
+      .mark {
+        position: absolute; top: 0; left: 0; width: 512px; height: 512px;
+        border-radius: 16%; background: #1f2ae6; color: #ece3ce;
+        display: flex; align-items: center; justify-content: center;
+        font-family: "Arial Black", "Arial Bold", Arial, sans-serif; font-weight: 900;
+        font-size: 370px; line-height: 1;
+      }
+      .mark.full { border-radius: 0; }
+      .mark span { display: block; transform: translateY(-2%); }
+    </style>
+  </head>
+  <body>
+    <div class="mark"><span>G</span></div>
+    <script>
+      if (new URLSearchParams(location.search).has("full")) {
+        document.querySelector(".mark").classList.add("full");
+      }
+    </script>
+  </body>
+</html>
