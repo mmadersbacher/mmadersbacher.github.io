@@ -1,0 +1,312 @@
+---
+import Base from "../layouts/Base.astro";
+import { CTFTIME_TEAM, CTFTIME_USER, CONTACT_MAIL, results } from "../data/site";
+
+const IMG = "/bubensahne.png";
+const AV_TELQRRRR = "/av-telqrrrr.jpg";
+const AV_LUNARIC = "/av-lunaric.jpg";
+
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  name: "Gehackt ist Geil",
+  alternateName: "GiG",
+  url: "https://mmadersbacher.github.io/",
+  description: "Akademisches CTF-Team aus Österreich.",
+  foundingDate: "2026",
+  address: { "@type": "PostalAddress", addressCountry: "AT" },
+  sameAs: [CTFTIME_TEAM],
+};
+---
+
+<Base
+  home
+  title="Gehackt ist Geil"
+  description="Gehackt ist Geil — akademisches CTF-Team aus Österreich. Flags jagen statt schlafen. Ergebnisse, Crew und wie du mitmachst."
+  ogTitle="Gehackt ist Geil — CTF-Team"
+  jsonLd={jsonLd}
+>
+  <main id="top">
+    <!-- HERO -->
+    <section class="hero">
+      <div class="wrap hero-grid">
+        <div class="hero-copy">
+          <div class="hero-kicker">
+            <span class="tag tag--blue">Academic CTF-Team</span>
+            <span class="tag">AT · Österreich</span>
+            <span class="tag">seit 2026</span>
+          </div>
+          <h1>
+            <span class="line">Gehackt</span>
+            <span class="line">ist</span>
+            <span class="line geil">Geil</span>
+          </h1>
+          <p class="lead">
+            Ein Haufen Studenten, die am Wochenende lieber <b>Flags jagen</b> als schlafen.
+            Wir zerlegen Web, Binaries und Krypto, bis das Flag rausfällt — weil kaputt&shy;machen
+            und verstehen dasselbe ist.
+          </p>
+          <div class="hero-cta">
+            <a class="btn btn--blue" href={CTFTIME_TEAM} target="_blank" rel="noopener">
+              Team auf CTFtime <span class="arrow">→</span>
+            </a>
+            <a class="btn" href="#palmares">Ergebnisse <span class="arrow">↓</span></a>
+          </div>
+        </div>
+
+        <div class="photo-wrap reveal">
+          <div class="stamp stamp--bube">
+            <span class="s1">Offizielles</span><span class="s2">Maskottchen</span>
+          </div>
+          <div class="photo-frame">
+            <canvas id="halftone" width="760" height="620" role="img" data-src={IMG}
+              aria-label="Halftone-Portrait des Team-Maskottchens: Absolute Bubensahne"></canvas>
+            <div class="photo-caption">
+              <span>GiG // Bubensahne</span>
+              <span>Halftone · 2c</span>
+            </div>
+          </div>
+          <div class="stamp stamp--est">
+            <span class="s1">Est.</span><span class="s2">2026</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- MARQUEE -->
+    <div class="marquee" aria-hidden="true">
+      <div class="marquee__track">
+        <span>Gehackt ist Geil<span class="dot">✶</span>Absolute Bubensahne<span class="dot">✶</span>Flags&nbsp;&gt;&nbsp;Schlaf<span class="dot">✶</span>CTFtime /438200<span class="dot">✶</span></span>
+        <span>Gehackt ist Geil<span class="dot">✶</span>Absolute Bubensahne<span class="dot">✶</span>Flags&nbsp;&gt;&nbsp;Schlaf<span class="dot">✶</span>CTFtime /438200<span class="dot">✶</span></span>
+      </div>
+    </div>
+
+    <!-- MANIFEST -->
+    <section class="sec manifest">
+      <div class="wrap">
+        <div class="sec-head reveal">
+          <h2>Wer wir sind</h2>
+          <span class="no">§01 — Manifest</span>
+        </div>
+        <p class="big reveal">
+          Kein Sponsor. Kein Business-Plan.<br />
+          Nur <span class="hl">Koffein</span>, <span class="hl-r">Neugier</span> und die feste
+          Gewissheit, dass gehackt geil ist.
+        </p>
+        <div class="cols">
+          <p class="reveal">
+            <b>«Gehackt ist Geil»</b> ist ein akademisches CTF-Team aus Österreich. Wir treten bei
+            Capture-the-Flag-Wettbewerben an — Web-Exploitation, Reverse Engineering, Krypto,
+            Forensik — und lernen dabei mehr über echte Systeme als in jedem Skript.
+          </p>
+          <p class="reveal">
+            Angefangen hat's aus einer einzigen Frage: Wie funktioniert das wirklich, und wo bricht
+            es? Heute heißt das durchgemachte Nächte, zu viel Mate und die eine Zeile im Write-up,
+            die alles erklärt. Mal Platz&nbsp;2, mal Platz&nbsp;255 — Hauptsache dabei.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- PALMARÈS -->
+    <section class="sec" id="palmares">
+      <div class="wrap">
+        <div class="sec-head reveal">
+          <h2>Palmarès</h2>
+          <span class="no">§02 — Saison 2026 · CTFtime</span>
+        </div>
+        <div class="ledger">
+          {results.map((r) => (
+            <a class="row reveal" href={CTFTIME_TEAM} target="_blank" rel="noopener">
+              <span class="sweep"></span>
+              <span class="place">{r.place}<small>Platz</small></span>
+              <span class="ev">
+                <span class="name">{r.event}{r.podium && <span class="podium">Top&nbsp;2</span>}</span>
+                <span class="meta">{r.kind}</span>
+              </span>
+              <span class="num pts">
+                <span class="k">CTF-Punkte</span>
+                <span class="v">{r.pts}</span>
+              </span>
+              <span class="num">
+                <span class="k">Rating</span>
+                <span class="v">{r.rating}</span>
+              </span>
+            </a>
+          ))}
+        </div>
+        <div class="ledger-foot">
+          <span class="note reveal">Offizielle Wertung — nachrechnen erlaubt.</span>
+          <a class="btn btn--sm reveal" href={CTFTIME_TEAM} target="_blank" rel="noopener">
+            Volle Team-Seite <span class="arrow">→</span>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- CREW -->
+    <section class="sec" id="crew">
+      <div class="wrap">
+        <div class="sec-head reveal">
+          <h2>Crew</h2>
+          <span class="no">§03 — Roster</span>
+        </div>
+        <div class="crew-grid">
+          <article class="card reveal">
+            <span class="idx mono">01</span>
+            <div class="badge"><img class="av" src={AV_TELQRRRR} width="62" height="62" alt="Telqrrrr" /></div>
+            <div class="handle">Telqrrrr</div>
+            <div class="role">Player</div>
+            <p class="bio">
+              Netzwerke, Reversing und die Überzeugung, dass man Dinge zerlegen muss, um sie zu
+              verstehen. Baut Tools, wenn ihm eins fehlt.
+            </p>
+            <div class="links">
+              <a href={CTFTIME_USER.telqrrrr} target="_blank" rel="noopener">CTFtime ↗</a>
+            </div>
+          </article>
+
+          <article class="card reveal">
+            <span class="idx mono">02</span>
+            <div class="badge badge--red"><img class="av" src={AV_LUNARIC} width="62" height="62" alt="Lunaric" /></div>
+            <div class="handle">Lunaric</div>
+            <div class="role">Player</div>
+            <p class="bio">„Good at: nothing" — sagt er selbst. Am Scoreboard liest sich das anders.</p>
+            <div class="links">
+              <a href={CTFTIME_USER.lunaric} target="_blank" rel="noopener">CTFtime ↗</a>
+              <a href="https://lunaric.dev" target="_blank" rel="noopener">lunaric.dev ↗</a>
+            </div>
+          </article>
+
+          <article class="card reveal">
+            <span class="idx mono">03</span>
+            <div class="badge badge--ink">Y</div>
+            <div class="handle">Yousuf</div>
+            <div class="role">Player</div>
+            <p class="bio">Jagt Flags mit dem Team, seit es das Team gibt.</p>
+            <div class="links">
+              <a href={CTFTIME_USER.yousuf} target="_blank" rel="noopener">CTFtime ↗</a>
+            </div>
+          </article>
+
+          <article class="card card--join reveal">
+            <span class="q">Rein<br />hier?</span>
+            <p class="bio" style="margin-top:0">Lust mitzuspielen? Schreib uns — wir beißen nicht.</p>
+            <a class="btn btn--sm btn--red" href={`mailto:${CONTACT_MAIL}`}>
+              Schreib uns <span class="arrow">→</span>
+            </a>
+            <a class="join-mail mono" href={`mailto:${CONTACT_MAIL}`}>{CONTACT_MAIL}</a>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- JOIN BAND -->
+    <section class="band">
+      <div class="wrap">
+        <h2>Wir suchen Leute, die gehackt auch geil finden.</h2>
+        <a class="btn btn--red" href={CTFTIME_TEAM} target="_blank" rel="noopener">
+          Auf CTFtime finden <span class="arrow">→</span>
+        </a>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    // Halftone-Duotone des Maskottchens — Canvas, live gerastert.
+    const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+    function initHalftone() {
+      const canvas = document.getElementById("halftone") as HTMLCanvasElement | null;
+      if (!canvas) return;
+      const ctx = canvas.getContext("2d");
+      if (!ctx) return;
+
+      const OUT_W = 760;
+      let OUT_H = 620;
+      const GAP = 8;
+      const INK = "#17140e";
+      const BLUE = "#1f2ae6";
+      const PAPER = "#ece3ce";
+      let cells: { x: number; y: number; lum: number }[] = [];
+
+      const img = new Image();
+      img.decoding = "async";
+
+      function buildCells() {
+        const off = document.createElement("canvas");
+        off.width = OUT_W;
+        off.height = OUT_H;
+        const octx = off.getContext("2d");
+        if (!octx) return;
+        octx.drawImage(img, 0, 0, OUT_W, OUT_H);
+        const data = octx.getImageData(0, 0, OUT_W, OUT_H).data;
+        cells = [];
+        for (let y = GAP / 2; y < OUT_H; y += GAP) {
+          for (let x = GAP / 2; x < OUT_W; x += GAP) {
+            const i = ((y | 0) * OUT_W + (x | 0)) * 4;
+            const lum = (0.299 * data[i] + 0.587 * data[i + 1] + 0.114 * data[i + 2]) / 255;
+            cells.push({ x, y, lum });
+          }
+        }
+      }
+
+      function draw(progress: number) {
+        if (!ctx) return;
+        ctx.clearRect(0, 0, OUT_W, OUT_H);
+        ctx.fillStyle = PAPER;
+        ctx.fillRect(0, 0, OUT_W, OUT_H);
+        const maxR = GAP * 0.72;
+        for (let pass = 0; pass < 2; pass++) {
+          ctx.fillStyle = pass === 0 ? BLUE : INK;
+          const ox = pass === 0 ? 2.4 : 0;
+          const oy = pass === 0 ? 1.8 : 0;
+          ctx.beginPath();
+          for (const c of cells) {
+            let p = progress;
+            if (progress < 1) {
+              const local = c.x / OUT_W;
+              p = Math.max(0, Math.min(1, progress * 1.5 - local * 0.5));
+            }
+            const r = (1 - c.lum) * maxR * p;
+            if (r > 0.15) {
+              ctx.moveTo(c.x + ox + r, c.y + oy);
+              ctx.arc(c.x + ox, c.y + oy, r, 0, 6.2832);
+            }
+          }
+          ctx.fill();
+        }
+      }
+
+      img.onload = () => {
+        OUT_H = Math.round((OUT_W * img.height) / img.width);
+        canvas.width = OUT_W;
+        canvas.height = OUT_H;
+        buildCells();
+        if (reduce) {
+          draw(1);
+          return;
+        }
+        const start = performance.now();
+        const DUR = 1100;
+        const tick = (now: number) => {
+          const t = Math.min(1, (now - start) / DUR);
+          draw(1 - Math.pow(1 - t, 3));
+          if (t < 1) requestAnimationFrame(tick);
+        };
+        requestAnimationFrame(tick);
+      };
+      img.onerror = () => {
+        canvas.width = OUT_W;
+        canvas.height = OUT_H;
+        if (ctx) {
+          ctx.fillStyle = PAPER;
+          ctx.fillRect(0, 0, OUT_W, OUT_H);
+        }
+      };
+      img.src = canvas.getAttribute("data-src") || "/bubensahne.png";
+    }
+
+    initHalftone();
+  </script>
+</Base>

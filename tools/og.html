@@ -1,0 +1,149 @@
+<!doctype html>
+<!--
+  Quelle für public/og.png (Link-Vorschaubild, 1200x630).
+  Neu rendern nach einer Branding-Änderung:
+
+  chrome --headless=new --allow-file-access-from-files --force-device-scale-factor=1 \
+    --window-size=1200,630 --virtual-time-budget=6000 \
+    --screenshot=public/og.png tools/og.html
+
+  (msedge.exe geht genauso. Fonts kommen aus node_modules, also vorher npm install.)
+-->
+<html lang="de">
+  <head>
+    <meta charset="utf-8" />
+    <title>OG</title>
+    <style>
+      @font-face {
+        font-family: "Anton";
+        src: url("../node_modules/@fontsource/anton/files/anton-latin-400-normal.woff2") format("woff2");
+        font-weight: 400;
+      }
+      @font-face {
+        font-family: "IBM Plex Mono";
+        src: url("../node_modules/@fontsource/ibm-plex-mono/files/ibm-plex-mono-latin-600-normal.woff2") format("woff2");
+        font-weight: 600;
+      }
+      :root {
+        --paper: #ece3ce;
+        --paper-2: #e3d9c0;
+        --ink: #17140e;
+        --ink-soft: #4a4331;
+        --blue: #1f2ae6;
+        --red: #ff3a1d;
+      }
+      * { box-sizing: border-box; margin: 0; padding: 0; }
+      html, body { width: 1200px; height: 630px; overflow: hidden; }
+      body {
+        background: var(--paper);
+        color: var(--ink);
+        position: relative;
+        display: grid;
+        grid-template-columns: 1fr 430px;
+        align-items: center;
+        gap: 30px;
+        padding: 56px 60px;
+        font-family: "IBM Plex Mono", monospace;
+      }
+      body::after {
+        content: "";
+        position: absolute; inset: 0; pointer-events: none;
+        background-image: radial-gradient(rgba(23, 20, 14, 0.13) 0.9px, transparent 1px);
+        background-size: 6px 6px;
+      }
+      .badge {
+        display: inline-block; background: var(--blue); color: var(--paper);
+        font-family: "Anton", sans-serif; font-size: 40px; line-height: 1;
+        padding: 9px 16px 5px; transform: rotate(-2deg); letter-spacing: 0.01em;
+      }
+      h1 {
+        font-family: "Anton", sans-serif; text-transform: uppercase;
+        font-size: 138px; line-height: 0.86; letter-spacing: 0.004em; margin-top: 22px;
+      }
+      h1 span { display: block; }
+      h1 .geil { color: var(--blue); position: relative; width: max-content; }
+      h1 .geil::after {
+        content: ""; position: absolute; left: -2%; right: -2%; bottom: 0.15em; height: 0.15em;
+        background: var(--red); z-index: -1; transform: rotate(-1.2deg);
+      }
+      .strap {
+        margin-top: 30px; font-size: 16px; font-weight: 600; letter-spacing: 0.15em;
+        white-space: nowrap; text-transform: uppercase; color: var(--ink-soft);
+      }
+      .strap b { color: var(--ink); }
+      .frame {
+        position: relative; background: var(--paper-2); border: 3px solid var(--ink);
+        box-shadow: 12px 12px 0 var(--ink); padding: 14px; transform: rotate(1.6deg);
+      }
+      .frame canvas { display: block; width: 100%; height: auto; background: var(--paper); }
+      .cap {
+        display: flex; justify-content: space-between; margin-top: 9px;
+        font-size: 12px; font-weight: 600; letter-spacing: 0.14em;
+        text-transform: uppercase; color: var(--ink-soft);
+      }
+      .reg { position: absolute; width: 30px; height: 30px; opacity: 0.55; }
+      .reg::before, .reg::after { content: ""; position: absolute; background: var(--ink); }
+      .reg::before { left: 14px; top: 0; width: 2px; height: 30px; }
+      .reg::after { top: 14px; left: 0; height: 2px; width: 30px; }
+      .tl { top: 16px; left: 16px; } .tr { top: 16px; right: 16px; }
+      .bl { bottom: 16px; left: 16px; } .br { bottom: 16px; right: 16px; }
+    </style>
+  </head>
+  <body>
+    <i class="reg tl"></i><i class="reg tr"></i><i class="reg bl"></i><i class="reg br"></i>
+
+    <div>
+      <span class="badge">GiG</span>
+      <h1><span>Gehackt</span><span>ist</span><span class="geil">Geil</span></h1>
+      <div class="strap"><b>Akademisches CTF-Team</b> · Österreich · Est. 2026</div>
+    </div>
+
+    <div class="frame">
+      <canvas id="halftone" width="760" height="620"></canvas>
+      <div class="cap"><span>GiG // Bubensahne</span><span>Halftone · 2c</span></div>
+    </div>
+
+    <script>
+      // Gleiches Raster wie auf der Seite, nur statisch gezeichnet.
+      const canvas = document.getElementById("halftone");
+      const ctx = canvas.getContext("2d");
+      const OUT_W = 760;
+      const GAP = 8;
+      const img = new Image();
+      img.onload = () => {
+        const OUT_H = Math.round((OUT_W * img.height) / img.width);
+        canvas.width = OUT_W;
+        canvas.height = OUT_H;
+        const off = document.createElement("canvas");
+        off.width = OUT_W;
+        off.height = OUT_H;
+        const octx = off.getContext("2d");
+        octx.drawImage(img, 0, 0, OUT_W, OUT_H);
+        const data = octx.getImageData(0, 0, OUT_W, OUT_H).data;
+        ctx.fillStyle = "#ece3ce";
+        ctx.fillRect(0, 0, OUT_W, OUT_H);
+        const maxR = GAP * 0.72;
+        for (let pass = 0; pass < 2; pass++) {
+          ctx.fillStyle = pass === 0 ? "#1f2ae6" : "#17140e";
+          const ox = pass === 0 ? 2.4 : 0;
+          const oy = pass === 0 ? 1.8 : 0;
+          ctx.beginPath();
+          for (let y = GAP / 2; y < OUT_H; y += GAP) {
+            for (let x = GAP / 2; x < OUT_W; x += GAP) {
+              const i = ((y | 0) * OUT_W + (x | 0)) * 4;
+              const lum = (0.299 * data[i] + 0.587 * data[i + 1] + 0.114 * data[i + 2]) / 255;
+              const r = (1 - lum) * maxR;
+              if (r > 0.15) {
+                ctx.moveTo(x + ox + r, y + oy);
+                ctx.arc(x + ox, y + oy, r, 0, 6.2832);
+              }
+            }
+          }
+          ctx.fill();
+        }
+        document.title = "OG-ready";
+      };
+      img.src = "../public/bubensahne.png";
+    </script>
+  </body>
+</html>

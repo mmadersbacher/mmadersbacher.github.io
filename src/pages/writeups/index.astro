@@ -1,0 +1,65 @@
+---
+import Base from "../../layouts/Base.astro";
+import { getCollection } from "astro:content";
+import { CONTACT_MAIL } from "../../data/site";
+
+const entries = (await getCollection("writeups", ({ data }) => !data.draft)).sort(
+  (a, b) => b.data.date.getTime() - a.data.date.getTime()
+);
+
+const fmt = new Intl.DateTimeFormat("de-AT", { day: "2-digit", month: "short", year: "numeric" });
+---
+
+<Base
+  title="Writeups — Gehackt ist Geil"
+  description="Lösungswege des CTF-Teams «Gehackt ist Geil»: wie wir Web-, Reversing-, Krypto- und Pwn-Challenges aufgemacht haben."
+  ogTitle="Writeups — Gehackt ist Geil"
+>
+  <main class="page">
+    <div class="wrap">
+      <div class="page-head">
+        <span class="no mono">§04 — Archiv</span>
+        <h1 class="page-title">Writeups</h1>
+        <p class="page-lead">
+          Wie wir die Challenge aufgemacht haben — inklusive der Sackgassen. Wer nur das Flag
+          postet, hat nichts erklärt.
+        </p>
+      </div>
+
+      {entries.length === 0 ? (
+        <div class="empty">
+          <span class="q">Noch<br />leer</span>
+          <div>
+            <p>
+              Hier landen unsere Lösungswege, sobald der erste geschrieben ist. Bis dahin:
+              Ergebnisse stehen auf der Startseite, gespielt wird trotzdem.
+            </p>
+            <a class="btn btn--sm" href="/">Zur Startseite <span class="arrow">→</span></a>
+          </div>
+        </div>
+      ) : (
+        <div class="wu-grid">
+          {entries.map((e) => (
+            <a class="wu-card reveal" href={`/writeups/${e.id}/`}>
+              <span class="cat" data-cat={e.data.category}>{e.data.category}</span>
+              <h2 class="wu-title">{e.data.title}</h2>
+              <p class="wu-sum">{e.data.summary}</p>
+              <div class="wu-meta mono">
+                <span>{e.data.event}</span>
+                <span>{fmt.format(e.data.date)}</span>
+                <span>{e.data.author}</span>
+              </div>
+            </a>
+          ))}
+        </div>
+      )}
+
+      <div class="page-foot">
+        <span class="note mono">Selbst was gelöst und Lust, es aufzuschreiben?</span>
+        <a class="btn btn--sm btn--red" href={`mailto:${CONTACT_MAIL}`}>
+          Schreib uns <span class="arrow">→</span>
+        </a>
+      </div>
+    </div>
+  </main>
+</Base>

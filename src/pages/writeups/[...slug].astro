@@ -1,0 +1,62 @@
+---
+import Base from "../../layouts/Base.astro";
+import { getCollection, render } from "astro:content";
+
+export async function getStaticPaths() {
+  const entries = await getCollection("writeups", ({ data }) => !data.draft);
+  return entries.map((entry) => ({ params: { slug: entry.id }, props: { entry } }));
+}
+
+const { entry } = Astro.props;
+const { Content } = await render(entry);
+
+const fmt = new Intl.DateTimeFormat("de-AT", { day: "2-digit", month: "long", year: "numeric" });
+
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "TechArticle",
+  headline: entry.data.title,
+  description: entry.data.summary,
+  datePublished: entry.data.date.toISOString().slice(0, 10),
+  author: { "@type": "Person", name: entry.data.author },
+  publisher: { "@type": "Organization", name: "Gehackt ist Geil" },
+};
+---
+
+<Base
+  title={`${entry.data.title} — Writeup · Gehackt ist Geil`}
+  description={entry.data.summary}
+  ogTitle={`${entry.data.title} — ${entry.data.event}`}
+  jsonLd={jsonLd}
+>
+  <main class="page">
+    <div class="wrap">
+      <article class="wu">
+        <header class="wu-head">
+          <a class="back mono" href="/writeups/">← Alle Writeups</a>
+          <span class="cat" data-cat={entry.data.category}>{entry.data.category}</span>
+          <h1 class="page-title">{entry.data.title}</h1>
+          <div class="wu-meta mono">
+            <span>{entry.data.event}</span>
+            <span>{fmt.format(entry.data.date)}</span>
+            <span>{entry.data.author}</span>
+            {entry.data.points && <span>{entry.data.points} Punkte</span>}
+          </div>
+          {entry.data.tags.length > 0 && (
+            <div class="wu-tags">
+              {entry.data.tags.map((t) => <span class="tag">{t}</span>)}
+            </div>
+          )}
+        </header>
+
+        <div class="prose">
+          <Content />
+        </div>
+      </article>
+
+      <div class="page-foot">
+        <a class="btn btn--sm" href="/writeups/">← Alle Writeups</a>
+      </div>
+    </div>
+  </main>
+</Base>

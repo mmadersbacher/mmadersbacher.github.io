@@ -1,0 +1,135 @@
+---
+import "@fontsource/anton";
+import "@fontsource/ibm-plex-sans/400.css";
+import "@fontsource/ibm-plex-sans/600.css";
+import "@fontsource/ibm-plex-sans/700.css";
+import "@fontsource/ibm-plex-mono/400.css";
+import "@fontsource/ibm-plex-mono/600.css";
+import "@fontsource/ibm-plex-mono/700.css";
+import "../styles/global.css";
+import { getCollection } from "astro:content";
+import { CTFTIME_TEAM, GITHUB } from "../data/site";
+
+interface Props {
+  title: string;
+  description: string;
+  /** Titel im Link-Preview, falls er sich vom <title> unterscheiden soll */
+  ogTitle?: string;
+  /** true auf der Startseite: Anker-Navigation statt "Start"-Link */
+  home?: boolean;
+  jsonLd?: Record<string, unknown>;
+}
+
+const { title, description, ogTitle, home = false, jsonLd } = Astro.props;
+
+const writeups = await getCollection("writeups", ({ data }) => !data.draft);
+const hasWriteups = writeups.length > 0;
+
+const canonical = new URL(Astro.url.pathname, Astro.site).href;
+const ogImage = new URL("og.png", Astro.site).href;
+---
+
+<html lang="de">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <meta name="theme-color" content="#ece3ce" />
+    <link rel="canonical" href={canonical} />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="alternate icon" href="/favicon.ico" sizes="32x32" />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Gehackt ist Geil" />
+    <meta property="og:locale" content="de_AT" />
+    <meta property="og:title" content={ogTitle ?? title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="Gehackt ist Geil — akademisches CTF-Team aus Österreich" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={ogTitle ?? title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImage} />
+
+    {jsonLd && <script type="application/ld+json" is:inline set:html={JSON.stringify(jsonLd)} />}
+  </head>
+
+  <body>
+    <i class="regmark tl"></i><i class="regmark tr"></i>
+    <i class="regmark bl"></i><i class="regmark br"></i>
+
+    <header class="masthead">
+      <div class="wrap">
+        <a href={home ? "#top" : "/"} class="brand" aria-label="Gehackt ist Geil — Startseite">
+          <span class="gig">GiG</span>
+          <span class="full">Gehackt&nbsp;ist&nbsp;Geil</span>
+        </a>
+
+        <nav class="nav" aria-label="Hauptnavigation">
+          {home ? (
+            <>
+              <a class="nav-a hide-sm" href="#palmares">Palmarès</a>
+              <a class="nav-a hide-sm" href="#crew">Crew</a>
+            </>
+          ) : (
+            <a class="nav-a hide-sm" href="/">Start</a>
+          )}
+          {hasWriteups && <a class="nav-a" href="/writeups/">Writeups</a>}
+        </nav>
+
+        <a class="btn btn--sm btn--blue to-ctf" href={CTFTIME_TEAM} target="_blank" rel="noopener">
+          CTFtime <span class="arrow">→</span>
+        </a>
+      </div>
+    </header>
+
+    <slot />
+
+    <footer class="foot">
+      <div class="wrap">
+        <div class="fbrand">Gehackt<br /><span class="b">ist</span> <span class="r">Geil</span></div>
+
+        <nav class="flinks" aria-label="Fußzeile">
+          {hasWriteups && <a href="/writeups/">Writeups</a>}
+          <a href={CTFTIME_TEAM} target="_blank" rel="noopener">CTFtime</a>
+          <a href={GITHUB} target="_blank" rel="noopener">GitHub</a>
+          <a href="/mario/">Mario</a>
+        </nav>
+
+        <div class="meta">
+          Akademisches CTF-Team · Österreich<br />
+          <a href={CTFTIME_TEAM} target="_blank" rel="noopener">ctftime.org/team/438200</a><br />
+          Absolute Bubensahne™ · Est. 2026
+        </div>
+      </div>
+    </footer>
+
+    <script>
+      const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+      // Scroll-Reveals — nativ & robust. Ohne JS bleibt alles sichtbar.
+      const reveals = document.querySelectorAll(".reveal");
+      if (!reduce && "IntersectionObserver" in window && reveals.length) {
+        document.documentElement.classList.add("anim");
+        const io = new IntersectionObserver(
+          (entries) => {
+            for (const e of entries) {
+              if (e.isIntersecting) {
+                e.target.classList.add("in");
+                io.unobserve(e.target);
+              }
+            }
+          },
+          { rootMargin: "0px 0px -8% 0px" }
+        );
+        reveals.forEach((el) => io.observe(el));
+        // Failsafe: nach 3s alles zeigen, egal was passiert.
+        setTimeout(() => reveals.forEach((el) => el.classList.add("in")), 3000);
+      }
+    </script>
+  </body>
+</html>
