@@ -2,7 +2,7 @@ import type { APIRoute } from "astro";
 import { getCollection } from "astro:content";
 
 export const GET: APIRoute = async ({ site }) => {
-  const base = (site ?? new URL("https://mmadersbacher.github.io")).href.replace(/\/$/, "");
+  const base = (site ?? new URL("https://gig-gehacktistgeil.com")).href.replace(/\/$/, "");
   const writeups = (await getCollection("writeups", ({ data }) => !data.draft)).sort(
     (a, b) => b.data.date.getTime() - a.data.date.getTime()
   );

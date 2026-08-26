@@ -1,7 +1,7 @@
-# mmadersbacher.github.io
+# gig-gehacktistgeil.com
 
 Site of the CTF team **«Gehackt ist Geil»** (CTFtime [/438200](https://ctftime.org/team/438200)),
-plus a personal page at `/mario`. Live at <https://mmadersbacher.github.io/>.
+plus a personal page at `/mario`. Live at <https://gig-gehacktistgeil.com/>.
 
 Astro, hand-written CSS, no UI framework. The look is riso/screenprint zine — newsprint paper,
 Anton + IBM Plex, off-register stamps, and a live canvas halftone of the team mascot.
@@ -10,11 +10,16 @@ Anton + IBM Plex, off-register stamps, and a live canvas halftone of the team ma
 
 ```sh
 npm install
-npm run dev      # localhost:4321
-npm run build    # -> dist/
+npm run dev         # localhost:4321
+npm run build       # -> dist/
+npm run cf-preview  # build + serve through the real Workers asset router
 ```
 
-Node 22+. Pushing to `main` builds and deploys via GitHub Actions (`.github/workflows/deploy.yml`).
+Node 22+. Pushing to `main` builds and deploys to Cloudflare Workers via GitHub Actions
+(`.github/workflows/deploy.yml`, config in `wrangler.jsonc`).
+
+The old `mmadersbacher.github.io` address stays on GitHub Pages serving the redirect stub in
+`tools/gh-pages-redirect/`, which forwards each path to the same path on the new domain.
 
 ## Structure
 
@@ -26,6 +31,8 @@ src/
   layouts/Base.astro  head/SEO, masthead, footer
   pages/              index, mario, writeups, 404, sitemap.xml
 tools/og.html         source of public/og.png (link preview image)
+tools/gh-pages-redirect/   stub served on the old mmadersbacher.github.io host
+wrangler.jsonc        Cloudflare Workers static-asset config
 ```
 
 ## Add a result

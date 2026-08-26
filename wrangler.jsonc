@@ -1,0 +1,18 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "gehackt-ist-geil",
+  "compatibility_date": "2026-08-26",
+  // Attaches the apex as a Workers custom domain and keeps it attached on every
+  // deploy. Cloudflare manages the proxied DNS record and the cert.
+  "routes": [{ "pattern": "gig-gehacktistgeil.com", "custom_domain": true }],
+  // Assets-only Worker: no "main", so no Worker script runs — Cloudflare serves
+  // the Astro build straight from the edge.
+  "assets": {
+    "directory": "./dist/",
+    // Astro builds /mario/index.html etc., and auto-trailing-slash serves those
+    // at /mario/ the way the site's absolute links expect.
+    "html_handling": "auto-trailing-slash",
+    // Serve src/pages/404.astro (built to dist/404.html) for unknown paths.
+    "not_found_handling": "404-page"
+  }
+}

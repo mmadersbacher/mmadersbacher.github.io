@@ -2,9 +2,9 @@
 import { defineConfig } from "astro/config";
 
 // https://astro.build/config
-// Deployed as the GitHub Pages user site: mmadersbacher.github.io
+// Deployed to Cloudflare Workers static assets, served at the apex domain.
 export default defineConfig({
-  site: "https://mmadersbacher.github.io",
+  site: "https://gig-gehacktistgeil.com",
   markdown: {
     shikiConfig: {
       theme: "github-dark",

@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://mmadersbacher.github.io/sitemap.xml
+Sitemap: https://gig-gehacktistgeil.com/sitemap.xml

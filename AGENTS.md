@@ -1,8 +1,8 @@
 # Notes for working on this repo
 
-GitHub Pages **user site** — everything here is served from the domain root, so paths are
-absolute (`/writeups/`, `/bubensahne.png`). There is no `base` in `astro.config.mjs`; don't
-add one back.
+Served at the apex of **gig-gehacktistgeil.com** from Cloudflare Workers. Everything sits at
+the domain root, so paths are absolute (`/writeups/`, `/bubensahne.png`). There is no `base`
+in `astro.config.mjs`; don't add one back.
 
 ## Ground rules
 
@@ -34,5 +34,24 @@ Docs: <https://docs.astro.build> — routing, content collections, styling.
 
 ## Deploy
 
-Push to `main` → `.github/workflows/deploy.yml` builds with `withastro/action@v3`
-(`node-version: 22`, older Node breaks Astro 7) and publishes to Pages.
+Push to `main` → `.github/workflows/deploy.yml` runs `npm ci && npm run build` on Node 22
+(older Node breaks Astro 7) and `wrangler deploy`. Config is `wrangler.jsonc`: an assets-only
+Worker (no `main`), `dist/` uploaded as static assets, `not_found_handling: "404-page"` so
+`src/pages/404.astro` is served on a miss. Needs the `CLOUDFLARE_API_TOKEN` and
+`CLOUDFLARE_ACCOUNT_ID` repo secrets.
+
+Check routing before pushing — `npm run cf-preview` runs the built site through the real
+Workers asset router, which `astro preview` does not:
+
+```
+npm run cf-preview        # build + wrangler dev on :8787
+npm run deploy            # build + deploy by hand
+```
+
+The old `mmadersbacher.github.io` host still runs on GitHub Pages, serving only the stub in
+`tools/gh-pages-redirect/` that forwards each path to the new domain. It is a client-side
+redirect — a `*.github.io` host can't do a real 301 — so leave the inline script in the
+`<head>` alone. Its workflow (`.github/workflows/gh-pages-redirect.yml`) is
+`workflow_dispatch` only on purpose; run it by hand after edits.
+
+`www` → apex is a Cloudflare Redirect Rule in the dashboard, not something in this repo.
