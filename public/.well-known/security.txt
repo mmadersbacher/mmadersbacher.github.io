@@ -1,0 +1,10 @@
+# RFC 9116 — https://www.rfc-editor.org/rfc/rfc9116
+# Expires is mandatory and must stay under a year out. Bump it when it nears.
+
+# Multiple Contact fields are allowed and are read in order of preference.
+# One URI per field — "mailto:a or mailto:b" is not a valid value.
+Contact: mailto:Telqrrrrr-ywh-462937e379a24618@yeswehack.ninja
+Contact: mailto:contact@lunaric.dev
+Expires: 2027-08-26T00:00:00.000Z
+Preferred-Languages: de, en
+Canonical: https://gig-gehacktistgeil.com/.well-known/security.txt
