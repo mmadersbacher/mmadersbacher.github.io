@@ -1,6 +1,7 @@
 ---
 import Base from "../../layouts/Base.astro";
 import { getCollection, render } from "astro:content";
+import { locales, useTranslations } from "../../i18n/ui";
 
 export async function getStaticPaths() {
   const entries = await getCollection("writeups", ({ data }) => !data.draft);
@@ -10,7 +11,15 @@ export async function getStaticPaths() {
 const { entry } = Astro.props;
 const { Content } = await render(entry);
 
-const fmt = new Intl.DateTimeFormat("de-AT", { day: "2-digit", month: "long", year: "numeric" });
+// Writeups sind deutsch geschrieben, es gibt sie also nur einmal. Der Sprach-
+// umschalter zeigt deshalb auf die Übersicht, und hreflang bleibt weg.
+const lang = "de" as const;
+const s = useTranslations(lang);
+const fmt = new Intl.DateTimeFormat(locales[lang].date, {
+  day: "2-digit",
+  month: "long",
+  year: "numeric",
+});
 
 const jsonLd = {
   "@context": "https://schema.org",
@@ -18,12 +27,16 @@ const jsonLd = {
   headline: entry.data.title,
   description: entry.data.summary,
   datePublished: entry.data.date.toISOString().slice(0, 10),
+  inLanguage: "de",
   author: { "@type": "Person", name: entry.data.author },
   publisher: { "@type": "Organization", name: "Gehackt ist Geil" },
 };
 ---
 
 <Base
+  lang={lang}
+  altPath="/writeups/"
+  hasAlternate={false}
   title={`${entry.data.title} — Writeup · Gehackt ist Geil`}
   description={entry.data.summary}
   ogTitle={`${entry.data.title} — ${entry.data.event}`}
@@ -33,20 +46,24 @@ const jsonLd = {
     <div class="wrap">
       <article class="wu">
         <header class="wu-head">
-          <a class="back mono" href="/writeups/">← Alle Writeups</a>
+          <a class="back mono" href="/writeups/">{s.writeups.back}</a>
           <span class="cat" data-cat={entry.data.category}>{entry.data.category}</span>
           <h1 class="page-title">{entry.data.title}</h1>
           <div class="wu-meta mono">
             <span>{entry.data.event}</span>
             <span>{fmt.format(entry.data.date)}</span>
             <span>{entry.data.author}</span>
-            {entry.data.points && <span>{entry.data.points} Punkte</span>}
+            {entry.data.points && <span>{entry.data.points} {s.writeups.points}</span>}
           </div>
-          {entry.data.tags.length > 0 && (
-            <div class="wu-tags">
-              {entry.data.tags.map((t) => <span class="tag">{t}</span>)}
-            </div>
-          )}
+          {
+            entry.data.tags.length > 0 && (
+              <div class="wu-tags">
+                {entry.data.tags.map((t) => (
+                  <span class="tag">{t}</span>
+                ))}
+              </div>
+            )
+          }
         </header>
 
         <div class="prose">
@@ -55,7 +72,7 @@ const jsonLd = {
       </article>
 
       <div class="page-foot">
-        <a class="btn btn--sm" href="/writeups/">← Alle Writeups</a>
+        <a class="btn btn--sm" href="/writeups/">{s.writeups.back}</a>
       </div>
     </div>
   </main>

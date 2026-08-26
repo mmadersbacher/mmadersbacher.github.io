@@ -1,0 +1,163 @@
+---
+import Base from "../layouts/Base.astro";
+import { LUNARIC, repos } from "../data/lunaric";
+import { CTFTIME_TEAM, CTFTIME_USER } from "../data/site";
+import { fill, localePath, useTranslations, type Lang } from "../i18n/ui";
+
+interface Props {
+  lang: Lang;
+}
+const { lang } = Astro.props;
+const s = useTranslations(lang);
+const l = s.lunaric;
+const href = (p: string) => localePath(lang, p);
+
+// Kein bürgerlicher Name auf dieser Seite — das Handle reicht, auch im JSON-LD.
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "Person",
+  name: "Lunaric",
+  url: "https://gig-gehacktistgeil.com/lunaric/",
+  jobTitle: l.jobTitle,
+  memberOf: { "@type": "Organization", name: "Gehackt ist Geil" },
+  knowsLanguage: ["nl", "de", "en", "ru"],
+  sameAs: [
+    LUNARIC.site,
+    LUNARIC.github,
+    LUNARIC.hackerone,
+    LUNARIC.yeswehack,
+    CTFTIME_USER.lunaric,
+  ],
+};
+---
+
+<Base lang={lang} title={l.title} description={l.description} ogTitle={l.title} jsonLd={jsonLd}>
+  <main class="page">
+    <div class="wrap">
+      <div class="page-head">
+        <div class="hero-kicker">
+          <span class="tag tag--blue">{l.kicker[0]}</span>
+          <span class="tag">{l.kicker[1]}</span>
+          <span class="tag">{l.kicker[2]}</span>
+        </div>
+        <h1 class="page-title">{l.h1[0]}{l.h1[1] && <><br />{l.h1[1]}</>}</h1>
+        <p class="page-lead" set:html={l.leadHtml} />
+        <p
+          class="page-lead sub"
+          set:html={fill(l.subHtml, { home: href("/"), site: LUNARIC.site })}
+        />
+      </div>
+
+      <!-- BUG BOUNTY -->
+      <section class="sub-sec">
+        <div class="sec-head reveal">
+          <h2>{l.hunt.h2}</h2>
+          <span class="no">{l.hunt.no}</span>
+        </div>
+        <p class="sub-lead reveal">{l.hunt.lead}</p>
+        <div class="facts">
+          <div class="fact reveal">
+            <span class="k mono">{l.hunt.focusK}</span>
+            <p>{l.hunt.focus}</p>
+          </div>
+          <div class="fact reveal">
+            <span class="k mono">{l.hunt.methodK}</span>
+            <p>{l.hunt.method}</p>
+          </div>
+          <div class="fact reveal">
+            <span class="k mono">{l.hunt.whereK}</span>
+            <p>{l.hunt.where}</p>
+          </div>
+        </div>
+        <p class="note mono reveal" style="margin-top:18px">{l.hunt.note}</p>
+      </section>
+
+      <!-- TOOLS -->
+      <section class="sub-sec">
+        <div class="sec-head reveal">
+          <h2>{l.tools.h2}</h2>
+          <span class="no">{l.tools.no}</span>
+        </div>
+        <p class="sub-lead reveal">{l.tools.lead}</p>
+        <div class="crew-grid">
+          {
+            repos.map((r) => (
+              <article class="card reveal">
+                <div class="handle" style="margin-top:0">
+                  {r.name}
+                </div>
+                <div class="role">{r.lang}</div>
+                <p class="bio">{r[lang]}</p>
+                <div class="links">
+                  <a href={r.url} target="_blank" rel="noopener">
+                    {l.tools.repo} ↗
+                  </a>
+                </div>
+              </article>
+            ))
+          }
+        </div>
+      </section>
+
+      <!-- CTF / PAPIERKRAM -->
+      <section class="sub-sec">
+        <div class="sec-head reveal">
+          <h2>{l.facts.h2}</h2>
+          <span class="no">{l.facts.no}</span>
+        </div>
+        <div class="facts">
+          <div class="fact reveal">
+            <span class="k mono">{l.facts.ctfK}</span>
+            <p
+              set:html={fill(l.facts.ctfHtml, {
+                team: CTFTIME_TEAM,
+                user: CTFTIME_USER.lunaric,
+              })}
+            />
+          </div>
+          <div class="fact reveal">
+            <span class="k mono">{l.facts.siteK}</span>
+            <p set:html={fill(l.facts.siteHtml, { site: LUNARIC.site })} />
+          </div>
+          <div class="fact reveal">
+            <span class="k mono">{l.facts.langK}</span>
+            <p>{l.facts.lang}</p>
+          </div>
+          <div class="fact reveal">
+            <span class="k mono">{l.facts.modestK}</span>
+            <p set:html={l.facts.modestHtml} />
+          </div>
+        </div>
+      </section>
+
+      <!-- KONTAKT -->
+      <section class="sub-sec">
+        <div class="sec-head reveal">
+          <h2>{l.contact.h2}</h2>
+          <span class="no">{l.contact.no}</span>
+        </div>
+        <div class="contact-row reveal">
+          <a class="btn btn--blue" href={LUNARIC.site} target="_blank" rel="noopener">
+            lunaric.dev <span class="arrow">→</span>
+          </a>
+          <a class="btn" href={LUNARIC.github} target="_blank" rel="noopener">
+            GitHub <span class="arrow">→</span>
+          </a>
+          <a class="btn" href={LUNARIC.yeswehack} target="_blank" rel="noopener">
+            YesWeHack <span class="arrow">→</span>
+          </a>
+          <a class="btn" href={LUNARIC.hackerone} target="_blank" rel="noopener">
+            HackerOne <span class="arrow">→</span>
+          </a>
+          <a class="btn" href={LUNARIC.tryhackme} target="_blank" rel="noopener">
+            TryHackMe <span class="arrow">→</span>
+          </a>
+          <a class="btn" href={CTFTIME_USER.lunaric} target="_blank" rel="noopener">
+            CTFtime <span class="arrow">→</span>
+          </a>
+        </div>
+        <p class="note mono reveal" style="margin-top:14px">{l.contact.note}</p>
+      </section>
+    </div>
+  </main>
+</Base>

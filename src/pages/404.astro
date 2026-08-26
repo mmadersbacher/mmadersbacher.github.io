@@ -1,19 +1,28 @@
 ---
 import Base from "../layouts/Base.astro";
+import { useTranslations } from "../i18n/ui";
+
+// Cloudflare liefert diese eine Seite für jeden Fehlgriff aus (not_found_handling
+// in wrangler.jsonc), also gibt es sie nur in der Default-Sprache.
+const s = useTranslations("de");
 ---
 
-<Base title="404 — Gehackt ist Geil" description="Diese Seite gibt es nicht.">
+<!-- altPath="/" : es gibt keine englische 404, der Umschalter führt zur Startseite. -->
+<Base
+  lang="de"
+  altPath="/"
+  hasAlternate={false}
+  title={s.notFound.title}
+  description={s.notFound.description}
+>
   <main class="page">
     <div class="wrap">
       <div class="page-head">
-        <span class="no mono">§404 — Nicht gefunden</span>
-        <h1 class="page-title">Kein<br />Flag hier</h1>
-        <p class="page-lead">
-          Die Seite existiert nicht (mehr). Kein Exploit nötig — der Weg zurück ist ganz normal
-          verlinkt.
-        </p>
+        <span class="no mono">{s.notFound.no}</span>
+        <h1 class="page-title" set:html={s.notFound.h1} />
+        <p class="page-lead">{s.notFound.lead}</p>
         <div class="contact-row">
-          <a class="btn btn--blue" href="/">Zur Startseite <span class="arrow">→</span></a>
+          <a class="btn btn--blue" href="/">{s.notFound.cta} <span class="arrow">→</span></a>
         </div>
       </div>
     </div>

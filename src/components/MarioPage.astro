@@ -1,0 +1,148 @@
+---
+import Base from "../layouts/Base.astro";
+import { contributions, projects } from "../data/oss";
+import { CTFTIME_TEAM, CTFTIME_USER, CONTACT_MAIL, GITHUB } from "../data/site";
+import { fill, localePath, useTranslations, type Lang } from "../i18n/ui";
+
+interface Props {
+  lang: Lang;
+}
+const { lang } = Astro.props;
+const s = useTranslations(lang);
+const m = s.mario;
+const href = (p: string) => localePath(lang, p);
+
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "Person",
+  name: "Mario Madersbacher",
+  alternateName: "Telqrrrr",
+  url: "https://gig-gehacktistgeil.com/mario/",
+  jobTitle: m.jobTitle,
+  address: { "@type": "PostalAddress", addressRegion: "Tirol", addressCountry: "AT" },
+  memberOf: { "@type": "Organization", name: "Gehackt ist Geil" },
+  sameAs: [GITHUB, CTFTIME_USER.telqrrrr],
+};
+---
+
+<Base lang={lang} title={m.title} description={m.description} ogTitle={m.title} jsonLd={jsonLd}>
+  <main class="page">
+    <div class="wrap">
+      <div class="page-head">
+        <div class="hero-kicker">
+          <span class="tag tag--blue">{m.kicker[0]}</span>
+          <span class="tag">{m.kicker[1]}</span>
+          <span class="tag">{m.kicker[2]}</span>
+        </div>
+        <h1 class="page-title">{m.h1[0]}<br />{m.h1[1]}</h1>
+        <p class="page-lead" set:html={m.leadHtml} />
+        <p class="page-lead sub" set:html={fill(m.subHtml, { home: href("/") })} />
+      </div>
+
+      <!-- OPEN SOURCE -->
+      <section class="sub-sec">
+        <div class="sec-head reveal">
+          <h2>{m.oss.h2}</h2>
+          <span class="no">{m.oss.no}</span>
+        </div>
+        <p class="sub-lead reveal">{m.oss.lead}</p>
+        <div class="oss-list">
+          {
+            contributions.map((c) => (
+              <a class="oss-row reveal" href={c.url} target="_blank" rel="noopener">
+                <span class="sweep" />
+                <span class="oss-main">
+                  <span class="oss-name">
+                    {c.project}
+                    <span class={`state state--${c.state}`}>
+                      {c.state === "merged" ? m.oss.merged : m.oss.open}
+                    </span>
+                  </span>
+                  <span class="oss-what">{c[lang]}</span>
+                </span>
+                <span class="oss-repo mono">{c.repo} ↗</span>
+              </a>
+            ))
+          }
+        </div>
+      </section>
+
+      <!-- TOOLS -->
+      <section class="sub-sec">
+        <div class="sec-head reveal">
+          <h2>{m.tools.h2}</h2>
+          <span class="no">{m.tools.no}</span>
+        </div>
+        <div class="crew-grid">
+          {
+            projects.map((p) => (
+              <article class="card reveal">
+                <div class="handle" style="margin-top:0">
+                  {p.name}
+                </div>
+                <div class="role">{p.lang}</div>
+                <p class="bio">{p[lang]}</p>
+                <div class="links">
+                  <a href={p.url} target="_blank" rel="noopener">
+                    {m.tools.repo} ↗
+                  </a>
+                </div>
+              </article>
+            ))
+          }
+        </div>
+      </section>
+
+      <!-- CTF / PAPIERKRAM -->
+      <section class="sub-sec">
+        <div class="sec-head reveal">
+          <h2>{m.facts.h2}</h2>
+          <span class="no">{m.facts.no}</span>
+        </div>
+        <div class="facts">
+          <div class="fact reveal">
+            <span class="k mono">{m.facts.ctfK}</span>
+            <p
+              set:html={fill(m.facts.ctfHtml, {
+                team: CTFTIME_TEAM,
+                user: CTFTIME_USER.telqrrrr,
+              })}
+            />
+          </div>
+          <div class="fact reveal">
+            <span class="k mono">{m.facts.certK}</span>
+            <p>{m.facts.cert}</p>
+          </div>
+          <div class="fact reveal">
+            <span class="k mono">{m.facts.bbK}</span>
+            <p>{m.facts.bb}</p>
+          </div>
+          <div class="fact reveal">
+            <span class="k mono">{m.facts.nowK}</span>
+            <p>{m.facts.now}</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- KONTAKT -->
+      <section class="sub-sec">
+        <div class="sec-head reveal">
+          <h2>{m.contact.h2}</h2>
+          <span class="no">{m.contact.no}</span>
+        </div>
+        <div class="contact-row reveal">
+          <a class="btn" href={GITHUB} target="_blank" rel="noopener">
+            GitHub <span class="arrow">→</span>
+          </a>
+          <a class="btn" href={CTFTIME_USER.telqrrrr} target="_blank" rel="noopener">
+            CTFtime <span class="arrow">→</span>
+          </a>
+          <a class="btn btn--blue" href={`mailto:${CONTACT_MAIL}`}>
+            {m.contact.mail} <span class="arrow">→</span>
+          </a>
+        </div>
+        <p class="note mono reveal" style="margin-top:14px">{m.contact.note}</p>
+      </section>
+    </div>
+  </main>
+</Base>

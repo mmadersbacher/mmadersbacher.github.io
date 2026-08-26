@@ -9,18 +9,58 @@ in `astro.config.mjs`; don't add one back.
 - Hand-written CSS in `src/styles/global.css`. No Tailwind, no component library.
 - The design is riso/screenprint: warm paper, 2px ink borders, hard offset shadows, Anton for
   display type, IBM Plex Mono for labels. No dark-mode hacker-terminal look.
-- Content is German. Repo docs are English.
+- German is the default language, English lives under `/en/`. Repo docs are English.
 - Results and roster are facts — check CTFtime before changing numbers, and don't invent
   rankings. (The CTFtime team API reports a `country_place` that does not match the public
   country table; ignore it.)
 
 ## Content
 
-- Team data: `src/data/site.ts`. Contributions/tools for `/mario`: `src/data/oss.ts`.
+- Team data and results: `src/data/site.ts`. Per-person data: `src/data/oss.ts` (`/mario`)
+  and `src/data/lunaric.ts` (`/lunaric`).
+- Numbers in `results` are stored raw and formatted per language at render time. Don't
+  hand-write `13.764` into the data again.
+- Bio pages link to bounty platforms but never reproduce their counters (reports, points,
+  rank, impact). Those drift, so any copy of them here is wrong within a week — link and let
+  the platform be the source. Don't add a stat row back.
+- `/lunaric` uses the handle only; the person's legal name does not appear on the site,
+  including in JSON-LD. Keep it that way.
 - Writeups: markdown in `src/content/writeups/`, schema in `src/content.config.ts`.
   `draft: true` hides an entry everywhere, including the sitemap. `vorlage.md` is the
   template and stays a draft — it also keeps the collection non-empty, which is what
   silences Astro's "collection is empty" warning during the build.
+
+## Two languages
+
+All copy lives in `src/i18n/ui.ts`; `en` is typed as `typeof de`, so a missing English key is
+a type error rather than a silent German fallback. Pages are thin: `src/pages/foo.astro` and
+`src/pages/en/foo.astro` both render one component out of `src/components/` with a `lang`
+prop. `Base.astro` derives the other language's URL by stripping the `/en` prefix from the
+current path — pass `altPath` when that guess is wrong (writeup articles, 404) and
+`hasAlternate={false}` when the page genuinely exists in one language only.
+
+Two traps:
+
+- **Number formatting.** `de-AT` groups thousands with a no-break space (`13 764`), not the
+  period this site uses. `locales[lang].num` is therefore `de-DE` while `locales[lang].date`
+  stays `de-AT` (it wants "Jänner"). Use the right one.
+- **Proper names don't translate.** «Gehackt ist Geil», «Absolute Bubensahne» and event names
+  stay German in both versions. The English hero explains the name via `home.gloss` instead.
+
+## Two details that look like bugs
+
+- **Anton leading.** Anton's capitals occupy 0.875em (0.865 above the baseline, 0.010 below).
+  Any `line-height` below that makes stacked display lines physically overlap — which is
+  exactly what used to happen to GEHACKT/IST/GEIL. Use `--lh-display` (0.92) or
+  `--lh-display-airy`, and give nested lines inside a display block their own `line-height`
+  (see `.stamp .s1`).
+- **The halftone canvas** (`src/components/HomePage.astro`) must size its bitmap to
+  `clientWidth × devicePixelRatio` and keep the dot pitch in CSS pixels. A fixed-size buffer
+  gets downscaled by the browser, and a hard dot grid turns to moiré when that happens — it
+  only looked fine on phones because their pixel density happened to land near 1:1. The
+  source photo is dark (median luminance ≈ 0.18), so the renderer also stretches the tonal
+  range and solves for a gamma that hits a target mean coverage; without that, most dots sit
+  at maximum radius and merge into a black slab.
 
 ## Astro
 

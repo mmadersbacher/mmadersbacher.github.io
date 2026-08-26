@@ -9,6 +9,15 @@ import "@fontsource/ibm-plex-mono/700.css";
 import "../styles/global.css";
 import { getCollection } from "astro:content";
 import { CTFTIME_TEAM, GITHUB } from "../data/site";
+import {
+  defaultLang,
+  langCodes,
+  locales,
+  localePath,
+  otherLang,
+  useTranslations,
+  type Lang,
+} from "../i18n/ui";
 
 interface Props {
   title: string;
@@ -18,18 +27,50 @@ interface Props {
   /** true auf der Startseite: Anker-Navigation statt "Start"-Link */
   home?: boolean;
   jsonLd?: Record<string, unknown>;
+  lang?: Lang;
+  /**
+   * Pfad der Seite in der Default-Sprache (also ohne /en). Nur nötig, wenn er
+   * sich nicht aus der URL ableiten lässt — etwa bei Writeup-Artikeln, die es
+   * nur auf Deutsch gibt und deren Umschalter auf die Übersicht zeigt.
+   */
+  altPath?: string;
+  /** false: Seite existiert nur in einer Sprache → keine hreflang-Paare. */
+  hasAlternate?: boolean;
 }
 
-const { title, description, ogTitle, home = false, jsonLd } = Astro.props;
+const {
+  title,
+  description,
+  ogTitle,
+  home = false,
+  jsonLd,
+  lang = defaultLang,
+  altPath,
+  hasAlternate = true,
+} = Astro.props;
+
+const s = useTranslations(lang);
+const other = otherLang(lang);
 
 const writeups = await getCollection("writeups", ({ data }) => !data.draft);
 const hasWriteups = writeups.length > 0;
 
+// Aktueller Pfad ohne Sprachpräfix — Grundlage für Umschalter und hreflang.
+const stripped = Astro.url.pathname.replace(/^\/en(?=\/|$)/, "") || "/";
+const basePath = altPath ?? stripped;
+
 const canonical = new URL(Astro.url.pathname, Astro.site).href;
 const ogImage = new URL("og.png", Astro.site).href;
+const href = (path: string) => localePath(lang, path);
+const alternates = hasAlternate
+  ? langCodes.map((l) => ({
+      hreflang: locales[l].html,
+      url: new URL(localePath(l, basePath), Astro.site).href,
+    }))
+  : [];
 ---
 
-<html lang="de">
+<html lang={locales[lang].html}>
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -41,9 +82,21 @@ const ogImage = new URL("og.png", Astro.site).href;
     <link rel="icon" href="/icon-32.png" type="image/png" sizes="32x32" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
 
+    {alternates.map((a) => <link rel="alternate" hreflang={a.hreflang} href={a.url} />)}
+    {
+      hasAlternate && (
+        <link
+          rel="alternate"
+          hreflang="x-default"
+          href={new URL(localePath(defaultLang, basePath), Astro.site).href}
+        />
+      )
+    }
+
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content="Gehackt ist Geil" />
-    <meta property="og:locale" content="de_AT" />
+    <meta property="og:locale" content={locales[lang].og} />
+    {hasAlternate && <meta property="og:locale:alternate" content={locales[other].og} />}
     <meta property="og:title" content={ogTitle ?? title} />
     <meta property="og:description" content={description} />
     <meta property="og:url" content={canonical} />
@@ -65,22 +118,41 @@ const ogImage = new URL("og.png", Astro.site).href;
 
     <header class="masthead">
       <div class="wrap">
-        <a href={home ? "#top" : "/"} class="brand" aria-label="Gehackt ist Geil — Startseite">
+        <a href={home ? "#top" : href("/")} class="brand" aria-label={s.nav.homeAria}>
           <span class="gig">GiG</span>
           <span class="full">Gehackt&nbsp;ist&nbsp;Geil</span>
         </a>
 
-        <nav class="nav" aria-label="Hauptnavigation">
-          {home ? (
-            <>
-              <a class="nav-a hide-sm" href="#palmares">Palmarès</a>
-              <a class="nav-a hide-sm" href="#crew">Crew</a>
-            </>
-          ) : (
-            <a class="nav-a hide-sm" href="/">Start</a>
-          )}
-          {hasWriteups && <a class="nav-a" href="/writeups/">Writeups</a>}
+        <nav class="nav" aria-label={s.nav.mainNav}>
+          {
+            home ? (
+              <>
+                <a class="nav-a hide-sm" href="#palmares">
+                  {s.home.palmares.h2}
+                </a>
+                <a class="nav-a hide-sm" href="#crew">
+                  {s.home.crew.h2}
+                </a>
+              </>
+            ) : (
+              <a class="nav-a hide-sm" href={href("/")}>
+                {s.nav.home}
+              </a>
+            )
+          }
+          {hasWriteups && <a class="nav-a" href={href("/writeups/")}>{s.nav.writeups}</a>}
         </nav>
+
+        <a
+          class="langtog"
+          href={localePath(other, basePath)}
+          hreflang={locales[other].html}
+          lang={locales[other].html}
+          aria-label={s.lang.switchTo}
+        >
+          <span class="on">{lang.toUpperCase()}</span>
+          <span class="off">{other.toUpperCase()}</span>
+        </a>
 
         <a class="btn btn--sm btn--blue to-ctf" href={CTFTIME_TEAM} target="_blank" rel="noopener">
           CTFtime <span class="arrow">→</span>
@@ -94,17 +166,18 @@ const ogImage = new URL("og.png", Astro.site).href;
       <div class="wrap">
         <div class="fbrand">Gehackt<br /><span class="b">ist</span> <span class="r">Geil</span></div>
 
-        <nav class="flinks" aria-label="Fußzeile">
-          {hasWriteups && <a href="/writeups/">Writeups</a>}
+        <nav class="flinks" aria-label={s.nav.footNav}>
+          {hasWriteups && <a href={href("/writeups/")}>{s.nav.writeups}</a>}
           <a href={CTFTIME_TEAM} target="_blank" rel="noopener">CTFtime</a>
           <a href={GITHUB} target="_blank" rel="noopener">GitHub</a>
-          <a href="/mario/">Mario</a>
+          <a href={href("/mario/")}>Mario</a>
+          <a href={href("/lunaric/")}>Lunaric</a>
         </nav>
 
         <div class="meta">
-          Akademisches CTF-Team · Österreich<br />
+          {s.foot.tagline}<br />
           <a href={CTFTIME_TEAM} target="_blank" rel="noopener">ctftime.org/team/438200</a><br />
-          Absolute Bubensahne™ · Est. 2026
+          {s.foot.est}
         </div>
       </div>
     </footer>
