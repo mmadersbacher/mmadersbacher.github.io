@@ -74,11 +74,18 @@ Docs: <https://docs.astro.build> — routing, content collections, styling.
 
 ## Deploy
 
+**Releases are manual right now.** `npm run deploy` from a machine that is logged in
+(`wrangler login`) is what actually publishes the site.
+
 Push to `main` → `.github/workflows/deploy.yml` runs `npm ci && npm run build` on Node 22
-(older Node breaks Astro 7) and `wrangler deploy`. Config is `wrangler.jsonc`: an assets-only
-Worker (no `main`), `dist/` uploaded as static assets, `not_found_handling: "404-page"` so
-`src/pages/404.astro` is served on a miss. Needs the `CLOUDFLARE_API_TOKEN` and
-`CLOUDFLARE_ACCOUNT_ID` repo secrets.
+(older Node breaks Astro 7). It *would* also run `wrangler deploy`, but that step is skipped
+unless the `CLOUDFLARE_API_TOKEN` and `CLOUDFLARE_ACCOUNT_ID` repo secrets exist — they
+don't, so CI only verifies the build and stays green. Add both secrets and it turns back into
+deploy-on-push with no further edits. Don't "fix" the workflow by deleting the guard; a run
+that fails on every commit is a run nobody reads.
+
+Config is `wrangler.jsonc`: an assets-only Worker (no `main`), `dist/` uploaded as static
+assets, `not_found_handling: "404-page"` so `src/pages/404.astro` is served on a miss.
 
 Check routing before pushing — `npm run cf-preview` runs the built site through the real
 Workers asset router, which `astro preview` does not:

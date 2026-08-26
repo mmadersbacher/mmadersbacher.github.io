@@ -1,4 +1,4 @@
-name: Deploy to Cloudflare Workers
+name: Build (and deploy, if configured)
 
 on:
   push:
@@ -15,12 +15,20 @@ concurrency:
 jobs:
   deploy:
     runs-on: ubuntu-latest
+
+    # Der Secrets-Kontext lässt sich in `if:` nicht direkt abfragen, über `env`
+    # aber schon. Deshalb landen die Werte hier oben und der Deploy-Schritt
+    # prüft dann gegen env.
+    env:
+      CF_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+      CF_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       - name: Set up Node
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v5
         with:
           # Astro 7 needs Node 22+
           node-version: 22
@@ -29,11 +37,22 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
+      # Läuft immer. Das ist der eigentliche Wert dieses Workflows: ein Push,
+      # der den Build bricht, fällt sofort auf — auch ohne Cloudflare-Zugang.
       - name: Build Astro site
         run: npm run build
 
+      # Nur wenn beide Secrets gesetzt sind. Ohne sie wird nicht deployt und
+      # der Lauf trotzdem grün: die Seite wird von Hand veröffentlicht
+      # (`npm run deploy`), ein roter Haken bei jedem Commit wäre nur Rauschen.
       - name: Deploy to Cloudflare Workers
-        uses: cloudflare/wrangler-action@v3
+        if: env.CF_API_TOKEN != '' && env.CF_ACCOUNT_ID != ''
+        uses: cloudflare/wrangler-action@v4
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+
+      - name: Note that deploy was skipped
+        if: env.CF_API_TOKEN == '' || env.CF_ACCOUNT_ID == ''
+        run: |
+          echo "::notice title=Deploy skipped::Build passed. CLOUDFLARE_API_TOKEN / CLOUDFLARE_ACCOUNT_ID are not set, so nothing was published. Release by hand with 'npm run deploy', or add the secrets to turn this back into a deploy-on-push."
