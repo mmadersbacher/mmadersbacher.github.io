@@ -59,21 +59,17 @@
   @media (max-width:560px){.top .r a.hide{display:none}}
 
   /* HERO — left aligned, moderate, not a screen-filling wall */
-  .hero{padding-block:clamp(64px,13vw,150px) clamp(48px,9vw,96px)}
-  .idline{font-size:12.5px; color:var(--ink-3); margin-bottom:26px;
-    display:flex; gap:10px; align-items:center}
-  .idline .sq{width:7px; height:7px; background:var(--ink); display:inline-block}
+  .hero{padding-block:clamp(72px,14vw,168px) clamp(40px,8vw,84px)}
   h1{font-family:var(--disp); font-weight:600; font-size:clamp(1.9rem,5.6vw,3.4rem);
-    line-height:1.04; letter-spacing:-.045em; margin-bottom:30px}
-  .stmt{font-size:clamp(1.15rem,2.6vw,1.6rem); line-height:1.42; color:var(--ink);
-    max-width:26ch; letter-spacing:-.02em}
+    line-height:1.04; letter-spacing:-.045em; margin-bottom:34px}
+  .stmt{font-size:clamp(1.18rem,2.7vw,1.66rem); line-height:1.46; color:var(--ink);
+    max-width:30ch; letter-spacing:-.02em}
   .stmt .q{color:var(--ink-2)}
 
   /* prose */
-  section{padding-block:clamp(44px,7vw,82px); border-top:1px solid var(--hair)}
-  .lbl{font-family:var(--disp); font-size:11px; font-weight:600; color:var(--ink-3);
-    letter-spacing:.04em; margin-bottom:26px}
-  .lbl b{color:var(--ink-2); font-weight:600}
+  section{padding-block:clamp(44px,7vw,80px); border-top:1px solid var(--hair)}
+  h2{font-family:var(--disp); font-weight:600; font-size:1.18rem; letter-spacing:-.03em;
+    margin-bottom:20px; color:var(--ink)}
   p.body{max-width:var(--measure); color:var(--ink-2); margin-bottom:15px}
   p.body:last-child{margin-bottom:0}
   p.body .k{color:var(--ink)}
@@ -159,26 +155,25 @@
 </div></div>
 
 <header class="hero"><div class="wrap">
-  <div class="idline"><span class="sq"></span>18 · Austria-based · plays as telqrrrr</div>
   <h1>Mario<br>Madersbacher</h1>
-  <p class="stmt">I take real systems apart <span class="q">— for</span>
-    <span class="rd">sport</span><span class="q">, and for</span> <span class="rd">the fix</span><span class="q">.</span></p>
+  <p class="stmt">I'm working toward red teaming. Right now that means capture the flag, and
+    taking real software apart to find where it <span class="rd">gives</span>.</p>
 </div></header>
 
 <main>
 
   <section><div class="wrap">
-    <div class="lbl"><b>00</b> &nbsp;WHAT THIS IS</div>
-    <p class="body">Most of what I do is <span class="k">capture the flag</span> — web exploitation,
-      reverse engineering, crypto, forensics. It's the fastest way I've found to learn how a system
-      actually works: by finding the exact place it doesn't.</p>
-    <p class="body">When a competition ends the same instinct goes at real tools. I read the source,
-      find the bug, and send the patch upstream. Writing my own tooling in Rust and Go is a
-      <em>side effect</em> of that — not the headline.</p>
+    <p class="body">I'm eighteen. Capture the flag is how I train — web, reversing, crypto, forensics —
+      and a scoreboard every weekend keeps me honest about how much I actually know. When a competition
+      ends, the same habit goes at production tools: I read the source, find the bug, and send the fix
+      to the people who maintain it.</p>
+    <p class="body">All of it points the same direction. I want to end up on a <span class="k">red team</span> —
+      the person who gets paid to find the way in before someone who means it does.</p>
   </div></section>
 
   <section><div class="wrap">
-    <div class="lbl"><b>01</b> &nbsp;CTF — WHERE THE HOURS GO</div>
+    <h2>Capture the flag</h2>
+    <p class="body" style="margin-bottom:26px">Recent finishes. I play as <span class="k">telqrrrr</span>, with a small team.</p>
     <div class="log">
       <div class="row">
         <div class="rank">3<sup>rd</sup></div>
@@ -201,14 +196,13 @@
         <div class="field">of <b>819</b> teams</div>
       </div>
     </div>
-    <p class="cats"><b>web</b><span class="s">/</span><b>reversing</b><span class="s">/</span><b>crypto</b><span class="s">/</span><b>forensics</b><span class="s">&nbsp;&nbsp;—&nbsp;&nbsp;and whatever the challenge turns out to actually be.</span></p>
-    <p class="after">Played with a small Austrian team. Full log on <a href="https://ctftime.org/user/264976" target="_blank" rel="noopener">CTFtime</a>.</p>
+    <p class="after">Every result is on <a href="https://ctftime.org/user/264976" target="_blank" rel="noopener">CTFtime</a> if you want to check it.</p>
   </div></section>
 
   <section><div class="wrap">
-    <div class="lbl"><b>02</b> &nbsp;WHAT FALLS OUT — PATCHES UPSTREAM</div>
-    <p class="body" style="margin-bottom:24px">Bugs I hit while poking at the tools everyone in this
-      field runs. Merged into the real projects, not my own repos — each links to the pull request.</p>
+    <h2>Fixes that landed</h2>
+    <p class="body" style="margin-bottom:24px">Bugs I ran into while reading the tools this field
+      actually runs on. These went into the real projects — not my own repos. Each links to the pull request.</p>
     <div class="up">
       <a href="https://github.com/secdev/scapy/pull/5090" target="_blank" rel="noopener">
         <span class="p">Scapy <span class="rp">#5090</span></span>
@@ -249,26 +243,25 @@
   </div></section>
 
   <section><div class="wrap">
-    <div class="lbl"><b>03</b> &nbsp;THE CODE (SIDE EFFECT)</div>
-    <p class="body">The tooling — local network and IoT discovery, API recon, packet inspection, mostly
-      <span class="k">Rust</span> and <span class="k">Go</span> — exists because I wanted it to, or wanted
-      to know how the real one worked. It's <a class="lnk" href="https://github.com/mmadersbacher" target="_blank" rel="noopener">on GitHub</a>
-      if that's your thing. It is not the reason you're here.</p>
+    <h2>My own tools</h2>
+    <p class="body">I build in <span class="k">Rust</span> and <span class="k">Go</span> too — local network
+      and IoT discovery, API recon, packet inspection. Usually because I wanted the tool to exist, or
+      wanted to understand how the real one works by writing my own. It's
+      <a class="lnk" href="https://github.com/mmadersbacher" target="_blank" rel="noopener">on GitHub</a>.</p>
   </div></section>
 
   <section><div class="wrap">
-    <div class="lbl"><b>04</b> &nbsp;REACH ME</div>
-    <p class="body">Got a hard problem, a challenge, or a reason to work together?
-      <a class="lnk" href="mailto:Telqrrrrr-ywh-462937e379a24618@yeswehack.ninja">mail</a> ·
-      <a class="lnk" href="https://github.com/mmadersbacher" target="_blank" rel="noopener">github</a> ·
-      <a class="lnk" href="https://ctftime.org/user/264976" target="_blank" rel="noopener">ctftime</a></p>
+    <h2>Get in touch</h2>
+    <p class="body">Hiring for red-team or security work, or you've got a problem worth a weekend on —
+      reach me by <a class="lnk" href="mailto:Telqrrrrr-ywh-462937e379a24618@yeswehack.ninja">email</a>,
+      or on <a class="lnk" href="https://github.com/mmadersbacher" target="_blank" rel="noopener">GitHub</a>
+      and <a class="lnk" href="https://ctftime.org/user/264976" target="_blank" rel="noopener">CTFtime</a>.</p>
   </div></section>
 
 </main>
 
-<div class="foot"><div class="wrap" style="display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;width:100%">
-  <span>© <span id="y">2026</span> Mario Madersbacher</span>
-  <span>hand-written · monochrome on purpose · no framework, no tracking</span>
+<div class="foot"><div class="wrap" style="width:100%">
+  <span>Mario Madersbacher, <span id="y">2026</span></span>
 </div></div>
 
 <script>
