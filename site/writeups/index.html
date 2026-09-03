@@ -1,0 +1,121 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Writeups — Mario Madersbacher</title>
+<meta name="description" content="CTF and security writeups by Mario Madersbacher.">
+<meta name="color-scheme" content="dark">
+<link rel="canonical" href="https://mmadersbacher.github.io/writeups/">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%23111'/%3E%3Crect x='6' y='14' width='20' height='5' fill='%23e9e6df'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Martian+Mono:wght@400;600;700&family=Spline+Sans+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#101011; --ink:#e9e6df; --ink-2:#9d9a92; --ink-3:#5c5a54; --hair:#232320;
+    --disp:"Martian Mono",ui-monospace,monospace;
+    --text:"Spline Sans Mono",ui-monospace,Consolas,monospace;
+    --gutter:clamp(20px,5vw,64px);
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{background:var(--bg); color:var(--ink); font-family:var(--text);
+    font-size:15.5px; line-height:1.62; letter-spacing:-.01em; overflow-x:hidden;
+    -webkit-font-smoothing:antialiased}
+  ::selection{background:var(--ink); color:var(--bg)}
+  a{color:inherit; text-decoration:none}
+  .wrap{max-width:820px; margin:0 auto; padding-inline:var(--gutter)}
+  .top{border-bottom:1px solid var(--hair)}
+  .top .wrap{display:flex; justify-content:space-between; align-items:center; height:52px;
+    font-size:12.5px; color:var(--ink-2)}
+  .top a{border-bottom:1px solid transparent; transition:border-color .18s,color .18s}
+  .top a:hover{color:var(--ink); border-color:var(--ink-3)}
+  header.h{padding-block:clamp(56px,11vw,120px) clamp(30px,5vw,52px)}
+  h1{font-family:var(--disp); font-weight:600; font-size:clamp(1.7rem,5vw,2.8rem);
+    letter-spacing:-.045em; line-height:1.05}
+  .sub{color:var(--ink-2); margin-top:18px; max-width:56ch}
+  main{padding-bottom:80px}
+  .list{border-top:1px solid var(--hair)}
+  .item{display:block; padding:22px 2px; border-bottom:1px solid var(--hair); transition:background .16s}
+  .item:hover{background:#161614}
+  .item .row1{display:flex; justify-content:space-between; gap:16px; align-items:baseline; flex-wrap:wrap}
+  .item .t{color:var(--ink); font-size:1.1rem}
+  .item .d{font-family:var(--disp); font-size:11.5px; color:var(--ink-3); white-space:nowrap}
+  .item .b{color:var(--ink-2); font-size:13.5px; margin-top:6px; max-width:70ch}
+  .item .tags{margin-top:9px; font-family:var(--disp); font-size:10.5px; color:var(--ink-3);
+    display:flex; gap:8px; flex-wrap:wrap}
+  .empty{border-top:1px solid var(--hair); padding-top:34px; color:var(--ink-2); max-width:58ch}
+  .empty .k{color:var(--ink)}
+  .foot{border-top:1px solid var(--hair); padding-block:30px 56px; color:var(--ink-3); font-size:12.5px}
+  .foot a{color:var(--ink-2); border-bottom:1px solid var(--hair)}
+  .foot a:hover{color:var(--ink)}
+</style>
+</head>
+<body>
+
+<div class="top"><div class="wrap">
+  <a href="/">← Mario Madersbacher</a>
+  <a href="https://github.com/mmadersbacher" target="_blank" rel="noopener">GitHub</a>
+</div></div>
+
+<header class="h"><div class="wrap">
+  <h1>Writeups</h1>
+  <p class="sub">Notes from CTF challenges and things I've taken apart. I post one when it
+    actually taught me something — not to fill a page.</p>
+</div></header>
+
+<main><div class="wrap">
+  <div id="list"></div>
+</div></main>
+
+<div class="foot"><div class="wrap">
+  <a href="/">Back to start</a>
+</div></div>
+
+<!--
+  ─────────────────────────────────────────────────────────────────────
+  HOW TO ADD A WRITEUP  (no build, no framework — just two small steps)
+  1. Copy tools/writeup-template.html to  site/writeups/<slug>.html
+     and fill it in.  <slug> becomes the URL:  /writeups/<slug>/  → use
+     /writeups/<slug>.html
+  2. Add one line to the POSTS array below (newest first).
+  ─────────────────────────────────────────────────────────────────────
+-->
+<script>
+  // newest first. { title, date (YYYY-MM-DD), href, blurb, tags:[] }
+  var POSTS = [
+    // { title:"Baby RSA — recovering d from a leaked bit", date:"2026-09-10",
+    //   href:"/writeups/baby-rsa.html",
+    //   blurb:"A textbook RSA challenge with one non-textbook twist.",
+    //   tags:["crypto","BrunnerCTF"] },
+  ];
+
+  var fmt = function(iso){
+    try{ return new Date(iso+"T00:00:00").toLocaleDateString("en-GB",
+      {year:"numeric",month:"short",day:"2-digit"}); }catch(e){ return iso; }
+  };
+  var esc = function(s){ return String(s).replace(/[&<>"]/g,function(c){
+    return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]; }); };
+
+  var el = document.getElementById("list");
+  if(!POSTS.length){
+    el.className = "empty";
+    el.innerHTML = "<p>Nothing published yet. I'd rather post <span class='k'>one writeup "+
+      "that's worth reading</span> than ten that pad a page — the first ones land when a "+
+      "challenge earns it. Meanwhile the <a href='/' style='color:#e9e6df;border-bottom:1px solid #5c5a54'>"+
+      "front page</a> has the actual work.</p>";
+  } else {
+    POSTS.sort(function(a,b){ return b.date.localeCompare(a.date); });
+    el.className = "list";
+    el.innerHTML = POSTS.map(function(p){
+      var tags = (p.tags||[]).map(function(t){ return "<span>"+esc(t)+"</span>"; }).join("");
+      return "<a class='item' href='"+esc(p.href)+"'>"+
+        "<span class='row1'><span class='t'>"+esc(p.title)+"</span>"+
+        "<span class='d'>"+fmt(p.date)+"</span></span>"+
+        (p.blurb?"<span class='b'>"+esc(p.blurb)+"</span>":"")+
+        (tags?"<span class='tags'>"+tags+"</span>":"")+"</a>";
+    }).join("");
+  }
+</script>
+</body>
+</html>
