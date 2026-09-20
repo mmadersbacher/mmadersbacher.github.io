@@ -10,20 +10,32 @@ export const GET: APIRoute = async ({ site }) => {
 
   const wuLastmod = writeups.length ? writeups[0].data.date.toISOString().slice(0, 10) : undefined;
 
+  const blog = (await getCollection("blog", ({ data }) => !data.draft)).sort(
+    (a, b) => b.data.date.getTime() - a.data.date.getTime()
+  );
+  const blogLastmod = blog.length ? blog[0].data.date.toISOString().slice(0, 10) : undefined;
+
   // Seiten, die es in beiden Sprachen gibt — jede Sprache bekommt eine eigene
   // <url> plus die xhtml:link-Paare, damit Google sie als Übersetzungen liest.
   const translated: { path: string; lastmod?: string }[] = [
     { path: "/" },
     { path: "/mario/" },
     { path: "/lunaric/" },
+    { path: "/blog/", lastmod: blogLastmod },
     ...(writeups.length ? [{ path: "/writeups/", lastmod: wuLastmod }] : []),
   ];
 
   // Writeup-Artikel sind deutsch und existieren nur einmal.
-  const singles = writeups.map((e) => ({
-    path: `/writeups/${e.id}/`,
-    lastmod: e.data.date.toISOString().slice(0, 10),
-  }));
+  const singles = [
+    ...writeups.map((e) => ({
+      path: `/writeups/${e.id}/`,
+      lastmod: e.data.date.toISOString().slice(0, 10),
+    })),
+    ...blog.map((e) => ({
+      path: `/blog/${e.id}/`,
+      lastmod: e.data.date.toISOString().slice(0, 10),
+    })),
+  ];
 
   const alternates = (path: string) =>
     [

@@ -45,6 +45,7 @@ const de = {
     home: "Start",
     palmares: "Palmarès",
     crew: "Crew",
+    blog: "Blog",
     writeups: "Writeups",
     mainNav: "Hauptnavigation",
     footNav: "Fußzeile",
@@ -56,16 +57,16 @@ const de = {
     switchTo: "Auf Englisch umschalten",
   },
   foot: {
-    tagline: "Akademisches CTF-Team · Österreich",
+    tagline: "Akademisches CTF-Team · International",
     est: "Absolute Bubensahne™ · Est. 2026",
   },
   home: {
     title: "Gehackt ist Geil",
     ogTitle: "Gehackt ist Geil — CTF-Team",
     description:
-      "Gehackt ist Geil — akademisches CTF-Team aus Österreich. Flags jagen statt schlafen. Ergebnisse, Crew und wie du mitmachst.",
-    orgDescription: "Akademisches CTF-Team aus Österreich.",
-    kicker: ["Academic CTF-Team", "AT · Österreich", "seit 2026"],
+      "Gehackt ist Geil — internationales akademisches CTF-Team, entstanden in Deutschland und Österreich. Flags jagen statt schlafen. Ergebnisse, Crew und wie du mitmachst.",
+    orgDescription: "Internationales akademisches CTF-Team, entstanden in Deutschland und Österreich.",
+    kicker: ["Academic CTF-Team", "International · DE + AT", "seit 2026"],
     /** Der Teamname bleibt in beiden Sprachen stehen. */
     h1: ["Gehackt", "ist", "Geil"],
     /** Nur in der englischen Fassung: Übersetzung des Namens als Fußnote. */
@@ -87,7 +88,7 @@ const de = {
       bigHtml:
         'Kein Sponsor. Kein Business-Plan.<br />Nur <span class="hl">Koffein</span>, <span class="hl-r">Neugier</span> und die feste Gewissheit, dass gehackt geil ist.',
       p1Html:
-        "<b>«Gehackt ist Geil»</b> ist ein akademisches CTF-Team aus Österreich. Wir treten bei Capture-the-Flag-Wettbewerben an — Web-Exploitation, Reverse Engineering, Krypto, Forensik — und lernen dabei mehr über echte Systeme als in jedem Skript.",
+        "<b>«Gehackt ist Geil»</b> ist ein akademisches CTF-Team — entstanden in Deutschland und Österreich, heute mit Leuten aus mehreren Ländern. Wir treten bei Capture-the-Flag-Wettbewerben an — Web-Exploitation, Reverse Engineering, Krypto, Forensik — und lernen dabei mehr über echte Systeme als in jedem Skript.",
       p2Html:
         "Angefangen hat's aus einer einzigen Frage: Wie funktioniert das wirklich, und wo bricht es? Heute heißt das durchgemachte Nächte, zu viel Mate und die eine Zeile im Write-up, die alles erklärt. Mal Platz&nbsp;2, mal Platz&nbsp;255 — Hauptsache dabei.",
     },
@@ -126,26 +127,33 @@ const de = {
   mario: {
     title: "Mario Madersbacher — Security & Netzwerke",
     description:
-      "Mario Madersbacher (Telqrrrr) aus Tirol: Open-Source-Beiträge zu Scapy, Impacket, Sigma und Nuclei, eigene Netzwerk- und Security-Tools in Rust und Go, CTFs mit «Gehackt ist Geil».",
+      "Mario Madersbacher (Telqrrrr) aus Österreich: Open-Source-Beiträge zu Scapy, Impacket, Volatility 3, Sigma und Nuclei, eigene Netzwerk- und Security-Tools in Rust und Go, CTFs mit «Gehackt ist Geil».",
     jobTitle: "Security- und Netzwerk-Schüler",
-    kicker: ["Telqrrrr", "Tirol · Österreich", "Security & Netzwerke"],
+    kicker: ["Telqrrrr", "Österreich", "Security & Netzwerke"],
     h1: ["Mario", "Madersbacher"],
     leadHtml:
-      "18, HAK in Tirol, und der Großteil der Energie geht in Security und Netzwerke. Wenn ich nicht verstehe, wie sich etwas verhält, schreibe ich meistens das Tool, das es mir zeigt. Rust und Go, wenn es schnell sein muss, Python wenn ich nur die Antwort will. Linux als Alltagssystem.",
+      "18, Österreich, und der Großteil der Energie geht in Security und Netzwerke. Wenn ich nicht verstehe, wie sich etwas verhält, schreibe ich meistens das Tool, das es mir zeigt. Rust und Go, wenn es schnell sein muss, Python wenn ich nur die Antwort will. Linux als Alltagssystem.",
     subHtml:
       'Nebenbei spiele ich CTFs mit <a href="{home}">«Gehackt ist Geil»</a> — diese Seite ist auch von mir.',
+    cves: {
+      h2: "CVEs",
+      no: "§A — Zugewiesen",
+      lead:
+        "Gefundene Bugs, die eine Nummer bekommen haben. Jede Zeile ist eine echte, verlinkte Advisory.",
+      sev: { critical: "Critical", high: "High", medium: "Medium", low: "Low" },
+    },
     oss: {
       h2: "Open Source",
-      no: "§A — Upstream",
+      no: "§B — Upstream",
       lead:
         "Kein Fork-Friedhof: Änderungen an Projekten, die andere Leute wirklich benutzen. Jede Zeile hier ist ein Pull Request im Original-Repo.",
       merged: "gemerged",
       open: "offen",
     },
-    tools: { h2: "Eigene Tools", no: "§B — Werkstatt", repo: "Repo" },
+    tools: { h2: "Eigene Tools", no: "§C — Werkstatt", repo: "Repo" },
     facts: {
       h2: "CTF & Papierkram",
-      no: "§C — Belege",
+      no: "§D — Belege",
       ctfK: "CTF",
       ctfHtml:
         'Spiele mit <a href="{team}" target="_blank" rel="noopener">Gehackt ist Geil</a>, beste Platzierung bisher Platz&nbsp;2 bei MntcrlCTF&nbsp;2026. Eigenes Profil: <a href="{user}" target="_blank" rel="noopener">ctftime.org/user/264976</a>.',
@@ -158,7 +166,7 @@ const de = {
     },
     contact: {
       h2: "Kontakt",
-      no: "§D — Erreichbar",
+      no: "§E — Erreichbar",
       mail: "E-Mail",
       note: "Mails laufen über eine Relay-Adresse — kommt trotzdem an.",
     },
@@ -238,6 +246,22 @@ const de = {
     /** Writeups selbst sind deutsch — in der EN-Fassung steht das als Hinweis. */
     germanOnly: "",
   },
+  blog: {
+    title: "Blog — Gehackt ist Geil",
+    description:
+      "Notizen, Nachlese und Gedanken vom CTF-Team «Gehackt ist Geil» — abseits der reinen Writeups.",
+    no: "§05 — Blog",
+    h1: "Blog",
+    lead:
+      "Was uns gerade beschäftigt: Tooling, Nachlese, Meinungen. Kurz, ehrlich, unregelmäßig.",
+    emptyQ: "Bald<br />mehr",
+    emptyText:
+      "Der erste Post ist in Arbeit. Bis dahin: Ergebnisse stehen auf der Startseite, und geschrieben wird trotzdem.",
+    emptyCta: "Zur Startseite",
+    footNote: "Selbst was zu sagen?",
+    footCta: "Schreib uns",
+    back: "← Alle Posts",
+  },
   notFound: {
     title: "404 — Gehackt ist Geil",
     description: "Diese Seite gibt es nicht.",
@@ -255,6 +279,7 @@ const en: typeof de = {
     home: "Home",
     palmares: "Palmarès",
     crew: "Crew",
+    blog: "Blog",
     writeups: "Writeups",
     mainNav: "Main navigation",
     footNav: "Footer",
@@ -265,16 +290,16 @@ const en: typeof de = {
     switchTo: "Switch to German",
   },
   foot: {
-    tagline: "Academic CTF team · Austria",
+    tagline: "Academic CTF team · International",
     est: "Absolute Bubensahne™ · Est. 2026",
   },
   home: {
-    title: "Gehackt ist Geil — Austrian CTF team",
+    title: "Gehackt ist Geil",
     ogTitle: "Gehackt ist Geil — CTF team",
     description:
-      "Gehackt ist Geil — an academic CTF team from Austria. Chasing flags instead of sleeping. Results, crew, and how to join.",
-    orgDescription: "Academic CTF team from Austria.",
-    kicker: ["Academic CTF team", "AT · Austria", "since 2026"],
+      "Gehackt ist Geil — an international academic CTF team, started in Germany and Austria. Chasing flags instead of sleeping. Results, crew, and how to join.",
+    orgDescription: "International academic CTF team, started in Germany and Austria.",
+    kicker: ["Academic CTF team", "International · DE + AT", "since 2026"],
     h1: ["Gehackt", "ist", "Geil"],
     gloss: "German for «hacked is awesome». Yes, really.",
     leadHtml:
@@ -293,7 +318,7 @@ const en: typeof de = {
       bigHtml:
         'No sponsor. No business plan.<br />Just <span class="hl">caffeine</span>, <span class="hl-r">curiosity</span> and the firm belief that hacking is awesome.',
       p1Html:
-        "<b>«Gehackt ist Geil»</b> is an academic CTF team from Austria. We play capture-the-flag competitions — web exploitation, reverse engineering, crypto, forensics — and learn more about real systems doing it than from any course handout.",
+        "<b>«Gehackt ist Geil»</b> is an academic CTF team — started in Germany and Austria, now with members from several countries. We play capture-the-flag competitions — web exploitation, reverse engineering, crypto, forensics — and learn more about real systems doing it than from any course handout.",
       p2Html:
         "It started with a single question: how does this actually work, and where does it break? These days that means all-nighters, too much mate tea and the one line in the write-up that explains everything. Sometimes 2nd place, sometimes 255th — the point is being there.",
     },
@@ -332,26 +357,33 @@ const en: typeof de = {
   mario: {
     title: "Mario Madersbacher — security & networks",
     description:
-      "Mario Madersbacher (Telqrrrr) from Tyrol, Austria: upstream contributions to Scapy, Impacket, Sigma and Nuclei, his own network and security tools in Rust and Go, CTFs with «Gehackt ist Geil».",
+      "Mario Madersbacher (Telqrrrr) from Austria: upstream contributions to Scapy, Impacket, Volatility 3, Sigma and Nuclei, his own network and security tools in Rust and Go, CTFs with «Gehackt ist Geil».",
     jobTitle: "Security and networking student",
-    kicker: ["Telqrrrr", "Tyrol · Austria", "Security & networks"],
+    kicker: ["Telqrrrr", "Austria", "Security & networks"],
     h1: ["Mario", "Madersbacher"],
     leadHtml:
-      "18, business school in Tyrol, and most of the energy goes into security and networks. When I don't understand how something behaves, I usually end up writing the tool that shows me. Rust and Go when it has to be fast, Python when I just want the answer. Linux as the daily driver.",
+      "18, Austria, and most of the energy goes into security and networks. When I don't understand how something behaves, I usually end up writing the tool that shows me. Rust and Go when it has to be fast, Python when I just want the answer. Linux as the daily driver.",
     subHtml:
       'On the side I play CTFs with <a href="{home}">«Gehackt ist Geil»</a> — this site is mine too.',
+    cves: {
+      h2: "CVEs",
+      no: "§A — Assigned",
+      lead:
+        "Bugs I found that ended up with a number. Every line is a real advisory, linked.",
+      sev: { critical: "Critical", high: "High", medium: "Medium", low: "Low" },
+    },
     oss: {
       h2: "Open source",
-      no: "§A — Upstream",
+      no: "§B — Upstream",
       lead:
         "Not a graveyard of forks: changes to projects other people actually use. Every line here is a pull request in the original repo.",
       merged: "merged",
       open: "open",
     },
-    tools: { h2: "My own tools", no: "§B — Workshop", repo: "Repo" },
+    tools: { h2: "My own tools", no: "§C — Workshop", repo: "Repo" },
     facts: {
       h2: "CTF & paperwork",
-      no: "§C — Receipts",
+      no: "§D — Receipts",
       ctfK: "CTF",
       ctfHtml:
         'I play with <a href="{team}" target="_blank" rel="noopener">Gehackt ist Geil</a>; best placing so far is 2nd at MntcrlCTF&nbsp;2026. My own profile: <a href="{user}" target="_blank" rel="noopener">ctftime.org/user/264976</a>.',
@@ -364,7 +396,7 @@ const en: typeof de = {
     },
     contact: {
       h2: "Contact",
-      no: "§D — Reachable",
+      no: "§E — Reachable",
       mail: "E-mail",
       note: "Mail goes through a relay address — it still gets there.",
     },
@@ -442,6 +474,22 @@ const en: typeof de = {
     back: "← All writeups",
     points: "points",
     germanOnly: "Heads up: the write-ups themselves are written in German.",
+  },
+  blog: {
+    title: "Blog — Gehackt ist Geil",
+    description:
+      "Notes, post-mortems and thoughts from the CTF team «Gehackt ist Geil» — beyond the writeups.",
+    no: "§05 — Blog",
+    h1: "Blog",
+    lead:
+      "What is on our mind right now: tooling, post-mortems, opinions. Short, honest, irregular.",
+    emptyQ: "More<br />soon",
+    emptyText:
+      "The first post is in the works. Until then: the results are on the home page, and we keep writing.",
+    emptyCta: "Back to the home page",
+    footNote: "Got something to say?",
+    footCta: "Get in touch",
+    back: "← All posts",
   },
   notFound: {
     title: "404 — Gehackt ist Geil",

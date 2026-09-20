@@ -235,7 +235,7 @@ main { position: relative; z-index: 1; }
 .marquee__track { display: inline-flex; white-space: nowrap; will-change: transform; animation: slide 26s linear infinite; }
 .marquee__track span { font-family: var(--font-display); text-transform: uppercase; font-size: 1.5rem; padding: 12px 0; letter-spacing: 0.02em; }
 .marquee__track .dot { color: var(--red); padding-inline: 20px; }
-@keyframes slide { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+@keyframes slide { from { transform: translateX(0); } to { transform: translateX(calc(-100% / 6)); } } /* -100%/6 = genau eine der 6 Marquee-Kopien, daher nahtlos */
 @media (prefers-reduced-motion: reduce) { .marquee__track { animation: none; } }
 
 /* ============================================================
@@ -499,6 +499,8 @@ html.anim .reveal.in { opacity: 1; transform: none; transition: opacity 0.6s eas
 .state--open { color: var(--ink-soft); background: transparent; }
 .oss-row:hover .state--merged { color: var(--paper); background: var(--red); border-color: var(--paper); }
 .oss-row:hover .state--open { color: rgba(236,227,206,0.85); }
+.state--sev { color: var(--red); background: var(--paper); }
+.oss-row:hover .state--sev { color: var(--paper); background: var(--ink); border-color: var(--paper); }
 @media (max-width: 640px) {
   .oss-row { grid-template-columns: 1fr; }
   .oss-repo { white-space: normal; }

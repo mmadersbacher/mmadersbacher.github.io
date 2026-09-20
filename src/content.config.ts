@@ -18,4 +18,20 @@ const writeups = defineCollection({
   }),
 });
 
-export const collections = { writeups };
+// Blog: allgemeine Posts als Markdown in src/content/blog/ (kein CTF-Schema).
+// draft: true wird nirgends verlinkt und bekommt keine Seite.
+const blog = defineCollection({
+  loader: glob({ pattern: "**/*.md", base: "./src/content/blog" }),
+  schema: z.object({
+    title: z.string(),
+    date: z.coerce.date(),
+    author: z.string(),
+    summary: z.string(),
+    tags: z.array(z.string()).default([]),
+    /** Sprache des Posts — steuert html-lang und JSON-LD des Artikels. */
+    lang: z.enum(["de", "en"]).default("de"),
+    draft: z.boolean().default(false),
+  }),
+});
+
+export const collections = { writeups, blog };

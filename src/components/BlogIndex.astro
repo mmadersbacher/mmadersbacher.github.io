@@ -1,0 +1,70 @@
+---
+import Base from "../layouts/Base.astro";
+import { getCollection } from "astro:content";
+import { CONTACT_MAIL } from "../data/site";
+import { locales, localePath, useTranslations, type Lang } from "../i18n/ui";
+
+interface Props {
+  lang: Lang;
+}
+const { lang } = Astro.props;
+const s = useTranslations(lang);
+const t = s.blog;
+const href = (p: string) => localePath(lang, p);
+
+const entries = (await getCollection("blog", ({ data }) => !data.draft)).sort(
+  (a, b) => b.data.date.getTime() - a.data.date.getTime()
+);
+
+const fmt = new Intl.DateTimeFormat(locales[lang].date, {
+  day: "2-digit",
+  month: "short",
+  year: "numeric",
+});
+---
+
+<Base lang={lang} title={t.title} description={t.description} ogTitle={t.title}>
+  <main class="page">
+    <div class="wrap">
+      <div class="page-head">
+        <span class="no mono">{t.no}</span>
+        <h1 class="page-title">{t.h1}</h1>
+        <p class="page-lead">{t.lead}</p>
+      </div>
+
+      {
+        entries.length === 0 ? (
+          <div class="empty">
+            <span class="q" set:html={t.emptyQ} />
+            <div>
+              <p>{t.emptyText}</p>
+              <a class="btn btn--sm" href={href("/")}>
+                {t.emptyCta} <span class="arrow">→</span>
+              </a>
+            </div>
+          </div>
+        ) : (
+          <div class="wu-grid">
+            {entries.map((e) => (
+              <a class="wu-card reveal" href={href(`/blog/${e.id}/`)}>
+                <h2 class="wu-title">{e.data.title}</h2>
+                <p class="wu-sum">{e.data.summary}</p>
+                <div class="wu-meta mono">
+                  <span>{fmt.format(e.data.date)}</span>
+                  <span>{e.data.author}</span>
+                </div>
+              </a>
+            ))}
+          </div>
+        )
+      }
+
+      <div class="page-foot">
+        <span class="note mono">{t.footNote}</span>
+        <a class="btn btn--sm btn--red" href={`mailto:${CONTACT_MAIL}`}>
+          {t.footCta} <span class="arrow">→</span>
+        </a>
+      </div>
+    </div>
+  </main>
+</Base>

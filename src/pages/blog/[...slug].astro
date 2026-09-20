@@ -1,0 +1,77 @@
+---
+import Base from "../../layouts/Base.astro";
+import { getCollection, render } from "astro:content";
+import { locales, localePath, useTranslations, type Lang } from "../../i18n/ui";
+
+export async function getStaticPaths() {
+  const entries = await getCollection("blog", ({ data }) => !data.draft);
+  return entries.map((entry) => ({ params: { slug: entry.id }, props: { entry } }));
+}
+
+const { entry } = Astro.props;
+const { Content } = await render(entry);
+
+// Ein Post existiert genau einmal, in der Sprache, in der er geschrieben ist.
+// Der Umschalter zeigt deshalb auf die Übersicht, hreflang bleibt weg.
+const lang = (entry.data.lang ?? "de") as Lang;
+const s = useTranslations(lang);
+const href = (p: string) => localePath(lang, p);
+const fmt = new Intl.DateTimeFormat(locales[lang].date, {
+  day: "2-digit",
+  month: "long",
+  year: "numeric",
+});
+
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  headline: entry.data.title,
+  description: entry.data.summary,
+  datePublished: entry.data.date.toISOString().slice(0, 10),
+  inLanguage: lang,
+  author: { "@type": "Person", name: entry.data.author },
+  publisher: { "@type": "Organization", name: "Gehackt ist Geil" },
+};
+---
+
+<Base
+  lang={lang}
+  altPath="/blog/"
+  hasAlternate={false}
+  title={`${entry.data.title} — Blog · Gehackt ist Geil`}
+  description={entry.data.summary}
+  ogTitle={entry.data.title}
+  jsonLd={jsonLd}
+>
+  <main class="page">
+    <div class="wrap">
+      <article class="wu">
+        <header class="wu-head">
+          <a class="back mono" href={href("/blog/")}>{s.blog.back}</a>
+          <h1 class="page-title">{entry.data.title}</h1>
+          <div class="wu-meta mono">
+            <span>{fmt.format(entry.data.date)}</span>
+            <span>{entry.data.author}</span>
+          </div>
+          {
+            entry.data.tags.length > 0 && (
+              <div class="wu-tags">
+                {entry.data.tags.map((tag) => (
+                  <span class="tag">{tag}</span>
+                ))}
+              </div>
+            )
+          }
+        </header>
+
+        <div class="prose">
+          <Content />
+        </div>
+      </article>
+
+      <div class="page-foot">
+        <a class="btn btn--sm" href={href("/blog/")}>{s.blog.back}</a>
+      </div>
+    </div>
+  </main>
+</Base>

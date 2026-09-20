@@ -1,6 +1,6 @@
 ---
 import Base from "../layouts/Base.astro";
-import { contributions, projects } from "../data/oss";
+import { cves, contributions, projects } from "../data/oss";
 import { CTFTIME_TEAM, CTFTIME_USER, CONTACT_MAIL, GITHUB } from "../data/site";
 import { fill, localePath, useTranslations, type Lang } from "../i18n/ui";
 
@@ -19,7 +19,7 @@ const jsonLd = {
   alternateName: "Telqrrrr",
   url: "https://gig-gehacktistgeil.com/mario/",
   jobTitle: m.jobTitle,
-  address: { "@type": "PostalAddress", addressRegion: "Tirol", addressCountry: "AT" },
+  address: { "@type": "PostalAddress", addressCountry: "AT" },
   memberOf: { "@type": "Organization", name: "Gehackt ist Geil" },
   sameAs: [GITHUB, CTFTIME_USER.telqrrrr],
 };
@@ -38,6 +38,37 @@ const jsonLd = {
         <p class="page-lead" set:html={m.leadHtml} />
         <p class="page-lead sub" set:html={fill(m.subHtml, { home: href("/") })} />
       </div>
+
+      <!-- CVEs -->
+      <section class="sub-sec">
+        <div class="sec-head reveal">
+          <h2>{m.cves.h2}</h2>
+          <span class="no">{m.cves.no}</span>
+        </div>
+        <p class="sub-lead reveal">{m.cves.lead}</p>
+        <div class="oss-list">
+          {
+            cves.map((c) => (
+              <a class="oss-row reveal" href={c.url} target="_blank" rel="noopener">
+                <span class="sweep" />
+                <span class="oss-main">
+                  <span class="oss-name">
+                    {c.id}
+                    {c.severity && (
+                      <span class="state state--sev">
+                        {m.cves.sev[c.severity]}
+                        {c.cvss ? ` · ${c.cvss}` : ""}
+                      </span>
+                    )}
+                  </span>
+                  <span class="oss-what">{c[lang]}</span>
+                </span>
+                <span class="oss-repo mono">{c.product} · {c.ref} ↗</span>
+              </a>
+            ))
+          }
+        </div>
+      </section>
 
       <!-- OPEN SOURCE -->
       <section class="sub-sec">

@@ -37,7 +37,6 @@ const jsonLd = {
   url: "https://gig-gehacktistgeil.com/",
   description: s.home.orgDescription,
   foundingDate: "2026",
-  address: { "@type": "PostalAddress", addressCountry: "AT" },
   sameAs: [CTFTIME_TEAM],
 };
 
@@ -114,12 +113,12 @@ const marquee = s.home.marquee;
     <!-- MARQUEE -->
     <div class="marquee" aria-hidden="true">
       <div class="marquee__track">
-        <span>
-          {marquee.map((m) => (<>{m}<span class="dot">✶</span></>))}
-        </span>
-        <span>
-          {marquee.map((m) => (<>{m}<span class="dot">✶</span></>))}
-        </span>
+        {/* Nahtlose Endlos-Laufschrift: mehrere identische Kopien, damit auch auf
+            breiten Bildschirmen immer Text den Viewport fuellt. Die Kopienzahl muss
+            mit der Verschiebung in @keyframes slide uebereinstimmen (aktuell 6). */}
+        {Array.from({ length: 6 }).map(() => (
+          <span>{marquee.map((m) => (<>{m}<span class="dot">✶</span></>))}</span>
+        ))}
       </div>
     </div>
 

@@ -1,6 +1,43 @@
 // Upstream-Beiträge und eigene Tools für /mario bzw. /en/mario.
 // Status nach dem Merge hier umstellen — sonst stimmt die Seite nicht mehr.
 
+// Zugewiesene CVEs für /mario. Nur echte, veröffentlichte Einträge — Advisory verlinkt.
+export type CVE = {
+  id: string;
+  /** Betroffenes Produkt bzw. Paket. */
+  product: string;
+  /** Optional: Schweregrad und CVSS, falls die Advisory einen nennt. */
+  severity?: "critical" | "high" | "medium" | "low";
+  cvss?: string;
+  de: string;
+  en: string;
+  /** Advisory bzw. Datenbank-Eintrag. */
+  url: string;
+  /** Kurzreferenz für die Zeile, z. B. GHSA-ID oder VulDB-Nummer. */
+  ref: string;
+};
+
+export const cves: CVE[] = [
+  {
+    id: "CVE-2026-90776",
+    product: "nodemailer",
+    severity: "high",
+    cvss: "7.5",
+    de: "Quadratischer Aufwand im addressparser (9.1.0–10.0.4): manipulierte Adress-Kommentare legen den Node.js-Event-Loop lahm. Behoben in 10.0.5.",
+    en: "Quadratic blow-up in nodemailer's addressparser (9.1.0–10.0.4): crafted address comments stall the Node.js event loop. Fixed in 10.0.5.",
+    url: "https://github.com/nodemailer/nodemailer/security/advisories/GHSA-prgh-xp8r-p3m5",
+    ref: "GHSA-prgh-xp8r-p3m5",
+  },
+  {
+    id: "CVE-2026-90492",
+    product: "webgjc/web_robot 2.8.0",
+    de: "OS-Command-Injection in webgjc/web_robot 2.8.0.",
+    en: "OS command injection in webgjc/web_robot 2.8.0.",
+    url: "https://vuldb.com/?id.403080",
+    ref: "VulDB-403080",
+  },
+];
+
 export type Contribution = {
   project: string;
   repo: string;
@@ -21,12 +58,28 @@ export const contributions: Contribution[] = [
     state: "merged",
   },
   {
+    project: "Volatility 3",
+    repo: "volatilityfoundation/volatility3",
+    de: "Das capabilities-Plugin war auf Linux-Kerneln vor 6.3 kaputt — Ursache gefunden und behoben.",
+    en: "The capabilities plugin was broken on Linux kernels before 6.3 — root-caused and fixed.",
+    url: "https://github.com/volatilityfoundation/volatility3/pull/2017",
+    state: "merged",
+  },
+  {
+    project: "Volatility 3",
+    repo: "volatilityfoundation/volatility3",
+    de: "Ein Architektur-Tippfehler blockierte das scheduled_tasks-Plugin auf 32-Bit-Images — korrigiert.",
+    en: "An architecture typo blocked the scheduled_tasks plugin on 32-bit images — fixed.",
+    url: "https://github.com/volatilityfoundation/volatility3/pull/2016",
+    state: "merged",
+  },
+  {
     project: "Impacket",
     repo: "fortra/impacket",
     de: "BootpDecoder ist bei reinen BOOTP-Paketen ohne DHCP-Optionen abgestürzt (Issue #1900).",
     en: "BootpDecoder crashed on plain BOOTP packets that carry no DHCP options (issue #1900).",
     url: "https://github.com/fortra/impacket/pull/2263",
-    state: "open",
+    state: "merged",
   },
   {
     project: "Sigma",
@@ -42,7 +95,7 @@ export const contributions: Contribution[] = [
     de: "Template für CVE-2020-10204 (Nexus Repository Manager 3, RCE), gegen eine verwundbare Instanz verifiziert.",
     en: "Template for CVE-2020-10204 (Nexus Repository Manager 3, RCE), verified against a vulnerable instance.",
     url: "https://github.com/projectdiscovery/nuclei-templates/pull/16902",
-    state: "open",
+    state: "merged",
   },
   {
     project: "LOLBAS",
@@ -50,7 +103,7 @@ export const contributions: Contribution[] = [
     de: "Eintrag für Vssadmin.exe — Schattenkopien löschen (T1490), stand im Backlog des Projekts.",
     en: "Entry for Vssadmin.exe — deleting shadow copies (T1490), which had been sitting in the project's backlog.",
     url: "https://github.com/LOLBAS-Project/LOLBAS/pull/520",
-    state: "open",
+    state: "merged",
   },
 ];
 

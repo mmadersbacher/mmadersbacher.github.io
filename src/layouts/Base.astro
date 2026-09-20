@@ -8,7 +8,7 @@ import "@fontsource/ibm-plex-mono/600.css";
 import "@fontsource/ibm-plex-mono/700.css";
 import "../styles/global.css";
 import { getCollection } from "astro:content";
-import { CTFTIME_TEAM, GITHUB } from "../data/site";
+import { CTFTIME_TEAM } from "../data/site";
 import {
   defaultLang,
   langCodes,
@@ -103,7 +103,7 @@ const alternates = hasAlternate
     <meta property="og:image" content={ogImage} />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
-    <meta property="og:image:alt" content="Gehackt ist Geil — akademisches CTF-Team aus Österreich" />
+    <meta property="og:image:alt" content="Gehackt ist Geil — internationales akademisches CTF-Team, entstanden in Deutschland und Österreich" />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content={ogTitle ?? title} />
     <meta name="twitter:description" content={description} />
@@ -140,6 +140,7 @@ const alternates = hasAlternate
               </a>
             )
           }
+          <a class="nav-a" href={href("/blog/")}>{s.nav.blog}</a>
           {hasWriteups && <a class="nav-a" href={href("/writeups/")}>{s.nav.writeups}</a>}
         </nav>
 
@@ -167,9 +168,9 @@ const alternates = hasAlternate
         <div class="fbrand">Gehackt<br /><span class="b">ist</span> <span class="r">Geil</span></div>
 
         <nav class="flinks" aria-label={s.nav.footNav}>
+          <a href={href("/blog/")}>{s.nav.blog}</a>
           {hasWriteups && <a href={href("/writeups/")}>{s.nav.writeups}</a>}
           <a href={CTFTIME_TEAM} target="_blank" rel="noopener">CTFtime</a>
-          <a href={GITHUB} target="_blank" rel="noopener">GitHub</a>
           <a href={href("/mario/")}>Mario</a>
           <a href={href("/lunaric/")}>Lunaric</a>
         </nav>
