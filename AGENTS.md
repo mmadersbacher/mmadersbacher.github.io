@@ -129,4 +129,4 @@ under a minute. Every claim links to its public record (CVE record, advisory, PR
   `--ink-3` must stay ≥ 4.5:1 on `--bg` in both themes or the test fails.
 - `site/writeups/` is a static list (POSTS array in its index.html); new articles come from
   `tools/writeup-template.html`. `site/og.png` is rendered from `tools/personal-og.html`
-  (command in that file's header comment).
+  by `tools/render-og.sh` (renders taller, crops to 1200×630; a 630px headless window clips the footer).
