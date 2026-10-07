@@ -8,7 +8,7 @@
   },
   "person": {
     "name": "Mario Madersbacher",
-    "headline": "Security Researcher · Web Penetration Tester (HTB CWES)",
+    "headline": "Security researcher and web penetration tester",
     "location": "Tyrol, Austria",
     "country": "AT",
     "region": "Tyrol",
@@ -322,7 +322,7 @@
   "projects": [
     {
       "name": "Own tools",
-      "meta": "Rust · Go · Python · on GitHub",
+      "meta": "Rust, Go and Python, all on GitHub",
       "what": "IoTShade for network and IoT discovery, NetReconUltra, a Go scanner with a React dashboard, NetRecon in Python, and a hash cracker. I wrote them to understand how the real tools work.",
       "url": "https://github.com/mmadersbacher?tab=repositories"
     }

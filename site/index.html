@@ -15,15 +15,15 @@
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%23111'/%3E%3Crect x='6' y='14' width='20' height='5' fill='%23e9e6df'/%3E%3C/svg%3E">
 <meta property="og:type" content="profile">
 <meta property="og:title" content="Mario Madersbacher">
-<meta property="og:description" content="Security Researcher · Web Penetration Tester (HTB CWES) · 3 CVEs · 12 merged upstream PRs · HTB CWES">
+<meta property="og:description" content="Security researcher and web penetration tester. 3 CVEs and 12 merged upstream pull requests.">
 <meta property="og:url" content="https://mmadersbacher.github.io/">
 <meta property="og:image" content="https://mmadersbacher.github.io/og.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
-<meta property="og:image:alt" content="Mario Madersbacher · Security Researcher · Web Penetration Tester (HTB CWES)">
+<meta property="og:image:alt" content="Mario Madersbacher, Security researcher and web penetration tester">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Mario Madersbacher">
-<meta name="twitter:description" content="3 CVEs · 12 merged upstream PRs · HTB CWES">
+<meta name="twitter:description" content="3 CVEs and 12 merged upstream pull requests.">
 <meta name="twitter:image" content="https://mmadersbacher.github.io/og.png">
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"Person","name":"Mario Madersbacher","jobTitle":"Security Researcher","description":"Security researcher and web penetration tester (HTB CWES) from Tyrol, Austria. Three CVEs, merged fixes in Impacket, Scapy, Volatility 3 and ffuf, accepted bug bounty reports. Everything on the page links to where you can check it.","url":"https://mmadersbacher.github.io/","address":{"@type":"PostalAddress","addressRegion":"Tyrol","addressCountry":"AT"},"sameAs":["https://github.com/mmadersbacher","https://hackerone.com/telqrrr","https://yeswehack.com/hunters/telqrrrrr","https://profile.hackthebox.com/profile/019f563d-c2b9-7061-ba9e-17ef2ca8a910","https://ctftime.org/user/264976","https://www.linkedin.com/in/mario-madersbacher-310b49414"],"knowsAbout":["Web application security","Vulnerability research","Coordinated disclosure","Network security","Active Directory","Detection engineering"],"hasCredential":[{"@type":"EducationalOccupationalCredential","name":"HTB Certified Web Exploitation Specialist (CWES)","credentialCategory":"certification","recognizedBy":{"@type":"Organization","name":"Hack The Box"},"url":"https://profile.hackthebox.com/profile/019f563d-c2b9-7061-ba9e-17ef2ca8a910/certificate/HTBCERT-BB6F9B6B7A"}]}</script>
 <script>try{if(localStorage.getItem("theme")==="light")document.documentElement.setAttribute("data-theme","light")}catch(e){}</script>
@@ -47,9 +47,9 @@
 </div></div>
 
 <header class="hero" id="top"><div class="wrap">
-  <p class="kicker">Security Researcher · Web Penetration Tester (HTB CWES)</p>
+  <p class="kicker">Security researcher and web penetration tester</p>
   <h1>Mario<br>Madersbacher</h1>
-  <p class="stmt">3 CVEs · 12 merged upstream PRs · HTB CWES. Everything on this page links to where you can <span class="rd">check it</span>.</p>
+  <p class="stmt">3 CVEs and 12 merged upstream pull requests. Everything on this page links to where you can <span class="rd">check it</span>.</p>
   <p class="links" aria-label="Profiles">
     <a href="https://github.com/mmadersbacher">GitHub</a>
     <a href="https://hackerone.com/telqrrr">HackerOne</a>
@@ -77,7 +77,9 @@
       <div class="name"><code class="id">CVE-2026-103043</code> <span class="prod">anchorme.js ≤ 3.0.8</span></div>
       <p class="sub">ReDoS in the regex that pulls IPv6 hosts out of a URL, reachable through the default <code>anchorme()</code> call. A URL under 100 bytes makes it backtrack exponentially and the Node.js event loop just stops.</p>
       <p class="sub">No fix released as of October 2026, npm latest is still 3.0.8. Credited under my real name on the CVE record.</p>
-      <p class="proof"><a class="lnk" href="https://www.cve.org/CVERecord?id=CVE-2026-103043">CVE record</a> · <a class="lnk" href="https://www.vulncheck.com/advisories/anchorme-through-3.0.8-regular-expression-denial-of-service">VulnCheck advisory</a> · <a class="lnk" href="https://gist.github.com/mmadersbacher/46050b4224eb979431986cdef1dd2ad3">PoC gist</a></p>
+      <p class="proof"><a class="lnk" href="https://www.cve.org/CVERecord?id=CVE-2026-103043">CVE record</a>
+<a class="lnk" href="https://www.vulncheck.com/advisories/anchorme-through-3.0.8-regular-expression-denial-of-service">VulnCheck advisory</a>
+<a class="lnk" href="https://gist.github.com/mmadersbacher/46050b4224eb979431986cdef1dd2ad3">PoC gist</a></p>
     </div>
     <div class="field">
       <span class="nw"><b>CVSS 7.5</b> v3.1 · <b>8.7</b> v4.0</span><br>
@@ -91,7 +93,9 @@
       <div class="name"><code class="id">CVE-2026-90776</code> <span class="prod">Nodemailer 9.1.0 to 10.0.4</span></div>
       <p class="sub">The address parser in <code>lib/addressparser</code> goes quadratic on comment-joined addresses. Through <span class="k">mailparser</span> that is reachable from outside with a normal inbound mail, no auth, and the event loop stalls for seconds.</p>
       <p class="sub">Reported through a GitHub private advisory with a PoC and a fix suggestion. The maintainer patched it in 10.0.5. Credited on the advisory and on the CVE record.</p>
-      <p class="proof"><a class="lnk" href="https://github.com/advisories/GHSA-prgh-xp8r-p3m5">GHSA-prgh-xp8r-p3m5</a> · <a class="lnk" href="https://www.cve.org/CVERecord?id=CVE-2026-90776">CVE record</a> · <a class="lnk" href="https://github.com/nodemailer/nodemailer/commit/c07f17518d25aca8ab2ad66968dcbca538c24b89">Fix commit</a></p>
+      <p class="proof"><a class="lnk" href="https://github.com/advisories/GHSA-prgh-xp8r-p3m5">GHSA-prgh-xp8r-p3m5</a>
+<a class="lnk" href="https://www.cve.org/CVERecord?id=CVE-2026-90776">CVE record</a>
+<a class="lnk" href="https://github.com/nodemailer/nodemailer/commit/c07f17518d25aca8ab2ad66968dcbca538c24b89">Fix commit</a></p>
     </div>
     <div class="field">
       <span class="nw"><b>CVSS 7.5</b> v3.1 · <b>8.7</b> v4.0</span><br>
@@ -105,7 +109,8 @@
       <div class="name"><code class="id">CVE-2026-90492</code> <span class="prod">webgjc/web_robot 2.4.0 to 2.8.0</span></div>
       <p class="sub">The <code>case_name</code> request parameter goes straight into <code>os.system()</code> in <code>py/web.py</code> (<code>controller_listen</code> and <code>controller_recover</code>), nothing is sanitised.</p>
       <p class="sub">The vendor never answered, so it went out through VulDB. Credited as Telqrrr.</p>
-      <p class="proof"><a class="lnk" href="https://vuldb.com/?id.403080">VulDB VDB-403080</a> · <a class="lnk" href="https://www.cve.org/CVERecord?id=CVE-2026-90492">CVE record</a></p>
+      <p class="proof"><a class="lnk" href="https://vuldb.com/?id.403080">VulDB VDB-403080</a>
+<a class="lnk" href="https://www.cve.org/CVERecord?id=CVE-2026-90492">CVE record</a></p>
     </div>
     <div class="field">
       <span class="nw"><b>CVSS 6.3</b> v3.1 · <b>5.3</b> v4.0</span><br>
@@ -195,7 +200,7 @@
 
 <section id="bounty" aria-labelledby="bounty-h"><div class="wrap">
   <h2 id="bounty-h">Bug bounty</h2>
-  <p class="body" style="margin-bottom:22px">No program names here, that&#39;s the rule. The platform profiles are the record: <a class="lnk" href="https://hackerone.com/telqrrr">HackerOne</a> · <a class="lnk" href="https://yeswehack.com/hunters/telqrrrrr">YesWeHack</a></p>
+  <p class="body" style="margin-bottom:22px">No program names here, that&#39;s the rule. The platform profiles are the record: <a class="lnk" href="https://hackerone.com/telqrrr">HackerOne</a> and <a class="lnk" href="https://yeswehack.com/hunters/telqrrrrr">YesWeHack</a>.</p>
   <div class="blist">
       <div class="brow">
         <span class="bl">High <b>7.5</b> <span class="rp">C:H/I:N/A:N</span><br><span class="bo">accepted · rewarded</span></span>
@@ -235,7 +240,7 @@
       <article class="xp">
         <div class="xh">
           <span class="xr"><a class="lnk" href="https://github.com/mmadersbacher?tab=repositories">Own tools</a></span>
-          <span class="xd">Rust · Go · Python · on GitHub</span>
+          <span class="xd">Rust, Go and Python, all on GitHub</span>
         </div>
         <p class="body">IoTShade for network and IoT discovery, NetReconUltra, a Go scanner with a React dashboard, NetRecon in Python, and a hash cracker. I wrote them to understand how the real tools work.</p>
       </article>
@@ -310,8 +315,8 @@
 </div></section>
 </main>
 <footer class="foot"><div class="wrap">
-  <span>Mario Madersbacher · Tyrol, Austria</span>
-  <span>Updated October 2026 · <a href="https://github.com/mmadersbacher/mmadersbacher.github.io/tree/main/site">source</a> · <a href="/data.json">data.json</a></span>
+  <span>Mario Madersbacher, Tyrol, Austria</span>
+  <span class="flinks"><span>Updated October 2026</span><a href="https://github.com/mmadersbacher/mmadersbacher.github.io/tree/main/site">source</a><a href="/data.json">data.json</a></span>
 </div></footer>
 <script src="/main.js" defer></script>
 </body>

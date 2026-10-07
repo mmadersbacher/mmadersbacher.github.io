@@ -76,6 +76,12 @@ test("no em or en dashes anywhere on the page (ranges say 'to', clauses get a fu
   assert.doesNotMatch(html, /[\u2014\u2013]/, "dash found in rendered page");
 });
 
+test("no middle-dot separators in prose (hero, kicker, body paragraphs); dots belong in data lines only", () => {
+  const prose = [...html.matchAll(/<p class="(?:stmt|kicker|body)"[^>]*>([\s\S]*?)<\/p>/g)].map((m) => m[1]);
+  assert.ok(prose.length >= 8, `found ${prose.length} prose paragraphs`);
+  for (const p of prose) assert.ok(!p.includes("\u00b7"), `middle dot in prose: ${p.slice(0, 80)}`);
+});
+
 test("no missing data leaks into the page as undefined / null / NaN", () => {
   assert.doesNotMatch(html, /\b(undefined|NaN|\[object Object\])\b/);
   assert.doesNotMatch(html, />null</);

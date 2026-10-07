@@ -53,7 +53,7 @@ const { site, person, copy, cves, contributions, bounty, experience, projects, c
 const merged = contributions.filter((c) => c.state === "merged");
 const open = contributions.filter((c) => c.state === "open");
 const repos = [...new Set(contributions.map((c) => c.project))];
-const summary = `${cves.length} CVEs · ${merged.length} merged upstream PRs · HTB CWES`;
+const summary = `${cves.length} CVEs and ${merged.length} merged upstream pull requests`;
 const mail = `mailto:${person.email}`;
 const byDateDesc = (a, b) => (b.date || "").localeCompare(a.date || "");
 
@@ -91,15 +91,15 @@ const head = () => `<!doctype html>
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%23111'/%3E%3Crect x='6' y='14' width='20' height='5' fill='%23e9e6df'/%3E%3C/svg%3E">
 <meta property="og:type" content="profile">
 <meta property="og:title" content="${esc(person.name)}">
-<meta property="og:description" content="${esc(person.headline)} · ${esc(summary)}">
+<meta property="og:description" content="${esc(person.headline)}. ${esc(summary)}.">
 <meta property="og:url" content="${esc(site.url)}">
 <meta property="og:image" content="${esc(site.url)}og.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
-<meta property="og:image:alt" content="${esc(person.name)} · ${esc(person.headline)}">
+<meta property="og:image:alt" content="${esc(person.name)}, ${esc(person.headline)}">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="${esc(person.name)}">
-<meta name="twitter:description" content="${esc(summary)}">
+<meta name="twitter:description" content="${esc(summary)}.">
 <meta name="twitter:image" content="${esc(site.url)}og.png">
 <script type="application/ld+json">${JSON.stringify(jsonLd).replace(/</g, "\\u003c")}</script>
 <script>try{if(localStorage.getItem("theme")==="light")document.documentElement.setAttribute("data-theme","light")}catch(e){}</script>
@@ -152,7 +152,7 @@ const cveRow = (c) => `
       <div class="name"><code class="id">${esc(c.id)}</code> <span class="prod">${esc(c.product)} ${esc(c.range)}</span></div>
       <p class="sub">${rich(c.mechanism)}</p>
       <p class="sub">${rich(c.status)} ${esc(c.credit)}</p>
-      <p class="proof">${c.links.map((l) => ext(l.url, esc(l.label), "lnk")).join(" · ")}</p>
+      <p class="proof">${c.links.map((l) => ext(l.url, esc(l.label), "lnk")).join("\n")}</p>
     </div>
     <div class="field">
       <span class="nw"><b>CVSS ${esc(c.cvss31)}</b> v3.1 · <b>${esc(c.cvss40)}</b> v4.0</span><br>
@@ -195,7 +195,7 @@ const bountyRow = (b) => `
 const bountySec = () => `
 <section id="bounty" aria-labelledby="bounty-h"><div class="wrap">
   <h2 id="bounty-h">Bug bounty</h2>
-  <p class="body" style="margin-bottom:22px">${rich(copy.bountyLead)} ${ext(person.handles.find((h) => h.platform === "HackerOne").url, "HackerOne", "lnk")} · ${ext(person.handles.find((h) => h.platform === "YesWeHack").url, "YesWeHack", "lnk")}</p>
+  <p class="body" style="margin-bottom:22px">${rich(copy.bountyLead)} ${ext(person.handles.find((h) => h.platform === "HackerOne").url, "HackerOne", "lnk")} and ${ext(person.handles.find((h) => h.platform === "YesWeHack").url, "YesWeHack", "lnk")}.</p>
   <div class="blist">${bounty.items.map(bountyRow).join("")}
   </div>
 </div></section>
@@ -298,8 +298,8 @@ const contactSec = () => `
 
 const foot = () => `
 <footer class="foot"><div class="wrap">
-  <span>${esc(person.name)} · ${esc(person.location)}</span>
-  <span>Updated ${esc(site.updated)} · ${ext(site.repo, "source")} · <a href="/data.json">data.json</a></span>
+  <span>${esc(person.name)}, ${esc(person.location)}</span>
+  <span class="flinks"><span>Updated ${esc(site.updated)}</span>${ext(site.repo, "source")}<a href="/data.json">data.json</a></span>
 </div></footer>
 <script src="/main.js" defer></script>
 </body>
