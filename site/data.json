@@ -1,8 +1,8 @@
 {
   "site": {
     "url": "https://mmadersbacher.github.io/",
-    "title": "Mario Madersbacher — Security Researcher",
-    "description": "Security researcher and web penetration tester (HTB CWES) from Tyrol, Austria. Three CVEs, merged fixes in Impacket, Scapy, Volatility 3 and ffuf, accepted bug-bounty reports. Every claim links to its public record.",
+    "title": "Mario Madersbacher · Security Researcher",
+    "description": "Security researcher and web penetration tester (HTB CWES) from Tyrol, Austria. Three CVEs, merged fixes in Impacket, Scapy, Volatility 3 and ffuf, accepted bug bounty reports. Everything on the page links to where you can check it.",
     "updated": "October 2026",
     "repo": "https://github.com/mmadersbacher/mmadersbacher.github.io/tree/main/site"
   },
@@ -13,8 +13,8 @@
     "country": "AT",
     "region": "Tyrol",
     "email": "mario.madersbacher.2008@gmail.com",
-    "intro": "I find bugs in software people actually run — npm libraries, the tooling this field depends on, and web applications under bug-bounty programs — and report them so they get fixed. Still in secondary school; Matura in June 2027.",
-    "principle": "Severity here is only ever what was demonstrated. A CVSS vector on this page was reproduced, not estimated.",
+    "intro": "I find bugs in software people actually use. npm packages, the tools this field runs on, web apps in bug bounty programs. Then I report them so they get fixed. I'm still in school, Matura is in June 2027.",
+    "principle": "I don't inflate severity. If there is a CVSS score on this page I demonstrated it, I didn't estimate it.",
     "handles": [
       {
         "platform": "GitHub",
@@ -62,9 +62,9 @@
       "vector31": "AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
       "assigner": "VulnCheck CNA",
       "published": "2026-09-29",
-      "mechanism": "Regular-expression denial of service in the IPv6 host-extraction regex, reachable through the default `anchorme()` export. A crafted URL of under 100 bytes backtracks exponentially and blocks the Node.js event loop.",
-      "status": "No fixed release as of October 2026 — npm latest is still 3.0.8.",
-      "credit": "Credited as finder under my real name on the CVE record.",
+      "mechanism": "ReDoS in the regex that pulls IPv6 hosts out of a URL, reachable through the default `anchorme()` call. A URL under 100 bytes makes it backtrack exponentially and the Node.js event loop just stops.",
+      "status": "No fix released as of October 2026, npm latest is still 3.0.8.",
+      "credit": "Credited under my real name on the CVE record.",
       "links": [
         {
           "label": "CVE record",
@@ -84,7 +84,7 @@
       "id": "CVE-2026-90776",
       "product": "Nodemailer",
       "ecosystem": "npm",
-      "range": "9.1.0 – 10.0.4",
+      "range": "9.1.0 to 10.0.4",
       "cwe": "CWE-407",
       "cweName": "Inefficient algorithmic complexity",
       "severity": "High",
@@ -93,9 +93,9 @@
       "vector31": "AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
       "assigner": "VulnCheck CNA",
       "published": "2026-09-13",
-      "mechanism": "O(n²) parsing in `lib/addressparser` on comment-joined addresses. Remotely triggerable without authentication through **mailparser** on inbound mail: a standards-compliant message stalls the event loop for seconds.",
-      "status": "Reported through GitHub's private advisory with PoC and a suggested fix; patched by the maintainer in 10.0.5.",
-      "credit": "Credited as reporter on the GitHub advisory and as finder on the CVE record.",
+      "mechanism": "The address parser in `lib/addressparser` goes quadratic on comment-joined addresses. Through **mailparser** that is reachable from outside with a normal inbound mail, no auth, and the event loop stalls for seconds.",
+      "status": "Reported through a GitHub private advisory with a PoC and a fix suggestion. The maintainer patched it in 10.0.5.",
+      "credit": "Credited on the advisory and on the CVE record.",
       "links": [
         {
           "label": "GHSA-prgh-xp8r-p3m5",
@@ -115,7 +115,7 @@
       "id": "CVE-2026-90492",
       "product": "webgjc/web_robot",
       "ecosystem": "Python",
-      "range": "2.4.0 – 2.8.0",
+      "range": "2.4.0 to 2.8.0",
       "cwe": "CWE-78",
       "cweName": "OS command injection",
       "severity": "Medium",
@@ -124,9 +124,9 @@
       "vector31": "AV:N/AC:L/PR:N/UI:R/S:U/C:L/I:L/A:L",
       "assigner": "VulDB CNA",
       "published": "2026-09-13",
-      "mechanism": "The `case_name` request parameter reaches `os.system()` unsanitised in `py/web.py` (`controller_listen` / `controller_recover`).",
-      "status": "Vendor contacted, no response; published through VulDB.",
-      "credit": "Credited as reporter under the handle Telqrrr.",
+      "mechanism": "The `case_name` request parameter goes straight into `os.system()` in `py/web.py` (`controller_listen` and `controller_recover`), nothing is sanitised.",
+      "status": "The vendor never answered, so it went out through VulDB.",
+      "credit": "Credited as Telqrrr.",
       "links": [
         {
           "label": "VulDB VDB-403080",
@@ -146,17 +146,8 @@
       "number": 1322,
       "state": "open",
       "date": "2026-10-03",
-      "what": "`parallel` set through a config file aborted every run with an unwrap panic (#1321). Rust; fix plus regression test.",
+      "what": "If `parallel` came from a config file, every run died with an unwrap panic (#1321). Fix plus a regression test, Rust.",
       "url": "https://github.com/epi052/feroxbuster/pull/1322"
-    },
-    {
-      "repo": "ffuf/ffuf",
-      "project": "ffuf",
-      "number": 953,
-      "state": "open",
-      "date": "2026-09-26",
-      "what": "Raw request files without a trailing newline silently lost their last header; brought the parser in line with the preflight path, with tests.",
-      "url": "https://github.com/ffuf/ffuf/pull/953"
     },
     {
       "repo": "ffuf/ffuf",
@@ -164,7 +155,7 @@
       "number": 952,
       "state": "merged",
       "date": "2026-09-26",
-      "what": "Made the test suite pass on Windows — three root causes, one of them a pipe-buffer deadlock in the stdout capture that only showed up as a hang.",
+      "what": "Made the test suite pass on Windows. Three separate causes, one of them a pipe buffer deadlock in the stdout capture that only ever showed up as a hang.",
       "url": "https://github.com/ffuf/ffuf/pull/952"
     },
     {
@@ -173,7 +164,7 @@
       "number": 5150,
       "state": "merged",
       "date": "2026-09-03",
-      "what": "BGP NLRI dissector crashed on a prefix shorter than its mask claims.",
+      "what": "The BGP NLRI dissector crashed when the prefix on the wire was shorter than the mask said.",
       "url": "https://github.com/secdev/scapy/pull/5150"
     },
     {
@@ -182,7 +173,7 @@
       "number": 5149,
       "state": "merged",
       "date": "2026-09-03",
-      "what": "`IP6ListField` crashed on a truncated trailing IPv6 address — a field shared by about 17 dissectors (DHCPv6, ICMPv6, SRv6).",
+      "what": "`IP6ListField` crashed on a truncated last IPv6 address. That field sits in about 17 dissectors, DHCPv6, ICMPv6 and SRv6 among them.",
       "url": "https://github.com/secdev/scapy/pull/5149"
     },
     {
@@ -191,7 +182,7 @@
       "number": 2263,
       "state": "merged",
       "date": "2026-09-02",
-      "what": "`BootpDecoder` raised `struct.error` on BOOTP messages shorter than RFC 1542's 300-octet minimum (#1900). Handled per the RFC, with regression tests.",
+      "what": "`BootpDecoder` threw `struct.error` on BOOTP messages below the 300 octets RFC 1542 requires (#1900). Now handled the way the RFC says, with regression tests.",
       "url": "https://github.com/fortra/impacket/pull/2263"
     },
     {
@@ -209,7 +200,7 @@
       "number": 5096,
       "state": "merged",
       "date": "2026-08-26",
-      "what": "NSH MD-Type 2 context headers failed to dissect (`count_from` given a string); redone per RFC 8300 with proper length handling.",
+      "what": "NSH MD-Type 2 context headers didn't dissect at all, `count_from` had been given a string. Redone along RFC 8300 with real length handling.",
       "url": "https://github.com/secdev/scapy/pull/5096"
     },
     {
@@ -218,7 +209,7 @@
       "number": 5095,
       "state": "merged",
       "date": "2026-08-26",
-      "what": "OPC DA layer: `STDOBJREF.IPID` and `OpcDaFack.selack` were declared with field classes where packet classes belong, so dissection raised `TypeError`.",
+      "what": "OPC DA: `STDOBJREF.IPID` and `OpcDaFack.selack` used field classes where packet classes belong, so dissecting them raised `TypeError`.",
       "url": "https://github.com/secdev/scapy/pull/5095"
     },
     {
@@ -227,7 +218,7 @@
       "number": 5094,
       "state": "merged",
       "date": "2026-08-26",
-      "what": "Bluetooth `Set_Extended_Advertise_Enable` returned one advertising set regardless of `num_sets`.",
+      "what": "Bluetooth `Set_Extended_Advertise_Enable` always returned a single advertising set, no matter what `num_sets` said.",
       "url": "https://github.com/secdev/scapy/pull/5094"
     },
     {
@@ -236,7 +227,7 @@
       "number": 2017,
       "state": "merged",
       "date": "2026-08-19",
-      "what": "The capabilities plugin failed on Linux kernels before 6.3 — fixed the structure handling.",
+      "what": "The capabilities plugin broke on Linux kernels before 6.3. Fixed the structure handling.",
       "url": "https://github.com/volatilityfoundation/volatility3/pull/2017"
     },
     {
@@ -263,7 +254,7 @@
       "number": 5090,
       "state": "merged",
       "date": "2026-08-16",
-      "what": "NBNS name-query responses only returned the first address record; every entry is parsed now.",
+      "what": "NBNS name query responses only gave back the first address record. Now every entry gets parsed.",
       "url": "https://github.com/secdev/scapy/pull/5090"
     },
     {
@@ -272,77 +263,70 @@
       "number": 6238,
       "state": "open",
       "date": "2026-08-16",
-      "what": "Detection rule: Kerberos pre-authentication disabled on a user account — the precondition for AS-REP roasting.",
+      "what": "Detection rule for Kerberos pre-auth getting disabled on a user account, which is exactly what AS-REP roasting needs.",
       "url": "https://github.com/SigmaHQ/sigma/pull/6238"
     }
   ],
   "bounty": {
-    "lead": "Program names stay out by policy; the platform profiles are the record.",
     "items": [
       {
         "severity": "High",
         "cvss": "7.5",
         "vector": "C:H/I:N/A:N",
         "outcome": "accepted · rewarded",
-        "what": "Unauthenticated third-party proxy endpoint on a major European electronics retailer exposing ~9.1 M customer trade-in records (name, IMEI, contact, payout) across seven EU storefronts."
+        "what": "An unauthenticated third-party proxy endpoint at a big European electronics retailer. It exposed around 9.1 M customer trade-in records, name, IMEI, contact, payout, across seven EU storefronts."
       },
       {
         "severity": "Government VDP",
         "cvss": "",
         "vector": "",
         "outcome": "Belgium",
-        "what": "Improper access control on an internal Confluence instance (resolved); SQL injection in a public geo API (accepted); unauthenticated Grafana/Mimir/Loki observability stack with tenant enumeration (closed as informational)."
+        "what": "An internal Confluence that let anonymous users in (resolved). SQL injection in a public geo API (accepted). An open Grafana/Mimir/Loki stack with tenant enumeration (closed as informational)."
       },
       {
         "severity": "Earliest",
         "cvss": "",
         "vector": "",
         "outcome": "€300",
-        "what": "XSS chain on an Austrian price-comparison site."
+        "what": "My first one, an XSS chain on an Austrian price comparison site."
       }
     ]
   },
   "experience": [
     {
-      "role": "IT Intern — Field Support",
+      "role": "IT Intern, Field Support",
       "org": "Tirol Kliniken",
       "where": "Innsbruck",
       "from": "2026-08-13",
       "to": "2026-09-11",
       "bullets": [
-        "Endpoint and printer deployment across hospital sites.",
-        "Network troubleshooting in a NAC and central-DHCP environment."
+        "Rolled out endpoints and printers across the hospital sites.",
+        "Network troubleshooting in a NAC and central DHCP environment."
       ]
     },
     {
-      "role": "IT & Security Intern — Blue Team",
+      "role": "IT & Security Intern, Blue Team",
       "org": "Translogica GmbH",
       "where": "Innsbruck",
       "from": "2026-07-01",
       "to": "2026-07-31",
       "span": "July 2026",
       "bullets": [
-        "Administered the Wazuh SIEM. Wrote and live-verified ~20 custom Active Directory detection rules — DCSync, Kerberoasting, privileged-group changes, MITRE T1098 — with SID-based escalation.",
-        "Analysed a 35 M-event index; root-caused a KDC event storm (RC4/AES mismatch) and MS-SQL / pass-the-hash false positives, cutting alert noise by ~90 %.",
-        "CIS baseline and vulnerability assessments on domain controllers; escalated unpatched critical CVEs (RD Licensing RCE, CVSS 9.8).",
-        "Designed log retention (90 d hot / 12 mo snapshots) and wrote the SIEM operations handbook; inventoried ~700 assets into Snipe-IT; VLAN configuration on HPE Aruba Instant On switches."
+        "Ran the Wazuh SIEM. Wrote about 20 custom Active Directory detection rules (DCSync, Kerberoasting, privileged group changes, MITRE T1098) with SID-based escalation and verified every one of them live.",
+        "Dug through a 35 M event index, found the cause of a KDC event storm (RC4/AES mismatch) and of MS-SQL and pass-the-hash false positives. Alert noise dropped by about 90 %.",
+        "CIS baseline and vulnerability assessments on the domain controllers. Escalated unpatched critical CVEs, among them an RD Licensing RCE at CVSS 9.8.",
+        "Designed the log retention (90 days hot, 12 months of snapshots) and wrote the SIEM operations handbook. Put about 700 assets into Snipe-IT with a script. VLANs on HPE Aruba Instant On switches."
       ]
     }
   ],
   "projects": [
     {
-      "name": "Argus",
-      "meta": "CAASM appliance for school networks · diploma thesis 2025–2027 · Rust + Next.js · source private",
-      "what": "Cyber-asset attack-surface management built for Austrian public-school networks. Rust backend (9 crates) and Next.js frontend, ~75 k LOC. Discovers assets over ARP, LLDP, SNMP and DHCP, correlates findings against CISA KEV, and prioritises with a criticality/exposure model. Ships as a signed, air-gapped offline deployment (Docker bundle → Proxmox VM). Evaluation framework: Cohen's κ, ROC-AUC, risk-reduction metrics. Approved by the Tyrolean Board of Education; piloting on a live school network with a Raspberry Pi in-network sensor."
-    },
-    {
-      "name": "Earlier learning projects",
-      "meta": "Rust · Go · Python",
-      "what": "Network and IoT discovery (IoTShade), a Go network scanner with a React dashboard (NetReconUltra), a Python recon tool (NetRecon) and a hash cracker. Written to understand how the real tools work.",
+      "name": "Own tools",
+      "meta": "Rust · Go · Python · on GitHub",
+      "what": "IoTShade for network and IoT discovery, NetReconUltra, a Go scanner with a React dashboard, NetRecon in Python, and a hash cracker. I wrote them to understand how the real tools work.",
       "url": "https://github.com/mmadersbacher?tab=repositories"
     }
   ],
-  "ctfIntro": "Playing as **Telqrrr**, mostly with «Gehackt ist Geil», a small CTF community I started. Where CTFtime tracks the event, the rank links to its scoreboard; the two platform-only results say so.",
   "ctf": [
     {
       "place": 3,
@@ -393,7 +377,7 @@
       "name": "HTB Certified Web Exploitation Specialist (CWES)",
       "issuer": "Hack The Box",
       "date": "2026-10-07",
-      "detail": "Exam passed with 100 / 100 points.",
+      "detail": "100 of 100 points in the exam.",
       "id": "HTBCERT-BB6F9B6B7A",
       "url": "https://profile.hackthebox.com/profile/019f563d-c2b9-7061-ba9e-17ef2ca8a910/certificate/HTBCERT-BB6F9B6B7A"
     },
@@ -410,18 +394,7 @@
       "detail": "Valid to June 2029."
     }
   ],
-  "education": [
-    {
-      "school": "BHAK Schwaz",
-      "what": "Austrian business college, IT & media focus",
-      "span": "2022 – Matura expected June 2027"
-    },
-    {
-      "school": "University of Innsbruck",
-      "what": "Computer Science",
-      "span": "planned"
-    }
-  ],
+  "education": [],
   "skills": {
     "Web & API": [
       "Burp Suite",
@@ -466,5 +439,16 @@
       "German (native)",
       "English (B2)"
     ]
+  },
+  "copy": {
+    "heroTail": "Everything on this page links to where you can ~~check it~~.",
+    "researchLead": "Three CVEs with me as the credited finder. The scores are what the CNA published, not my own numbers.",
+    "ossLead": "Bugs I ran into while reading the tools this field actually runs on. The fixes went upstream, not into forks of my own.",
+    "ossTail": "Every line is the pull request.",
+    "bountyLead": "No program names here, that's the rule. The platform profiles are the record:",
+    "ctfIntro": "I play as **Telqrrr**, mostly with «Gehackt ist Geil», a small CTF community I started. If CTFtime tracks the event the rank links to the scoreboard. Two results only exist on the platform's own board and say so.",
+    "contactLead": "Vetting my application, triaging one of my reports, or you've got a target worth a weekend:",
+    "contactAlso": "I'm also on",
+    "contactTail": "PGP on request. Anything about this site itself goes to"
   }
 }

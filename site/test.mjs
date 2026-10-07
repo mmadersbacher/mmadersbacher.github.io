@@ -72,6 +72,15 @@ test("no bug-bounty program names, street address, phone number or birth date le
   for (const re of forbidden) assert.doesNotMatch(text, re, `forbidden pattern ${re} found`);
 });
 
+test("no em or en dashes anywhere on the page (ranges say 'to', clauses get a full stop)", () => {
+  assert.doesNotMatch(html, /[\u2014\u2013]/, "dash found in rendered page");
+});
+
+test("no missing data leaks into the page as undefined / null / NaN", () => {
+  assert.doesNotMatch(html, /\b(undefined|NaN|\[object Object\])\b/);
+  assert.doesNotMatch(html, />null</);
+});
+
 test("the Nodemailer entry does not claim authorship of the fix (public record: maintainer's fix, reporter credit)", () => {
   const nm = data.cves.find((c) => c.id === "CVE-2026-90776");
   assert.ok(nm);

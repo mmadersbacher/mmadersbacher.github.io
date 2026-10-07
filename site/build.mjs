@@ -24,6 +24,7 @@ const rich = (s) =>
   esc(s)
     .replace(/\*\*(.+?)\*\*/g, '<span class="k">$1</span>')
     .replace(/`([^`]+)`/g, "<code>$1</code>")
+    .replace(/~~(.+?)~~/g, '<span class="rd">$1</span>')
     .replace(/\[([^\]]+)\]\((https:\/\/[^)\s]+)\)/g, '<a class="lnk" href="$2">$1</a>');
 
 const ordinal = (n) => {
@@ -48,7 +49,7 @@ const ext = (url, label, cls = "") =>
 
 // ---------- derived facts ----------
 
-const { site, person, cves, contributions, bounty, experience, projects, ctf, certs, education, skills } = data;
+const { site, person, copy, cves, contributions, bounty, experience, projects, ctf, certs, education, skills } = data;
 const merged = contributions.filter((c) => c.state === "merged");
 const open = contributions.filter((c) => c.state === "open");
 const repos = [...new Set(contributions.map((c) => c.project))];
@@ -95,7 +96,7 @@ const head = () => `<!doctype html>
 <meta property="og:image" content="${esc(site.url)}og.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
-<meta property="og:image:alt" content="${esc(person.name)} — ${esc(person.headline)}">
+<meta property="og:image:alt" content="${esc(person.name)} · ${esc(person.headline)}">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="${esc(person.name)}">
 <meta name="twitter:description" content="${esc(summary)}">
@@ -128,7 +129,7 @@ const hero = () => `
 <header class="hero" id="top"><div class="wrap">
   <p class="kicker">${esc(person.headline)}</p>
   <h1>${esc(person.name).replace(" ", "<br>")}</h1>
-  <p class="stmt">${esc(summary)}. Every claim on this page links to its <span class="rd">public record</span>.</p>
+  <p class="stmt">${esc(summary)}. ${rich(copy.heroTail)}</p>
   <p class="links" aria-label="Profiles">
     ${person.handles.map((h) => ext(h.url, esc(h.platform))).join("\n    ")}
     ${ext(mail, "Email")}
@@ -163,7 +164,7 @@ const cveRow = (c) => `
 const research = () => `
 <section id="research" aria-labelledby="research-h"><div class="wrap">
   <h2 id="research-h">Research &amp; disclosures</h2>
-  <p class="body" style="margin-bottom:26px">${cves.length} CVEs credited as discoverer. Scores are the CNA's published scores, not mine.</p>
+  <p class="body" style="margin-bottom:26px">${rich(copy.researchLead)}</p>
   <div class="log">${cves.map(cveRow).join("")}
   </div>
 </div></section>
@@ -179,7 +180,7 @@ const prRow = (c) => `
 const oss = () => `
 <section id="oss" aria-labelledby="oss-h"><div class="wrap">
   <h2 id="oss-h">Open source</h2>
-  <p class="body" style="margin-bottom:24px">Bugs found while reading the tools this field runs on, fixed upstream rather than forked. <span class="k">${merged.length} merged</span>, ${open.length} open, across ${repos.length} projects. Each line is the pull request.</p>
+  <p class="body" style="margin-bottom:24px">${rich(copy.ossLead)} <span class="k">${merged.length} merged</span>, ${open.length} open, ${repos.length} projects. ${rich(copy.ossTail)}</p>
   <div class="up">${[...contributions].sort(byDateDesc).map(prRow).join("")}
   </div>
 </div></section>
@@ -194,7 +195,7 @@ const bountyRow = (b) => `
 const bountySec = () => `
 <section id="bounty" aria-labelledby="bounty-h"><div class="wrap">
   <h2 id="bounty-h">Bug bounty</h2>
-  <p class="body" style="margin-bottom:22px">${esc(bounty.lead)} ${ext(person.handles.find((h) => h.platform === "HackerOne").url, "HackerOne", "lnk")} · ${ext(person.handles.find((h) => h.platform === "YesWeHack").url, "YesWeHack", "lnk")}</p>
+  <p class="body" style="margin-bottom:22px">${rich(copy.bountyLead)} ${ext(person.handles.find((h) => h.platform === "HackerOne").url, "HackerOne", "lnk")} · ${ext(person.handles.find((h) => h.platform === "YesWeHack").url, "YesWeHack", "lnk")}</p>
   <div class="blist">${bounty.items.map(bountyRow).join("")}
   </div>
 </div></section>
@@ -204,7 +205,7 @@ const expItem = (e) => `
       <article class="xp">
         <div class="xh">
           <span class="xr">${esc(e.role)} <span class="xo">· ${esc(e.org)}, ${esc(e.where)}</span></span>
-          <span class="xd">${esc(e.span || `${fmtDate(e.from)} – ${fmtDate(e.to)}`)}</span>
+          <span class="xd">${esc(e.span || `${fmtDate(e.from)} to ${fmtDate(e.to)}`)}</span>
         </div>
         <ul>${e.bullets.map((b) => `<li>${rich(b)}</li>`).join("")}</ul>
       </article>`;
@@ -223,9 +224,9 @@ const experienceSec = () => `
   <h2 id="exp-h">Experience</h2>
   <div class="xlist">${experience.map(expItem).join("")}
   </div>
-  <h2 id="projects-h" style="margin-top:48px">Projects</h2>
+${projects.length ? `  <h2 id="projects-h" style="margin-top:48px">Projects</h2>
   <div class="xlist">${projects.map(projItem).join("")}
-  </div>
+  </div>` : ""}
 </div></section>
 `;
 
@@ -241,7 +242,7 @@ const ctfRow = (r) => {
 const ctfSec = () => `
 <section id="ctf" aria-labelledby="ctf-h"><div class="wrap">
   <h2 id="ctf-h">Capture the flag</h2>
-  <p class="body" style="margin-bottom:26px">${rich(data.ctfIntro)}</p>
+  <p class="body" style="margin-bottom:26px">${rich(copy.ctfIntro)}</p>
   <div class="log">${[...ctf].sort(byDateDesc).map(ctfRow).join("")}
   </div>
 </div></section>
@@ -250,13 +251,13 @@ const ctfSec = () => `
 const certRow = (c) => `
       <div class="frow">
         <span class="fk">${esc(c.issuer)} · ${fmtDate(c.date)}</span>
-        <span class="fv">${c.url ? ext(c.url, esc(c.name), "lnk") : esc(c.name)}${c.detail ? ` — ${esc(c.detail)}` : ""}${c.id ? ` <code class="id">${esc(c.id)}</code>` : ""}</span>
+        <span class="fv">${c.url ? ext(c.url, esc(c.name), "lnk") : esc(c.name)}${c.detail ? `. ${esc(c.detail)}` : ""}${c.id ? ` <code class="id">${esc(c.id)}</code>` : ""}</span>
       </div>`;
 
 const eduRow = (e) => `
       <div class="frow">
         <span class="fk">${esc(e.span)}</span>
-        <span class="fv"><span class="k">${esc(e.school)}</span> — ${esc(e.what)}</span>
+        <span class="fv"><span class="k">${esc(e.school)}</span>, ${esc(e.what)}</span>
       </div>`;
 
 const credentialsSec = () => `
@@ -264,9 +265,9 @@ const credentialsSec = () => `
   <h2 id="cred-h">Certifications</h2>
   <div class="facts">${certs.map(certRow).join("")}
   </div>
-  <h2 id="edu-h" style="margin-top:44px">Education</h2>
+${education.length ? `  <h2 id="edu-h" style="margin-top:44px">Education</h2>
   <div class="facts">${education.map(eduRow).join("")}
-  </div>
+  </div>` : ""}
 </div></section>
 `;
 
@@ -287,11 +288,11 @@ const skillsSec = () => `
 const contactSec = () => `
 <section id="contact" aria-labelledby="contact-h"><div class="wrap">
   <h2 id="contact-h">Contact</h2>
-  <p class="body">Vetting an application, triaging a report, or you have a target worth a weekend: ${ext(mail, esc(person.email), "lnk")}. Also on ${person.handles
+  <p class="body">${rich(copy.contactLead)} ${ext(mail, esc(person.email), "lnk")}. ${rich(copy.contactAlso)} ${person.handles
     .filter((h) => ["GitHub", "HackerOne", "YesWeHack", "LinkedIn"].includes(h.platform))
     .map((h) => ext(h.url, esc(h.platform), "lnk"))
     .join(", ")}.</p>
-  <p class="body">${esc(person.location)}. PGP on request; <a class="lnk" href="/.well-known/security.txt">security.txt</a> for anything about this site.</p>
+  <p class="body">${esc(person.location)}. ${rich(copy.contactTail)} <a class="lnk" href="/.well-known/security.txt">security.txt</a>.</p>
 </div></section>
 `;
 
@@ -312,5 +313,5 @@ export function render() {
 if (process.argv[1] && fileURLToPath(import.meta.url) === process.argv[1]) {
   const out = join(here, "index.html");
   writeFileSync(out, render());
-  console.log(`wrote ${out} (${Buffer.byteLength(render())} bytes) — ${summary}`);
+  console.log(`wrote ${out} (${Buffer.byteLength(render())} bytes) · ${summary}`);
 }
