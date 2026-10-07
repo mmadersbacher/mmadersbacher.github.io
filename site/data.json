@@ -1,0 +1,470 @@
+{
+  "site": {
+    "url": "https://mmadersbacher.github.io/",
+    "title": "Mario Madersbacher — Security Researcher",
+    "description": "Security researcher and web penetration tester (HTB CWES) from Tyrol, Austria. Three CVEs, merged fixes in Impacket, Scapy, Volatility 3 and ffuf, accepted bug-bounty reports. Every claim links to its public record.",
+    "updated": "October 2026",
+    "repo": "https://github.com/mmadersbacher/mmadersbacher.github.io/tree/main/site"
+  },
+  "person": {
+    "name": "Mario Madersbacher",
+    "headline": "Security Researcher · Web Penetration Tester (HTB CWES)",
+    "location": "Tyrol, Austria",
+    "country": "AT",
+    "region": "Tyrol",
+    "email": "mario.madersbacher.2008@gmail.com",
+    "intro": "I find bugs in software people actually run — npm libraries, the tooling this field depends on, and web applications under bug-bounty programs — and report them so they get fixed. Still in secondary school; Matura in June 2027.",
+    "principle": "Severity here is only ever what was demonstrated. A CVSS vector on this page was reproduced, not estimated.",
+    "handles": [
+      {
+        "platform": "GitHub",
+        "handle": "mmadersbacher",
+        "url": "https://github.com/mmadersbacher"
+      },
+      {
+        "platform": "HackerOne",
+        "handle": "telqrrr",
+        "url": "https://hackerone.com/telqrrr"
+      },
+      {
+        "platform": "YesWeHack",
+        "handle": "Telqrrrrr",
+        "url": "https://yeswehack.com/hunters/telqrrrrr"
+      },
+      {
+        "platform": "Hack The Box",
+        "handle": "Telqrrr",
+        "url": "https://profile.hackthebox.com/profile/019f563d-c2b9-7061-ba9e-17ef2ca8a910"
+      },
+      {
+        "platform": "CTFtime",
+        "handle": "Telqrrr",
+        "url": "https://ctftime.org/user/264976"
+      },
+      {
+        "platform": "LinkedIn",
+        "handle": "mario-madersbacher",
+        "url": "https://www.linkedin.com/in/mario-madersbacher-310b49414"
+      }
+    ]
+  },
+  "cves": [
+    {
+      "id": "CVE-2026-103043",
+      "product": "anchorme.js",
+      "ecosystem": "npm",
+      "range": "≤ 3.0.8",
+      "cwe": "CWE-1333",
+      "cweName": "Inefficient regular expression complexity",
+      "severity": "High",
+      "cvss31": "7.5",
+      "cvss40": "8.7",
+      "vector31": "AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
+      "assigner": "VulnCheck CNA",
+      "published": "2026-09-29",
+      "mechanism": "Regular-expression denial of service in the IPv6 host-extraction regex, reachable through the default `anchorme()` export. A crafted URL of under 100 bytes backtracks exponentially and blocks the Node.js event loop.",
+      "status": "No fixed release as of October 2026 — npm latest is still 3.0.8.",
+      "credit": "Credited as finder under my real name on the CVE record.",
+      "links": [
+        {
+          "label": "CVE record",
+          "url": "https://www.cve.org/CVERecord?id=CVE-2026-103043"
+        },
+        {
+          "label": "VulnCheck advisory",
+          "url": "https://www.vulncheck.com/advisories/anchorme-through-3.0.8-regular-expression-denial-of-service"
+        },
+        {
+          "label": "PoC gist",
+          "url": "https://gist.github.com/mmadersbacher/46050b4224eb979431986cdef1dd2ad3"
+        }
+      ]
+    },
+    {
+      "id": "CVE-2026-90776",
+      "product": "Nodemailer",
+      "ecosystem": "npm",
+      "range": "9.1.0 – 10.0.4",
+      "cwe": "CWE-407",
+      "cweName": "Inefficient algorithmic complexity",
+      "severity": "High",
+      "cvss31": "7.5",
+      "cvss40": "8.7",
+      "vector31": "AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
+      "assigner": "VulnCheck CNA",
+      "published": "2026-09-13",
+      "mechanism": "O(n²) parsing in `lib/addressparser` on comment-joined addresses. Remotely triggerable without authentication through **mailparser** on inbound mail: a standards-compliant message stalls the event loop for seconds.",
+      "status": "Reported through GitHub's private advisory with PoC and a suggested fix; patched by the maintainer in 10.0.5.",
+      "credit": "Credited as reporter on the GitHub advisory and as finder on the CVE record.",
+      "links": [
+        {
+          "label": "GHSA-prgh-xp8r-p3m5",
+          "url": "https://github.com/advisories/GHSA-prgh-xp8r-p3m5"
+        },
+        {
+          "label": "CVE record",
+          "url": "https://www.cve.org/CVERecord?id=CVE-2026-90776"
+        },
+        {
+          "label": "Fix commit",
+          "url": "https://github.com/nodemailer/nodemailer/commit/c07f17518d25aca8ab2ad66968dcbca538c24b89"
+        }
+      ]
+    },
+    {
+      "id": "CVE-2026-90492",
+      "product": "webgjc/web_robot",
+      "ecosystem": "Python",
+      "range": "2.4.0 – 2.8.0",
+      "cwe": "CWE-78",
+      "cweName": "OS command injection",
+      "severity": "Medium",
+      "cvss31": "6.3",
+      "cvss40": "5.3",
+      "vector31": "AV:N/AC:L/PR:N/UI:R/S:U/C:L/I:L/A:L",
+      "assigner": "VulDB CNA",
+      "published": "2026-09-13",
+      "mechanism": "The `case_name` request parameter reaches `os.system()` unsanitised in `py/web.py` (`controller_listen` / `controller_recover`).",
+      "status": "Vendor contacted, no response; published through VulDB.",
+      "credit": "Credited as reporter under the handle Telqrrr.",
+      "links": [
+        {
+          "label": "VulDB VDB-403080",
+          "url": "https://vuldb.com/?id.403080"
+        },
+        {
+          "label": "CVE record",
+          "url": "https://www.cve.org/CVERecord?id=CVE-2026-90492"
+        }
+      ]
+    }
+  ],
+  "contributions": [
+    {
+      "repo": "epi052/feroxbuster",
+      "project": "feroxbuster",
+      "number": 1322,
+      "state": "open",
+      "date": "2026-10-03",
+      "what": "`parallel` set through a config file aborted every run with an unwrap panic (#1321). Rust; fix plus regression test.",
+      "url": "https://github.com/epi052/feroxbuster/pull/1322"
+    },
+    {
+      "repo": "ffuf/ffuf",
+      "project": "ffuf",
+      "number": 953,
+      "state": "open",
+      "date": "2026-09-26",
+      "what": "Raw request files without a trailing newline silently lost their last header; brought the parser in line with the preflight path, with tests.",
+      "url": "https://github.com/ffuf/ffuf/pull/953"
+    },
+    {
+      "repo": "ffuf/ffuf",
+      "project": "ffuf",
+      "number": 952,
+      "state": "merged",
+      "date": "2026-09-26",
+      "what": "Made the test suite pass on Windows — three root causes, one of them a pipe-buffer deadlock in the stdout capture that only showed up as a hang.",
+      "url": "https://github.com/ffuf/ffuf/pull/952"
+    },
+    {
+      "repo": "secdev/scapy",
+      "project": "Scapy",
+      "number": 5150,
+      "state": "merged",
+      "date": "2026-09-03",
+      "what": "BGP NLRI dissector crashed on a prefix shorter than its mask claims.",
+      "url": "https://github.com/secdev/scapy/pull/5150"
+    },
+    {
+      "repo": "secdev/scapy",
+      "project": "Scapy",
+      "number": 5149,
+      "state": "merged",
+      "date": "2026-09-03",
+      "what": "`IP6ListField` crashed on a truncated trailing IPv6 address — a field shared by about 17 dissectors (DHCPv6, ICMPv6, SRv6).",
+      "url": "https://github.com/secdev/scapy/pull/5149"
+    },
+    {
+      "repo": "fortra/impacket",
+      "project": "Impacket",
+      "number": 2263,
+      "state": "merged",
+      "date": "2026-09-02",
+      "what": "`BootpDecoder` raised `struct.error` on BOOTP messages shorter than RFC 1542's 300-octet minimum (#1900). Handled per the RFC, with regression tests.",
+      "url": "https://github.com/fortra/impacket/pull/2263"
+    },
+    {
+      "repo": "LOLBAS-Project/LOLBAS",
+      "project": "LOLBAS",
+      "number": 520,
+      "state": "merged",
+      "date": "2026-08-26",
+      "what": "Entry for Vssadmin.exe deleting shadow copies (MITRE T1490).",
+      "url": "https://github.com/LOLBAS-Project/LOLBAS/pull/520"
+    },
+    {
+      "repo": "secdev/scapy",
+      "project": "Scapy",
+      "number": 5096,
+      "state": "merged",
+      "date": "2026-08-26",
+      "what": "NSH MD-Type 2 context headers failed to dissect (`count_from` given a string); redone per RFC 8300 with proper length handling.",
+      "url": "https://github.com/secdev/scapy/pull/5096"
+    },
+    {
+      "repo": "secdev/scapy",
+      "project": "Scapy",
+      "number": 5095,
+      "state": "merged",
+      "date": "2026-08-26",
+      "what": "OPC DA layer: `STDOBJREF.IPID` and `OpcDaFack.selack` were declared with field classes where packet classes belong, so dissection raised `TypeError`.",
+      "url": "https://github.com/secdev/scapy/pull/5095"
+    },
+    {
+      "repo": "secdev/scapy",
+      "project": "Scapy",
+      "number": 5094,
+      "state": "merged",
+      "date": "2026-08-26",
+      "what": "Bluetooth `Set_Extended_Advertise_Enable` returned one advertising set regardless of `num_sets`.",
+      "url": "https://github.com/secdev/scapy/pull/5094"
+    },
+    {
+      "repo": "volatilityfoundation/volatility3",
+      "project": "Volatility 3",
+      "number": 2017,
+      "state": "merged",
+      "date": "2026-08-19",
+      "what": "The capabilities plugin failed on Linux kernels before 6.3 — fixed the structure handling.",
+      "url": "https://github.com/volatilityfoundation/volatility3/pull/2017"
+    },
+    {
+      "repo": "volatilityfoundation/volatility3",
+      "project": "Volatility 3",
+      "number": 2016,
+      "state": "merged",
+      "date": "2026-08-19",
+      "what": "An architecture typo blocked `scheduled_tasks` on 32-bit memory images.",
+      "url": "https://github.com/volatilityfoundation/volatility3/pull/2016"
+    },
+    {
+      "repo": "projectdiscovery/nuclei-templates",
+      "project": "Nuclei Templates",
+      "number": 16902,
+      "state": "merged",
+      "date": "2026-08-19",
+      "what": "Template for CVE-2020-10204 (Nexus Repository Manager 3 RCE), verified against a live instance.",
+      "url": "https://github.com/projectdiscovery/nuclei-templates/pull/16902"
+    },
+    {
+      "repo": "secdev/scapy",
+      "project": "Scapy",
+      "number": 5090,
+      "state": "merged",
+      "date": "2026-08-16",
+      "what": "NBNS name-query responses only returned the first address record; every entry is parsed now.",
+      "url": "https://github.com/secdev/scapy/pull/5090"
+    },
+    {
+      "repo": "SigmaHQ/sigma",
+      "project": "Sigma",
+      "number": 6238,
+      "state": "open",
+      "date": "2026-08-16",
+      "what": "Detection rule: Kerberos pre-authentication disabled on a user account — the precondition for AS-REP roasting.",
+      "url": "https://github.com/SigmaHQ/sigma/pull/6238"
+    }
+  ],
+  "bounty": {
+    "lead": "Program names stay out by policy; the platform profiles are the record.",
+    "items": [
+      {
+        "severity": "High",
+        "cvss": "7.5",
+        "vector": "C:H/I:N/A:N",
+        "outcome": "accepted · rewarded",
+        "what": "Unauthenticated third-party proxy endpoint on a major European electronics retailer exposing ~9.1 M customer trade-in records (name, IMEI, contact, payout) across seven EU storefronts."
+      },
+      {
+        "severity": "Government VDP",
+        "cvss": "",
+        "vector": "",
+        "outcome": "Belgium",
+        "what": "Improper access control on an internal Confluence instance (resolved); SQL injection in a public geo API (accepted); unauthenticated Grafana/Mimir/Loki observability stack with tenant enumeration (closed as informational)."
+      },
+      {
+        "severity": "Earliest",
+        "cvss": "",
+        "vector": "",
+        "outcome": "€300",
+        "what": "XSS chain on an Austrian price-comparison site."
+      }
+    ]
+  },
+  "experience": [
+    {
+      "role": "IT Intern — Field Support",
+      "org": "Tirol Kliniken",
+      "where": "Innsbruck",
+      "from": "2026-08-13",
+      "to": "2026-09-11",
+      "bullets": [
+        "Endpoint and printer deployment across hospital sites.",
+        "Network troubleshooting in a NAC and central-DHCP environment."
+      ]
+    },
+    {
+      "role": "IT & Security Intern — Blue Team",
+      "org": "Translogica GmbH",
+      "where": "Innsbruck",
+      "from": "2026-07-01",
+      "to": "2026-07-31",
+      "span": "July 2026",
+      "bullets": [
+        "Administered the Wazuh SIEM. Wrote and live-verified ~20 custom Active Directory detection rules — DCSync, Kerberoasting, privileged-group changes, MITRE T1098 — with SID-based escalation.",
+        "Analysed a 35 M-event index; root-caused a KDC event storm (RC4/AES mismatch) and MS-SQL / pass-the-hash false positives, cutting alert noise by ~90 %.",
+        "CIS baseline and vulnerability assessments on domain controllers; escalated unpatched critical CVEs (RD Licensing RCE, CVSS 9.8).",
+        "Designed log retention (90 d hot / 12 mo snapshots) and wrote the SIEM operations handbook; inventoried ~700 assets into Snipe-IT; VLAN configuration on HPE Aruba Instant On switches."
+      ]
+    }
+  ],
+  "projects": [
+    {
+      "name": "Argus",
+      "meta": "CAASM appliance for school networks · diploma thesis 2025–2027 · Rust + Next.js · source private",
+      "what": "Cyber-asset attack-surface management built for Austrian public-school networks. Rust backend (9 crates) and Next.js frontend, ~75 k LOC. Discovers assets over ARP, LLDP, SNMP and DHCP, correlates findings against CISA KEV, and prioritises with a criticality/exposure model. Ships as a signed, air-gapped offline deployment (Docker bundle → Proxmox VM). Evaluation framework: Cohen's κ, ROC-AUC, risk-reduction metrics. Approved by the Tyrolean Board of Education; piloting on a live school network with a Raspberry Pi in-network sensor."
+    },
+    {
+      "name": "Earlier learning projects",
+      "meta": "Rust · Go · Python",
+      "what": "Network and IoT discovery (IoTShade), a Go network scanner with a React dashboard (NetReconUltra), a Python recon tool (NetRecon) and a hash cracker. Written to understand how the real tools work.",
+      "url": "https://github.com/mmadersbacher?tab=repositories"
+    }
+  ],
+  "ctfIntro": "Playing as **Telqrrr**, mostly with «Gehackt ist Geil», a small CTF community I started. Where CTFtime tracks the event, the rank links to its scoreboard; the two platform-only results say so.",
+  "ctf": [
+    {
+      "place": 3,
+      "event": "BrunnerCTF 2026",
+      "field": 1102,
+      "kind": "Jeopardy",
+      "date": "2026-08-23",
+      "url": "https://ctftime.org/event/3065",
+      "note": "team"
+    },
+    {
+      "place": 2,
+      "event": "MntcrlCTF 2026",
+      "field": 118,
+      "kind": "Jeopardy",
+      "date": "2026-06-28",
+      "url": "https://ctftime.org/event/3282",
+      "note": "team"
+    },
+    {
+      "place": 37,
+      "event": "SAS CTF 2026 Quals",
+      "field": 515,
+      "kind": "Qualifier",
+      "date": "2026-06-07",
+      "url": "https://ctftime.org/event/3109",
+      "note": "team"
+    },
+    {
+      "place": 14,
+      "event": "HTB Cyber Apocalypse 2026",
+      "fieldNote": "team of 3 · several thousand teams",
+      "kind": "Jeopardy",
+      "date": "2026",
+      "note": "HTB scoreboard, not on CTFtime"
+    },
+    {
+      "place": 2,
+      "event": "TryHackMe AI Odyssey CTF",
+      "fieldNote": "worldwide",
+      "kind": "Jeopardy",
+      "date": "2026",
+      "note": "TryHackMe scoreboard, not on CTFtime"
+    }
+  ],
+  "certs": [
+    {
+      "name": "HTB Certified Web Exploitation Specialist (CWES)",
+      "issuer": "Hack The Box",
+      "date": "2026-10-07",
+      "detail": "Exam passed with 100 / 100 points.",
+      "id": "HTBCERT-BB6F9B6B7A",
+      "url": "https://profile.hackthebox.com/profile/019f563d-c2b9-7061-ba9e-17ef2ca8a910/certificate/HTBCERT-BB6F9B6B7A"
+    },
+    {
+      "name": "Junior Penetration Tester (PT1)",
+      "issuer": "TryHackMe",
+      "date": "2026-06",
+      "detail": "Valid to June 2029."
+    },
+    {
+      "name": "AI Security (AI1)",
+      "issuer": "TryHackMe",
+      "date": "2026-06",
+      "detail": "Valid to June 2029."
+    }
+  ],
+  "education": [
+    {
+      "school": "BHAK Schwaz",
+      "what": "Austrian business college, IT & media focus",
+      "span": "2022 – Matura expected June 2027"
+    },
+    {
+      "school": "University of Innsbruck",
+      "what": "Computer Science",
+      "span": "planned"
+    }
+  ],
+  "skills": {
+    "Web & API": [
+      "Burp Suite",
+      "OWASP Top 10",
+      "GraphQL",
+      "REST",
+      "ffuf",
+      "sqlmap",
+      "ReDoS / algorithmic DoS"
+    ],
+    "Network & AD": [
+      "nmap",
+      "Impacket",
+      "Scapy",
+      "Kerberos",
+      "LDAP / SMB",
+      "VLANs"
+    ],
+    "Detection & defense": [
+      "Wazuh",
+      "MITRE ATT&CK",
+      "Sysmon",
+      "CIS Benchmarks",
+      "vulnerability management"
+    ],
+    "Code & tooling": [
+      "Python",
+      "Rust",
+      "TypeScript",
+      "Bash",
+      "Docker",
+      "Git",
+      "Ghidra / BinDiff"
+    ],
+    "Reporting": [
+      "CVSS v3.1 / v4",
+      "CWE",
+      "coordinated disclosure",
+      "pentest reports"
+    ],
+    "Languages": [
+      "German (native)",
+      "English (B2)"
+    ]
+  }
+}

@@ -1,313 +1,340 @@
 <!doctype html>
 <!--
    nothing here is hidden from someone who looks. that's kind of the point.
-   recon starts where most people stop reading. the console has a thread to pull.
+   facts: /data.json · layout: /build.mjs · the console has a thread to pull.
 -->
 <html lang="en">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Mario Madersbacher</title>
-<meta name="description" content="Mario Madersbacher — CTF player and offensive security. Web, reversing, crypto, forensics. Patches upstream to Scapy, Volatility, Impacket, Nuclei, Sigma, LOLBAS.">
-<meta name="color-scheme" content="dark">
+<title>Mario Madersbacher — Security Researcher</title>
+<meta name="description" content="Security researcher and web penetration tester (HTB CWES) from Tyrol, Austria. Three CVEs, merged fixes in Impacket, Scapy, Volatility 3 and ffuf, accepted bug-bounty reports. Every claim links to its public record.">
+<meta name="color-scheme" content="dark light">
+<meta name="theme-color" content="#101011">
 <link rel="canonical" href="https://mmadersbacher.github.io/">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%23111'/%3E%3Crect x='6' y='14' width='20' height='5' fill='%23e9e6df'/%3E%3C/svg%3E">
 <meta property="og:type" content="profile">
 <meta property="og:title" content="Mario Madersbacher">
-<meta property="og:description" content="CTF & offensive security, working toward red teaming. Web · reversing · crypto · forensics. Fixes upstream in the tools the field runs on.">
+<meta property="og:description" content="Security Researcher · Web Penetration Tester (HTB CWES) · 3 CVEs · 12 merged upstream PRs · HTB CWES">
 <meta property="og:url" content="https://mmadersbacher.github.io/">
 <meta property="og:image" content="https://mmadersbacher.github.io/og.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
-<meta property="og:image:alt" content="Mario Madersbacher — capture the flag, patches upstream, working toward red teaming">
+<meta property="og:image:alt" content="Mario Madersbacher — Security Researcher · Web Penetration Tester (HTB CWES)">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Mario Madersbacher">
-<meta name="twitter:description" content="CTF & offensive security, working toward red teaming.">
+<meta name="twitter:description" content="3 CVEs · 12 merged upstream PRs · HTB CWES">
 <meta name="twitter:image" content="https://mmadersbacher.github.io/og.png">
-<script type="application/ld+json">
-{"@context":"https://schema.org","@type":"Person","name":"Mario Madersbacher","description":"CTF player and offensive security researcher.","url":"https://mmadersbacher.github.io/","knowsAbout":["Capture the flag","Web exploitation","Reverse engineering","Cryptography","Digital forensics","Network security"],"sameAs":["https://github.com/mmadersbacher","https://ctftime.org/user/264976"]}
-</script>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Martian+Mono:wght@400;600;700&family=Spline+Sans+Mono:wght@400;500;600&display=swap" rel="stylesheet">
-<style>
-  :root{
-    --bg:#101011;          /* warm near-black */
-    --ink:#e9e6df;         /* warm off-white */
-    --ink-2:#9d9a92;       /* muted */
-    --ink-3:#5c5a54;       /* faint */
-    --hair:#232320;        /* hairline */
-    --hair-2:#2f2f2b;
-    --disp:"Martian Mono",ui-monospace,monospace;
-    --text:"Spline Sans Mono",ui-monospace,"Cascadia Mono",Consolas,monospace;
-    --gutter:clamp(20px,5vw,64px);
-    --measure:74ch;
-  }
-  *{margin:0;padding:0;box-sizing:border-box}
-  html{-webkit-text-size-adjust:100%}
-  body{
-    background:var(--bg); color:var(--ink); font-family:var(--text);
-    font-size:15.5px; line-height:1.62; letter-spacing:-.01em;
-    -webkit-font-smoothing:antialiased; text-rendering:optimizeLegibility;
-    overflow-x:hidden;
-  }
-  p.body{overflow-wrap:break-word}
-  ::selection{background:var(--ink); color:var(--bg)}
-  a{color:inherit; text-decoration:none}
-  .wrap{max-width:940px; margin:0 auto; padding-inline:var(--gutter)}
-
-  /* thin top rule + name, no glassy sticky nav */
-  .top{border-bottom:1px solid var(--hair)}
-  .top .wrap{display:flex; justify-content:space-between; align-items:center;
-    height:52px; font-size:12.5px; color:var(--ink-2)}
-  .top .who{color:var(--ink)}
-  .top a{border-bottom:1px solid transparent; transition:border-color .18s,color .18s}
-  .top a:hover{color:var(--ink); border-color:var(--ink-3)}
-  .top .r{display:flex; gap:20px}
-  @media (max-width:560px){.top .r a.hide{display:none}}
-
-  /* HERO — left aligned, moderate, not a screen-filling wall */
-  .hero{padding-block:clamp(72px,14vw,168px) clamp(40px,8vw,84px)}
-  h1{font-family:var(--disp); font-weight:600; font-size:clamp(1.9rem,5.6vw,3.4rem);
-    line-height:1.04; letter-spacing:-.045em; margin-bottom:34px}
-  .stmt{font-size:clamp(1.18rem,2.7vw,1.66rem); line-height:1.46; color:var(--ink);
-    max-width:30ch; letter-spacing:-.02em}
-  .stmt .q{color:var(--ink-2)}
-
-  /* prose */
-  section{padding-block:clamp(44px,7vw,80px); border-top:1px solid var(--hair)}
-  h2{font-family:var(--disp); font-weight:600; font-size:1.18rem; letter-spacing:-.03em;
-    margin-bottom:20px; color:var(--ink)}
-  p.body{max-width:var(--measure); color:var(--ink-2); margin-bottom:15px}
-  p.body:last-child{margin-bottom:0}
-  p.body .k{color:var(--ink)}
-  em{font-style:normal; color:var(--ink); border-bottom:1px solid var(--hair-2)}
-
-  /* CTF ledger — the core. big rank number, aligned like a log, no cards */
-  .log{border-top:1px solid var(--hair)}
-  .row{display:grid; grid-template-columns:auto 1fr auto; gap:16px 22px;
-    align-items:baseline; padding:20px 2px; border-bottom:1px solid var(--hair)}
-  .row .rank{font-family:var(--disp); font-weight:700; font-size:clamp(1.9rem,5vw,2.9rem);
-    line-height:.9; letter-spacing:-.05em; font-variant-numeric:tabular-nums;
-    min-width:2.4ch}
-  .row .rank sup{font-size:.42em; font-weight:600; color:var(--ink-2); vertical-align:super;
-    letter-spacing:0; margin-left:1px}
-  .row .ev{min-width:0}
-  .row .ev .name{color:var(--ink); font-size:1.02rem}
-  .row .ev .sub{color:var(--ink-3); font-size:12.5px; margin-top:2px}
-  .row .field{font-family:var(--disp); font-size:12px; color:var(--ink-2); text-align:right;
-    font-variant-numeric:tabular-nums; white-space:nowrap}
-  .row .field b{color:var(--ink); font-weight:600}
-  .cats{margin-top:26px; font-size:13.5px; color:var(--ink-2); display:flex;
-    flex-wrap:wrap; gap:6px 10px; align-items:baseline}
-  .cats b{color:var(--ink); font-weight:500}
-  .cats .s{color:var(--ink-3)}
-  .after{margin-top:22px; font-size:13px; color:var(--ink-3)}
-  .after a{color:var(--ink-2); border-bottom:1px solid var(--hair-2)}
-  .after a:hover{color:var(--ink); border-color:var(--ink-3)}
-
-  /* upstream — plain aligned rows, no boxes, no left borders, no icons */
-  .up{border-top:1px solid var(--hair); margin-top:4px}
-  .up a{display:grid; grid-template-columns:1fr auto; gap:6px 18px; align-items:baseline;
-    padding:15px 2px; border-bottom:1px solid var(--hair); transition:background .16s}
-  .up a:hover{background:#161614}
-  .up .p{color:var(--ink); font-size:1rem}
-  .up .p .rp{color:var(--ink-3); font-size:12px; margin-left:9px; font-family:var(--disp)}
-  .up .d{grid-column:1/2; color:var(--ink-2); font-size:13.5px; max-width:66ch}
-  .up .st{font-family:var(--disp); font-size:10.5px; letter-spacing:.06em; white-space:nowrap;
-    align-self:center; color:var(--ink-3)}
-  .up .st.m{color:var(--ink)}
-  .up .st .b{display:inline-block; width:6px; height:6px; margin-right:6px; vertical-align:middle}
-  .up .st.m .b{background:var(--ink)}
-  .up .st.o .b{border:1px solid var(--ink-3)}
-
-  .foot{border-top:1px solid var(--hair); padding-block:34px 60px; color:var(--ink-3);
-    font-size:12.5px; display:flex; justify-content:space-between; gap:16px; flex-wrap:wrap}
-  .foot a{color:var(--ink-2); border-bottom:1px solid var(--hair-2)}
-  .foot a:hover{color:var(--ink)}
-
-  /* ---- REDACTION: the signature effect. black bar wipes away under the cursor ---- */
-  .rd{position:relative; white-space:nowrap; cursor:default; color:var(--ink)}
-  .rd::after{content:""; position:absolute; inset:-1px -3px;
-    background:var(--ink); transform-origin:right center;
-    transition:transform .5s cubic-bezier(.7,0,.2,1); z-index:1}
-  .rd.on::after{transform:scaleX(0)}
-  .rd:hover::after{transform:scaleX(0)}
-  @media (hover:none){ .rd::after{transition:transform .35s} }
-
-  a.lnk{color:var(--ink); border-bottom:1px solid var(--ink-3)}
-  a.lnk:hover{border-color:var(--ink)}
-
-  /* narrow: stack the ledger and upstream rows so nothing overflows */
-  @media (max-width:560px){
-    .row{grid-template-columns:auto 1fr; gap:4px 16px; padding:16px 2px}
-    .row .field{grid-column:2; text-align:left; margin-top:2px}
-    .up a{grid-template-columns:1fr}
-    .up .st{grid-row:1; justify-self:start; margin-bottom:2px}
-    .up .p{order:-1}
-  }
-
-  @media (prefers-reduced-motion:reduce){
-    .rd::after{transition:none}
-  }
-</style>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Person","name":"Mario Madersbacher","jobTitle":"Security Researcher","description":"Security researcher and web penetration tester (HTB CWES) from Tyrol, Austria. Three CVEs, merged fixes in Impacket, Scapy, Volatility 3 and ffuf, accepted bug-bounty reports. Every claim links to its public record.","url":"https://mmadersbacher.github.io/","address":{"@type":"PostalAddress","addressRegion":"Tyrol","addressCountry":"AT"},"sameAs":["https://github.com/mmadersbacher","https://hackerone.com/telqrrr","https://yeswehack.com/hunters/telqrrrrr","https://profile.hackthebox.com/profile/019f563d-c2b9-7061-ba9e-17ef2ca8a910","https://ctftime.org/user/264976","https://www.linkedin.com/in/mario-madersbacher-310b49414"],"knowsAbout":["Web application security","Vulnerability research","Coordinated disclosure","Network security","Active Directory","Detection engineering"],"hasCredential":[{"@type":"EducationalOccupationalCredential","name":"HTB Certified Web Exploitation Specialist (CWES)","credentialCategory":"certification","recognizedBy":{"@type":"Organization","name":"Hack The Box"},"url":"https://profile.hackthebox.com/profile/019f563d-c2b9-7061-ba9e-17ef2ca8a910/certificate/HTBCERT-BB6F9B6B7A"}]}</script>
+<script>try{if(localStorage.getItem("theme")==="light")document.documentElement.setAttribute("data-theme","light")}catch(e){}</script>
+<link rel="preload" href="/fonts/MartianMono-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/fonts/SplineSansMono-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="/style.css">
 </head>
 <body>
+<a class="skip" href="#main">Skip to content</a>
 
 <div class="top"><div class="wrap">
   <span class="who">Mario Madersbacher</span>
-  <span class="r">
+  <nav class="r" aria-label="Sections">
+    <a class="hide" href="#research">Research</a>
+    <a class="hide" href="#oss">Open source</a>
+    <a class="hide" href="#ctf">CTF</a>
+    <a class="hide" href="#contact">Contact</a>
     <a href="/writeups/">Writeups</a>
-    <a class="hide" href="https://ctftime.org/user/264976" target="_blank" rel="noopener">CTFtime</a>
-    <a href="https://github.com/mmadersbacher" target="_blank" rel="noopener">GitHub</a>
-  </span>
+    <button class="tog" type="button" data-theme-toggle aria-pressed="false">Light mode</button>
+  </nav>
 </div></div>
 
-<header class="hero"><div class="wrap">
+<header class="hero" id="top"><div class="wrap">
+  <p class="kicker">Security Researcher · Web Penetration Tester (HTB CWES)</p>
   <h1>Mario<br>Madersbacher</h1>
-  <p class="stmt">I'm working toward red teaming. Right now that means capture the flag, and
-    taking real software apart to find where it <span class="rd">gives</span>.</p>
+  <p class="stmt">3 CVEs · 12 merged upstream PRs · HTB CWES. Every claim on this page links to its <span class="rd">public record</span>.</p>
+  <p class="links" aria-label="Profiles">
+    <a href="https://github.com/mmadersbacher">GitHub</a>
+    <a href="https://hackerone.com/telqrrr">HackerOne</a>
+    <a href="https://yeswehack.com/hunters/telqrrrrr">YesWeHack</a>
+    <a href="https://profile.hackthebox.com/profile/019f563d-c2b9-7061-ba9e-17ef2ca8a910">Hack The Box</a>
+    <a href="https://ctftime.org/user/264976">CTFtime</a>
+    <a href="https://www.linkedin.com/in/mario-madersbacher-310b49414">LinkedIn</a>
+    <a href="mailto:mario.madersbacher.2008@gmail.com">Email</a>
+  </p>
 </div></header>
+<main id="main">
+<section aria-labelledby="about-h"><div class="wrap">
+  <h2 id="about-h" class="vh">About</h2>
+  <p class="body">I find bugs in software people actually run — npm libraries, the tooling this field depends on, and web applications under bug-bounty programs — and report them so they get fixed. Still in secondary school; Matura in June 2027.</p>
+  <p class="body"><span class="k">Severity here is only ever what was demonstrated. A CVSS vector on this page was reproduced, not estimated.</span></p>
+</div></section>
 
-<main>
-
-  <section><div class="wrap">
-    <p class="body">I'm eighteen. Capture the flag is how I train — web, reversing, crypto, forensics —
-      and a scoreboard every weekend keeps me honest about how much I actually know. When a competition
-      ends, the same habit goes at production tools: I read the source, find the bug, and send the fix
-      to the people who maintain it.</p>
-    <p class="body">All of it points the same direction. I want to end up on a <span class="k">red team</span> —
-      the person who gets paid to find the way in before someone who means it does.</p>
-  </div></section>
-
-  <section><div class="wrap">
-    <h2>Capture the flag</h2>
-    <p class="body" style="margin-bottom:26px">Recent finishes. I play as <span class="k">telqrrrr</span>, with a small team.</p>
-    <div class="log">
-      <div class="row">
-        <div class="rank">3<sup>rd</sup></div>
-        <div class="ev"><div class="name">BrunnerCTF 2026</div><div class="sub">Jeopardy · Aug 2026</div></div>
-        <div class="field">of <b>1102</b> teams</div>
-      </div>
-      <div class="row">
-        <div class="rank">2<sup>nd</sup></div>
-        <div class="ev"><div class="name">MntcrlCTF 2026</div><div class="sub">Jeopardy · Jun 2026</div></div>
-        <div class="field">of <b>118</b> teams</div>
-      </div>
-      <div class="row">
-        <div class="rank">37<sup>th</sup></div>
-        <div class="ev"><div class="name">SAS CTF 2026 Quals</div><div class="sub">Qualifier · Jun 2026</div></div>
-        <div class="field">of <b>515</b> teams</div>
-      </div>
-      <div class="row">
-        <div class="rank">255<sup>th</sup></div>
-        <div class="ev"><div class="name">boroCTF 2026</div><div class="sub">Jeopardy · Jun 2026</div></div>
-        <div class="field">of <b>819</b> teams</div>
-      </div>
+<section id="research" aria-labelledby="research-h"><div class="wrap">
+  <h2 id="research-h">Research &amp; disclosures</h2>
+  <p class="body" style="margin-bottom:26px">3 CVEs credited as discoverer. Scores are the CNA's published scores, not mine.</p>
+  <div class="log">
+  <article class="row cve">
+    <div class="rank">7.5<sup>High</sup></div>
+    <div class="ev">
+      <div class="name"><code class="id">CVE-2026-103043</code> <span class="prod">anchorme.js ≤ 3.0.8</span></div>
+      <p class="sub">Regular-expression denial of service in the IPv6 host-extraction regex, reachable through the default <code>anchorme()</code> export. A crafted URL of under 100 bytes backtracks exponentially and blocks the Node.js event loop.</p>
+      <p class="sub">No fixed release as of October 2026 — npm latest is still 3.0.8. Credited as finder under my real name on the CVE record.</p>
+      <p class="proof"><a class="lnk" href="https://www.cve.org/CVERecord?id=CVE-2026-103043">CVE record</a> · <a class="lnk" href="https://www.vulncheck.com/advisories/anchorme-through-3.0.8-regular-expression-denial-of-service">VulnCheck advisory</a> · <a class="lnk" href="https://gist.github.com/mmadersbacher/46050b4224eb979431986cdef1dd2ad3">PoC gist</a></p>
     </div>
-    <p class="after">Every result is on <a href="https://ctftime.org/user/264976" target="_blank" rel="noopener">CTFtime</a> if you want to check it.</p>
-  </div></section>
+    <div class="field">
+      <span class="nw"><b>CVSS 7.5</b> v3.1 · <b>8.7</b> v4.0</span><br>
+      CWE-1333 · Inefficient regular expression complexity<br>
+      <span class="nw">VulnCheck CNA · 29 Sept 2026</span>
+    </div>
+  </article>
+  <article class="row cve">
+    <div class="rank">7.5<sup>High</sup></div>
+    <div class="ev">
+      <div class="name"><code class="id">CVE-2026-90776</code> <span class="prod">Nodemailer 9.1.0 – 10.0.4</span></div>
+      <p class="sub">O(n²) parsing in <code>lib/addressparser</code> on comment-joined addresses. Remotely triggerable without authentication through <span class="k">mailparser</span> on inbound mail: a standards-compliant message stalls the event loop for seconds.</p>
+      <p class="sub">Reported through GitHub&#39;s private advisory with PoC and a suggested fix; patched by the maintainer in 10.0.5. Credited as reporter on the GitHub advisory and as finder on the CVE record.</p>
+      <p class="proof"><a class="lnk" href="https://github.com/advisories/GHSA-prgh-xp8r-p3m5">GHSA-prgh-xp8r-p3m5</a> · <a class="lnk" href="https://www.cve.org/CVERecord?id=CVE-2026-90776">CVE record</a> · <a class="lnk" href="https://github.com/nodemailer/nodemailer/commit/c07f17518d25aca8ab2ad66968dcbca538c24b89">Fix commit</a></p>
+    </div>
+    <div class="field">
+      <span class="nw"><b>CVSS 7.5</b> v3.1 · <b>8.7</b> v4.0</span><br>
+      CWE-407 · Inefficient algorithmic complexity<br>
+      <span class="nw">VulnCheck CNA · 13 Sept 2026</span>
+    </div>
+  </article>
+  <article class="row cve">
+    <div class="rank">6.3<sup>Medium</sup></div>
+    <div class="ev">
+      <div class="name"><code class="id">CVE-2026-90492</code> <span class="prod">webgjc/web_robot 2.4.0 – 2.8.0</span></div>
+      <p class="sub">The <code>case_name</code> request parameter reaches <code>os.system()</code> unsanitised in <code>py/web.py</code> (<code>controller_listen</code> / <code>controller_recover</code>).</p>
+      <p class="sub">Vendor contacted, no response; published through VulDB. Credited as reporter under the handle Telqrrr.</p>
+      <p class="proof"><a class="lnk" href="https://vuldb.com/?id.403080">VulDB VDB-403080</a> · <a class="lnk" href="https://www.cve.org/CVERecord?id=CVE-2026-90492">CVE record</a></p>
+    </div>
+    <div class="field">
+      <span class="nw"><b>CVSS 6.3</b> v3.1 · <b>5.3</b> v4.0</span><br>
+      CWE-78 · OS command injection<br>
+      <span class="nw">VulDB CNA · 13 Sept 2026</span>
+    </div>
+  </article>
+  </div>
+</div></section>
 
-  <section><div class="wrap">
-    <h2>Fixes that landed</h2>
-    <p class="body" style="margin-bottom:24px">Bugs I ran into while reading the tools this field
-      actually runs on. These went into the real projects — not my own repos. Each links to the pull request.</p>
-    <div class="up">
-      <a href="https://github.com/secdev/scapy/pull/5090" target="_blank" rel="noopener">
-        <span class="p">Scapy <span class="rp">#5090</span></span>
-        <span class="st m"><span class="b"></span>merged</span>
-        <span class="d">NBNS name-query responses only returned the first address record — now every entry gets parsed.</span>
+<section id="oss" aria-labelledby="oss-h"><div class="wrap">
+  <h2 id="oss-h">Open source</h2>
+  <p class="body" style="margin-bottom:24px">Bugs found while reading the tools this field runs on, fixed upstream rather than forked. <span class="k">12 merged</span>, 3 open, across 8 projects. Each line is the pull request.</p>
+  <div class="up">
+      <a href="https://github.com/epi052/feroxbuster/pull/1322">
+        <span class="p">feroxbuster <span class="rp">#1322</span></span>
+        <span class="st o"><span class="b"></span>open</span>
+        <span class="d"><code>parallel</code> set through a config file aborted every run with an unwrap panic (#1321). Rust; fix plus regression test.</span>
       </a>
-      <a href="https://github.com/volatilityfoundation/volatility3/pull/2017" target="_blank" rel="noopener">
+      <a href="https://github.com/ffuf/ffuf/pull/953">
+        <span class="p">ffuf <span class="rp">#953</span></span>
+        <span class="st o"><span class="b"></span>open</span>
+        <span class="d">Raw request files without a trailing newline silently lost their last header; brought the parser in line with the preflight path, with tests.</span>
+      </a>
+      <a href="https://github.com/ffuf/ffuf/pull/952">
+        <span class="p">ffuf <span class="rp">#952</span></span>
+        <span class="st m"><span class="b"></span>merged · 26 Sept 2026</span>
+        <span class="d">Made the test suite pass on Windows — three root causes, one of them a pipe-buffer deadlock in the stdout capture that only showed up as a hang.</span>
+      </a>
+      <a href="https://github.com/secdev/scapy/pull/5150">
+        <span class="p">Scapy <span class="rp">#5150</span></span>
+        <span class="st m"><span class="b"></span>merged · 3 Sept 2026</span>
+        <span class="d">BGP NLRI dissector crashed on a prefix shorter than its mask claims.</span>
+      </a>
+      <a href="https://github.com/secdev/scapy/pull/5149">
+        <span class="p">Scapy <span class="rp">#5149</span></span>
+        <span class="st m"><span class="b"></span>merged · 3 Sept 2026</span>
+        <span class="d"><code>IP6ListField</code> crashed on a truncated trailing IPv6 address — a field shared by about 17 dissectors (DHCPv6, ICMPv6, SRv6).</span>
+      </a>
+      <a href="https://github.com/fortra/impacket/pull/2263">
+        <span class="p">Impacket <span class="rp">#2263</span></span>
+        <span class="st m"><span class="b"></span>merged · 2 Sept 2026</span>
+        <span class="d"><code>BootpDecoder</code> raised <code>struct.error</code> on BOOTP messages shorter than RFC 1542&#39;s 300-octet minimum (#1900). Handled per the RFC, with regression tests.</span>
+      </a>
+      <a href="https://github.com/LOLBAS-Project/LOLBAS/pull/520">
+        <span class="p">LOLBAS <span class="rp">#520</span></span>
+        <span class="st m"><span class="b"></span>merged · 26 Aug 2026</span>
+        <span class="d">Entry for Vssadmin.exe deleting shadow copies (MITRE T1490).</span>
+      </a>
+      <a href="https://github.com/secdev/scapy/pull/5096">
+        <span class="p">Scapy <span class="rp">#5096</span></span>
+        <span class="st m"><span class="b"></span>merged · 26 Aug 2026</span>
+        <span class="d">NSH MD-Type 2 context headers failed to dissect (<code>count_from</code> given a string); redone per RFC 8300 with proper length handling.</span>
+      </a>
+      <a href="https://github.com/secdev/scapy/pull/5095">
+        <span class="p">Scapy <span class="rp">#5095</span></span>
+        <span class="st m"><span class="b"></span>merged · 26 Aug 2026</span>
+        <span class="d">OPC DA layer: <code>STDOBJREF.IPID</code> and <code>OpcDaFack.selack</code> were declared with field classes where packet classes belong, so dissection raised <code>TypeError</code>.</span>
+      </a>
+      <a href="https://github.com/secdev/scapy/pull/5094">
+        <span class="p">Scapy <span class="rp">#5094</span></span>
+        <span class="st m"><span class="b"></span>merged · 26 Aug 2026</span>
+        <span class="d">Bluetooth <code>Set_Extended_Advertise_Enable</code> returned one advertising set regardless of <code>num_sets</code>.</span>
+      </a>
+      <a href="https://github.com/volatilityfoundation/volatility3/pull/2017">
         <span class="p">Volatility 3 <span class="rp">#2017</span></span>
-        <span class="st m"><span class="b"></span>merged</span>
+        <span class="st m"><span class="b"></span>merged · 19 Aug 2026</span>
         <span class="d">The capabilities plugin failed on Linux kernels before 6.3 — fixed the structure handling.</span>
       </a>
-      <a href="https://github.com/volatilityfoundation/volatility3/pull/2016" target="_blank" rel="noopener">
+      <a href="https://github.com/volatilityfoundation/volatility3/pull/2016">
         <span class="p">Volatility 3 <span class="rp">#2016</span></span>
-        <span class="st m"><span class="b"></span>merged</span>
-        <span class="d">An architecture typo was blocking scheduled_tasks on 32-bit memory images.</span>
+        <span class="st m"><span class="b"></span>merged · 19 Aug 2026</span>
+        <span class="d">An architecture typo blocked <code>scheduled_tasks</code> on 32-bit memory images.</span>
       </a>
-      <a href="https://github.com/fortra/impacket/pull/2263" target="_blank" rel="noopener">
-        <span class="p">Impacket <span class="rp">#2263</span></span>
-        <span class="st m"><span class="b"></span>merged</span>
-        <span class="d">BootpDecoder crashed on plain BOOTP packets with no DHCP options — closed the crash (#1900).</span>
-      </a>
-      <a href="https://github.com/projectdiscovery/nuclei-templates/pull/16902" target="_blank" rel="noopener">
+      <a href="https://github.com/projectdiscovery/nuclei-templates/pull/16902">
         <span class="p">Nuclei Templates <span class="rp">#16902</span></span>
-        <span class="st m"><span class="b"></span>merged</span>
-        <span class="d">Detection for CVE-2020-10204 (Nexus Repository Manager 3 RCE), verified against a live instance.</span>
+        <span class="st m"><span class="b"></span>merged · 19 Aug 2026</span>
+        <span class="d">Template for CVE-2020-10204 (Nexus Repository Manager 3 RCE), verified against a live instance.</span>
       </a>
-      <a href="https://github.com/LOLBAS-Project/LOLBAS/pull/520" target="_blank" rel="noopener">
-        <span class="p">LOLBAS <span class="rp">#520</span></span>
-        <span class="st m"><span class="b"></span>merged</span>
-        <span class="d">Documented Vssadmin.exe deleting shadow copies (MITRE T1490).</span>
+      <a href="https://github.com/secdev/scapy/pull/5090">
+        <span class="p">Scapy <span class="rp">#5090</span></span>
+        <span class="st m"><span class="b"></span>merged · 16 Aug 2026</span>
+        <span class="d">NBNS name-query responses only returned the first address record; every entry is parsed now.</span>
       </a>
-      <a href="https://github.com/SigmaHQ/sigma/pull/6238" target="_blank" rel="noopener">
+      <a href="https://github.com/SigmaHQ/sigma/pull/6238">
         <span class="p">Sigma <span class="rp">#6238</span></span>
         <span class="st o"><span class="b"></span>open</span>
-        <span class="d">Detection rule for Kerberos pre-auth disabled — the precondition for AS-REP roasting.</span>
+        <span class="d">Detection rule: Kerberos pre-authentication disabled on a user account — the precondition for AS-REP roasting.</span>
       </a>
-    </div>
-  </div></section>
+  </div>
+</div></section>
 
-  <section><div class="wrap">
-    <h2>My own tools</h2>
-    <p class="body">I build in <span class="k">Rust</span> and <span class="k">Go</span> too — local network
-      and IoT discovery, API recon, packet inspection. Usually because I wanted the tool to exist, or
-      wanted to understand how the real one works by writing my own. It's
-      <a class="lnk" href="https://github.com/mmadersbacher" target="_blank" rel="noopener">on GitHub</a>.</p>
-  </div></section>
+<section id="bounty" aria-labelledby="bounty-h"><div class="wrap">
+  <h2 id="bounty-h">Bug bounty</h2>
+  <p class="body" style="margin-bottom:22px">Program names stay out by policy; the platform profiles are the record. <a class="lnk" href="https://hackerone.com/telqrrr">HackerOne</a> · <a class="lnk" href="https://yeswehack.com/hunters/telqrrrrr">YesWeHack</a></p>
+  <div class="blist">
+      <div class="brow">
+        <span class="bl">High <b>7.5</b> <span class="rp">C:H/I:N/A:N</span><br><span class="bo">accepted · rewarded</span></span>
+        <span class="bw">Unauthenticated third-party proxy endpoint on a major European electronics retailer exposing ~9.1 M customer trade-in records (name, IMEI, contact, payout) across seven EU storefronts.</span>
+      </div>
+      <div class="brow">
+        <span class="bl">Government VDP<br><span class="bo">Belgium</span></span>
+        <span class="bw">Improper access control on an internal Confluence instance (resolved); SQL injection in a public geo API (accepted); unauthenticated Grafana/Mimir/Loki observability stack with tenant enumeration (closed as informational).</span>
+      </div>
+      <div class="brow">
+        <span class="bl">Earliest<br><span class="bo">€300</span></span>
+        <span class="bw">XSS chain on an Austrian price-comparison site.</span>
+      </div>
+  </div>
+</div></section>
 
-  <section><div class="wrap">
-    <h2>Get in touch</h2>
-    <p class="body">Hiring for red-team or security work, or you've got a problem worth a weekend on —
-      reach me by <a class="lnk" href="mailto:Telqrrrrr-ywh-462937e379a24618@yeswehack.ninja">email</a>,
-      or on <a class="lnk" href="https://github.com/mmadersbacher" target="_blank" rel="noopener">GitHub</a>
-      and <a class="lnk" href="https://ctftime.org/user/264976" target="_blank" rel="noopener">CTFtime</a>.</p>
-  </div></section>
+<section id="experience" aria-labelledby="exp-h"><div class="wrap">
+  <h2 id="exp-h">Experience</h2>
+  <div class="xlist">
+      <article class="xp">
+        <div class="xh">
+          <span class="xr">IT Intern — Field Support <span class="xo">· Tirol Kliniken, Innsbruck</span></span>
+          <span class="xd">13 Aug 2026 – 11 Sept 2026</span>
+        </div>
+        <ul><li>Endpoint and printer deployment across hospital sites.</li><li>Network troubleshooting in a NAC and central-DHCP environment.</li></ul>
+      </article>
+      <article class="xp">
+        <div class="xh">
+          <span class="xr">IT &amp; Security Intern — Blue Team <span class="xo">· Translogica GmbH, Innsbruck</span></span>
+          <span class="xd">July 2026</span>
+        </div>
+        <ul><li>Administered the Wazuh SIEM. Wrote and live-verified ~20 custom Active Directory detection rules — DCSync, Kerberoasting, privileged-group changes, MITRE T1098 — with SID-based escalation.</li><li>Analysed a 35 M-event index; root-caused a KDC event storm (RC4/AES mismatch) and MS-SQL / pass-the-hash false positives, cutting alert noise by ~90 %.</li><li>CIS baseline and vulnerability assessments on domain controllers; escalated unpatched critical CVEs (RD Licensing RCE, CVSS 9.8).</li><li>Designed log retention (90 d hot / 12 mo snapshots) and wrote the SIEM operations handbook; inventoried ~700 assets into Snipe-IT; VLAN configuration on HPE Aruba Instant On switches.</li></ul>
+      </article>
+  </div>
+  <h2 id="projects-h" style="margin-top:48px">Projects</h2>
+  <div class="xlist">
+      <article class="xp">
+        <div class="xh">
+          <span class="xr">Argus</span>
+          <span class="xd">CAASM appliance for school networks · diploma thesis 2025–2027 · Rust + Next.js · source private</span>
+        </div>
+        <p class="body">Cyber-asset attack-surface management built for Austrian public-school networks. Rust backend (9 crates) and Next.js frontend, ~75 k LOC. Discovers assets over ARP, LLDP, SNMP and DHCP, correlates findings against CISA KEV, and prioritises with a criticality/exposure model. Ships as a signed, air-gapped offline deployment (Docker bundle → Proxmox VM). Evaluation framework: Cohen&#39;s κ, ROC-AUC, risk-reduction metrics. Approved by the Tyrolean Board of Education; piloting on a live school network with a Raspberry Pi in-network sensor.</p>
+      </article>
+      <article class="xp">
+        <div class="xh">
+          <span class="xr"><a class="lnk" href="https://github.com/mmadersbacher?tab=repositories">Earlier learning projects</a></span>
+          <span class="xd">Rust · Go · Python</span>
+        </div>
+        <p class="body">Network and IoT discovery (IoTShade), a Go network scanner with a React dashboard (NetReconUltra), a Python recon tool (NetRecon) and a hash cracker. Written to understand how the real tools work.</p>
+      </article>
+  </div>
+</div></section>
 
+<section id="ctf" aria-labelledby="ctf-h"><div class="wrap">
+  <h2 id="ctf-h">Capture the flag</h2>
+  <p class="body" style="margin-bottom:26px">Playing as <span class="k">Telqrrr</span>, mostly with «Gehackt ist Geil», a small CTF community I started. Where CTFtime tracks the event, the rank links to its scoreboard; the two platform-only results say so.</p>
+  <div class="log">
+      <a class="row" href="https://ctftime.org/event/3065"><div class="rank">3<sup>rd</sup></div><div class="ev"><div class="name">BrunnerCTF 2026</div><div class="sub">Jeopardy · 23 Aug 2026 · team</div></div><div class="field">of <b>1,102</b> teams</div></a>
+      <a class="row" href="https://ctftime.org/event/3282"><div class="rank">2<sup>nd</sup></div><div class="ev"><div class="name">MntcrlCTF 2026</div><div class="sub">Jeopardy · 28 Jun 2026 · team</div></div><div class="field">of <b>118</b> teams</div></a>
+      <a class="row" href="https://ctftime.org/event/3109"><div class="rank">37<sup>th</sup></div><div class="ev"><div class="name">SAS CTF 2026 Quals</div><div class="sub">Qualifier · 7 Jun 2026 · team</div></div><div class="field">of <b>515</b> teams</div></a>
+      <div class="row"><div class="rank">14<sup>th</sup></div><div class="ev"><div class="name">HTB Cyber Apocalypse 2026</div><div class="sub">Jeopardy · 2026 · HTB scoreboard, not on CTFtime</div></div><div class="field">team of 3 · several thousand teams</div></div>
+      <div class="row"><div class="rank">2<sup>nd</sup></div><div class="ev"><div class="name">TryHackMe AI Odyssey CTF</div><div class="sub">Jeopardy · 2026 · TryHackMe scoreboard, not on CTFtime</div></div><div class="field">worldwide</div></div>
+  </div>
+</div></section>
+
+<section id="credentials" aria-labelledby="cred-h"><div class="wrap">
+  <h2 id="cred-h">Certifications</h2>
+  <div class="facts">
+      <div class="frow">
+        <span class="fk">Hack The Box · 7 Oct 2026</span>
+        <span class="fv"><a class="lnk" href="https://profile.hackthebox.com/profile/019f563d-c2b9-7061-ba9e-17ef2ca8a910/certificate/HTBCERT-BB6F9B6B7A">HTB Certified Web Exploitation Specialist (CWES)</a> — Exam passed with 100 / 100 points. <code class="id">HTBCERT-BB6F9B6B7A</code></span>
+      </div>
+      <div class="frow">
+        <span class="fk">TryHackMe · Jun 2026</span>
+        <span class="fv">Junior Penetration Tester (PT1) — Valid to June 2029.</span>
+      </div>
+      <div class="frow">
+        <span class="fk">TryHackMe · Jun 2026</span>
+        <span class="fv">AI Security (AI1) — Valid to June 2029.</span>
+      </div>
+  </div>
+  <h2 id="edu-h" style="margin-top:44px">Education</h2>
+  <div class="facts">
+      <div class="frow">
+        <span class="fk">2022 – Matura expected June 2027</span>
+        <span class="fv"><span class="k">BHAK Schwaz</span> — Austrian business college, IT &amp; media focus</span>
+      </div>
+      <div class="frow">
+        <span class="fk">planned</span>
+        <span class="fv"><span class="k">University of Innsbruck</span> — Computer Science</span>
+      </div>
+  </div>
+</div></section>
+
+<section id="skills" aria-labelledby="skills-h"><div class="wrap">
+  <h2 id="skills-h">Skills</h2>
+  <div class="facts">
+      <div class="frow">
+        <span class="fk">Web &amp; API</span>
+        <span class="fv tags"><span class="tag">Burp Suite</span><span class="tag">OWASP Top 10</span><span class="tag">GraphQL</span><span class="tag">REST</span><span class="tag">ffuf</span><span class="tag">sqlmap</span><span class="tag">ReDoS / algorithmic DoS</span></span>
+      </div>
+      <div class="frow">
+        <span class="fk">Network &amp; AD</span>
+        <span class="fv tags"><span class="tag">nmap</span><span class="tag">Impacket</span><span class="tag">Scapy</span><span class="tag">Kerberos</span><span class="tag">LDAP / SMB</span><span class="tag">VLANs</span></span>
+      </div>
+      <div class="frow">
+        <span class="fk">Detection &amp; defense</span>
+        <span class="fv tags"><span class="tag">Wazuh</span><span class="tag">MITRE ATT&amp;CK</span><span class="tag">Sysmon</span><span class="tag">CIS Benchmarks</span><span class="tag">vulnerability management</span></span>
+      </div>
+      <div class="frow">
+        <span class="fk">Code &amp; tooling</span>
+        <span class="fv tags"><span class="tag">Python</span><span class="tag">Rust</span><span class="tag">TypeScript</span><span class="tag">Bash</span><span class="tag">Docker</span><span class="tag">Git</span><span class="tag">Ghidra / BinDiff</span></span>
+      </div>
+      <div class="frow">
+        <span class="fk">Reporting</span>
+        <span class="fv tags"><span class="tag">CVSS v3.1 / v4</span><span class="tag">CWE</span><span class="tag">coordinated disclosure</span><span class="tag">pentest reports</span></span>
+      </div>
+      <div class="frow">
+        <span class="fk">Languages</span>
+        <span class="fv tags"><span class="tag">German (native)</span><span class="tag">English (B2)</span></span>
+      </div>
+  </div>
+</div></section>
+
+<section id="contact" aria-labelledby="contact-h"><div class="wrap">
+  <h2 id="contact-h">Contact</h2>
+  <p class="body">Vetting an application, triaging a report, or you have a target worth a weekend: <a class="lnk" href="mailto:mario.madersbacher.2008@gmail.com">mario.madersbacher.2008@gmail.com</a>. Also on <a class="lnk" href="https://github.com/mmadersbacher">GitHub</a>, <a class="lnk" href="https://hackerone.com/telqrrr">HackerOne</a>, <a class="lnk" href="https://yeswehack.com/hunters/telqrrrrr">YesWeHack</a>, <a class="lnk" href="https://www.linkedin.com/in/mario-madersbacher-310b49414">LinkedIn</a>.</p>
+  <p class="body">Tyrol, Austria. PGP on request; <a class="lnk" href="/.well-known/security.txt">security.txt</a> for anything about this site.</p>
+</div></section>
 </main>
-
-<div class="foot"><div class="wrap" style="width:100%">
-  <span>Mario Madersbacher, <span id="y">2026</span></span>
-</div></div>
-
-<script>
-(function(){
-  "use strict";
-  var y=document.getElementById("y"); if(y) y.textContent=new Date().getFullYear();
-  var reduce=matchMedia("(prefers-reduced-motion:reduce)").matches;
-
-  /* redaction: bars wipe away when the cursor gets near, then stay open */
-  var bars=[].slice.call(document.querySelectorAll(".rd"));
-  if(bars.length){
-    if(matchMedia("(hover:none)").matches){
-      // touch: reveal on tap
-      bars.forEach(function(b){ b.addEventListener("click",function(){ b.classList.add("on"); }); });
-    } else {
-      var R=90;
-      addEventListener("mousemove",function(e){
-        for(var i=bars.length;i--;){
-          var b=bars[i]; if(b.classList.contains("on")) continue;
-          var r=b.getBoundingClientRect();
-          var dx=Math.max(r.left-e.clientX, e.clientX-r.right, 0);
-          var dy=Math.max(r.top-e.clientY, e.clientY-r.bottom, 0);
-          if(dx*dx+dy*dy < R*R) b.classList.add("on");
-        }
-      },{passive:true});
-    }
-  }
-
-  /* ---- for whoever opened this ---- */
-  var s="R1JZREVFe2d1M19mMGhlcDNfMWZfbDBoZV9zMWVmZ19lM3BiYX0=";
-  try{
-    console.log("%c// you opened the console. good instinct.","font-family:monospace;color:#e9e6df;font-size:13px");
-    console.log("%c// there is a flag on this page. it is base64, then rot13.","font-family:monospace;color:#9d9a92");
-    console.log("%c"+s,"font-family:monospace;color:#5c5a54");
-    console.log("%c// format is mine: TELQRR{ ... }. no tools needed, you know both steps.","font-family:monospace;color:#9d9a92");
-  }catch(e){}
-})();
-</script>
+<footer class="foot"><div class="wrap">
+  <span>Mario Madersbacher · Tyrol, Austria</span>
+  <span>Updated October 2026 · <a href="https://github.com/mmadersbacher/mmadersbacher.github.io/tree/main/site">source</a> · <a href="/data.json">data.json</a></span>
+</div></footer>
+<script src="/main.js" defer></script>
 </body>
 </html>

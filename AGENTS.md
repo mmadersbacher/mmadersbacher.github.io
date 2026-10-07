@@ -95,10 +95,38 @@ npm run cf-preview        # build + wrangler dev on :8787
 npm run deploy            # build + deploy by hand
 ```
 
-The old `mmadersbacher.github.io` host still runs on GitHub Pages, serving only the stub in
-`tools/gh-pages-redirect/` that forwards each path to the new domain. It is a client-side
-redirect — a `*.github.io` host can't do a real 301 — so leave the inline script in the
-`<head>` alone. Its workflow (`.github/workflows/gh-pages-redirect.yml`) is
-`workflow_dispatch` only on purpose; run it by hand after edits.
+The `mmadersbacher.github.io` host is a **second, separate site**: the personal page in
+`site/`, deployed to GitHub Pages by `.github/workflows/pages.yml` (triggers on `site/**`). It
+does not use Astro and shares nothing with the team site except the repo. See the section below.
 
 `www` → apex is a Cloudflare Redirect Rule in the dashboard, not something in this repo.
+
+## Personal site (`site/`, mmadersbacher.github.io)
+
+Plain HTML/CSS/JS, no dependencies, English only. Audience: pentest-platform reviewers,
+bug-bounty triagers, maintainers, employers — people who want to verify a track record in
+under a minute. Every claim links to its public record (CVE record, advisory, PR, CTFtime).
+
+- **Facts live in `site/data.json`**, nothing else. `node site/build.mjs` renders
+  `site/index.html` from it; CI runs the same build before deploying, so editing data.json
+  alone is enough. Commit the regenerated index.html too so the repo stays browsable.
+- `node --test site/test.mjs` runs offline checks: data shape, every PR URL matches
+  repo+number, forbidden strings (bug-bounty program names, town, phone, birth date), HTML
+  escaping, no third-party resources, size budget (< 100 KB without fonts), AA contrast for
+  both themes. CI fails on any of these. `node site/check-links.mjs` (network, opt-in)
+  fetches every URL in data.json.
+- Facts are verified against the primary source before they go in: PR state via the GitHub
+  API, CVE scores from the CVE record (the CNA's numbers, never ours), CTF ranks from the
+  CTFtime scoreboard. A rank that only exists on an organiser's own scoreboard gets no link
+  and says so. Bug-bounty entries never name the program. Location stays at region level.
+- The Nodemailer CVE is worded as *reported with PoC and suggested fix, patched by the
+  maintainer* — the public fix commit says the suggested change was insufficient and
+  implements a different one, so "fix contributed" would be false.
+- Design: warm near-black, monospace throughout (Martian Mono display, Spline Sans Mono
+  text, both self-hosted under `site/fonts/`, OFL), 1px hairlines, no cards/boxes/icons, the
+  big-number ledger rows, the redaction effect on one phrase. Dark by default, light via
+  the toggle (`data-theme="light"`, remembered in localStorage). Tokens in `style.css`;
+  `--ink-3` must stay ≥ 4.5:1 on `--bg` in both themes or the test fails.
+- `site/writeups/` is a static list (POSTS array in its index.html); new articles come from
+  `tools/writeup-template.html`. `site/og.png` is rendered from `tools/personal-og.html`
+  (command in that file's header comment).

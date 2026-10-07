@@ -1,39 +1,36 @@
 <!doctype html>
+<!-- Source of site/og.png (link preview). Render:
+  chromium --headless=new --no-sandbox --allow-file-access-from-files --force-device-scale-factor=1 \
+    --window-size=1200,630 --virtual-time-budget=4000 --screenshot=site/og.png tools/personal-og.html
+-->
 <html lang="en"><head><meta charset="utf-8">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Martian+Mono:wght@400;600;700&family=Spline+Sans+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
+  @font-face{font-family:"Martian Mono";font-weight:400 800;src:url(../site/fonts/MartianMono-latin.woff2) format("woff2")}
+  @font-face{font-family:"Spline Sans Mono";font-weight:300 700;src:url(../site/fonts/SplineSansMono-latin.woff2) format("woff2")}
   *{margin:0;padding:0;box-sizing:border-box}
   html,body{width:1200px;height:630px;overflow:hidden}
-  body{background:#101011;color:#e9e6df;
-    font-family:"Spline Sans Mono",monospace;
-    padding:78px 84px; display:flex; flex-direction:column; justify-content:space-between}
-  .top{display:flex; justify-content:space-between; align-items:flex-start;
-    font-size:19px; color:#5c5a54}
+  body{background:#101011;color:#e9e6df; font-family:"Spline Sans Mono",monospace;
+    padding:62px 84px 58px; display:flex; flex-direction:column; justify-content:space-between}
+  .top{display:flex; justify-content:space-between; align-items:flex-start; font-size:19px; color:#85827a}
   .top .m{width:34px;height:9px;background:#e9e6df;display:inline-block;vertical-align:middle;margin-right:2px}
-  h1{font-family:"Martian Mono",monospace; font-weight:600; font-size:92px;
-    line-height:.98; letter-spacing:-.05em; margin-top:22px}
-  .tag{font-size:30px; color:#9d9a92; margin-top:30px; letter-spacing:-.01em}
+  .kick{font-family:"Martian Mono",monospace; font-size:19px; letter-spacing:.06em; text-transform:uppercase; color:#9d9a92}
+  h1{font-family:"Martian Mono",monospace; font-weight:600; font-size:86px; line-height:.98; letter-spacing:-.05em; margin-top:18px}
+  .tag{font-size:28px; color:#9d9a92; margin-top:26px; letter-spacing:-.01em}
   .tag b{color:#e9e6df; font-weight:500}
-  .redline{font-size:30px; letter-spacing:-.01em; display:flex; align-items:center; gap:0}
-  .redline .q{color:#9d9a92}
-  .redline .bar{background:#e9e6df; color:transparent; padding:0 4px; margin:0 2px; border-radius:1px}
-  .foot{display:flex; justify-content:space-between; align-items:baseline;
-    font-size:20px; color:#5c5a54; border-top:1px solid #232320; padding-top:22px}
+  .foot{display:flex; justify-content:space-between; align-items:baseline; font-size:19px; color:#85827a; border-top:1px solid #232320; padding-top:18px}
   .foot .u{color:#9d9a92}
 </style></head>
 <body>
   <div class="top">
     <span><span class="m"></span></span>
-    <span>github · ctftime</span>
+    <span class="kick">Security Researcher · Web Penetration Tester</span>
   </div>
   <div>
     <h1>Mario<br>Madersbacher</h1>
-    <div class="tag">capture the flag · patches upstream · working toward <b>red&nbsp;teaming</b></div>
+    <div class="tag"><b>3 CVEs</b> · <b>12</b> merged upstream PRs · HTB <b>CWES</b></div>
   </div>
   <div class="foot">
     <span class="u">mmadersbacher.github.io</span>
-    <span>web · reversing · crypto · forensics</span>
+    <span>anchorme · nodemailer · impacket · scapy · volatility · ffuf</span>
   </div>
 </body></html>

@@ -1,8 +1,9 @@
 name: Deploy personal site (GitHub Pages)
 
-# mmadersbacher.github.io serves the hand-written personal site in `site/`.
-# The CTF-team site is a separate deployment (see deploy.yml → Cloudflare Workers)
-# and is untouched by this workflow.
+# mmadersbacher.github.io serves the personal site in `site/`: facts in
+# `site/data.json`, rendered to `site/index.html` by `site/build.mjs` (no
+# dependencies). The CTF-team site is a separate deployment (see deploy.yml →
+# Cloudflare Workers) and is untouched by this workflow.
 
 on:
   push:
@@ -31,6 +32,20 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      # Render data.json → index.html, then run the offline checks (facts
+      # shape, forbidden strings, escaping, size budget, contrast). A red run
+      # here means the page would have shipped something wrong.
+      - name: Build
+        run: node site/build.mjs
+
+      - name: Test
+        run: node --test site/test.mjs
 
       - name: Upload site/ as Pages artifact
         uses: actions/upload-pages-artifact@v3

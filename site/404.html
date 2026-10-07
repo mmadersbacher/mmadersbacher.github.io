@@ -1,18 +1,30 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8">
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>404 — Mario Madersbacher</title>
+<meta name="robots" content="noindex">
+<meta name="color-scheme" content="dark light">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%23111'/%3E%3Crect x='6' y='14' width='20' height='5' fill='%23e9e6df'/%3E%3C/svg%3E">
+<script>try{if(localStorage.getItem("theme")==="light")document.documentElement.setAttribute("data-theme","light")}catch(e){}</script>
+<link rel="stylesheet" href="/style.css">
 <style>
-  html,body{height:100%;margin:0}
-  body{background:#0a0c10;color:#e7ecf3;display:grid;place-items:center;
-    font-family:"JetBrains Mono",ui-monospace,Consolas,monospace;text-align:center;padding:24px}
-  .c{max-width:32ch}
-  .big{font-size:4rem;font-weight:700;color:#cdf34a;letter-spacing:-.02em;line-height:1}
-  p{color:#6b7688;margin:14px 0 26px;font-size:13px;letter-spacing:.05em}
-  a{color:#0a0c10;background:#cdf34a;text-decoration:none;padding:11px 20px;border-radius:8px;
-    font-size:13px;font-weight:500}
-</style></head>
-<body><div class="c">
-  <div class="big">404</div>
+  .nf{min-height:70vh; display:grid; align-content:center}
+  .nf .rank{font-family:var(--disp); font-weight:700; font-size:clamp(3rem,12vw,6rem); letter-spacing:-.05em; line-height:.9}
+  .nf p{color:var(--ink-2); margin:18px 0 28px; font-size:13.5px}
+</style>
+</head>
+<body>
+<div class="top"><div class="wrap">
+  <a class="who" href="/">Mario Madersbacher</a>
+  <nav class="r"><a href="/writeups/">Writeups</a><button class="tog" type="button" data-theme-toggle aria-pressed="false">Light mode</button></nav>
+</div></div>
+<main class="nf"><div class="wrap">
+  <div class="rank">404</div>
   <p>// no route to host</p>
-  <a href="/">← back to start</a>
-</div></body></html>
+  <a class="lnk" href="/">← back to start</a>
+</div></main>
+<script src="/main.js" defer></script>
+</body>
+</html>

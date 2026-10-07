@@ -18,8 +18,9 @@ npm run cf-preview  # build + serve through the real Workers asset router
 Node 22+. Pushing to `main` builds and deploys to Cloudflare Workers via GitHub Actions
 (`.github/workflows/deploy.yml`, config in `wrangler.jsonc`).
 
-The old `mmadersbacher.github.io` address stays on GitHub Pages serving the redirect stub in
-`tools/gh-pages-redirect/`, which forwards each path to the same path on the new domain.
+`mmadersbacher.github.io` is a separate site in the same repo: the personal page in `site/`
+(plain HTML/CSS/JS, facts in `site/data.json`, rendered by `site/build.mjs`), deployed to
+GitHub Pages by `.github/workflows/pages.yml`. `node --test site/test.mjs` checks it.
 
 ## Structure
 
@@ -31,7 +32,8 @@ src/
   layouts/Base.astro  head/SEO, masthead, footer
   pages/              index, mario, writeups, 404, sitemap.xml
 tools/og.html         source of public/og.png (link preview image)
-tools/gh-pages-redirect/   stub served on the old mmadersbacher.github.io host
+tools/personal-og.html     source of site/og.png
+site/                 personal site for mmadersbacher.github.io (data.json → build.mjs → index.html)
 wrangler.jsonc        Cloudflare Workers static-asset config
 ```
 
