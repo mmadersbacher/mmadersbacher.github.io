@@ -220,11 +220,11 @@ const projItem = (p) => `
       </article>`;
 
 const experienceSec = () => `
-<section id="experience" aria-labelledby="exp-h"><div class="wrap">
-  <h2 id="exp-h">Experience</h2>
+<section id="experience" aria-labelledby="${experience.length ? "exp-h" : "projects-h"}"><div class="wrap">
+${experience.length ? `  <h2 id="exp-h">Experience</h2>
   <div class="xlist">${experience.map(expItem).join("")}
-  </div>
-${projects.length ? `  <h2 id="projects-h" style="margin-top:48px">Projects</h2>
+  </div>` : ""}
+${projects.length ? `  <h2 id="projects-h"${experience.length ? ` style="margin-top:48px"` : ""}>Projects</h2>
   <div class="xlist">${projects.map(projItem).join("")}
   </div>` : ""}
 </div></section>

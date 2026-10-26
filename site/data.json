@@ -292,33 +292,7 @@
       }
     ]
   },
-  "experience": [
-    {
-      "role": "IT Intern, Field Support",
-      "org": "Tirol Kliniken",
-      "where": "Innsbruck",
-      "from": "2026-08-13",
-      "to": "2026-09-11",
-      "bullets": [
-        "Rolled out endpoints and printers across the hospital sites.",
-        "Network troubleshooting in a NAC and central DHCP environment."
-      ]
-    },
-    {
-      "role": "IT & Security Intern, Blue Team",
-      "org": "Translogica GmbH",
-      "where": "Innsbruck",
-      "from": "2026-07-01",
-      "to": "2026-07-31",
-      "span": "July 2026",
-      "bullets": [
-        "Ran the Wazuh SIEM. Wrote about 20 custom Active Directory detection rules (DCSync, Kerberoasting, privileged group changes, MITRE T1098) with SID-based escalation and verified every one of them live.",
-        "Dug through a 35 M event index, found the cause of a KDC event storm (RC4/AES mismatch) and of MS-SQL and pass-the-hash false positives. Alert noise dropped by about 90 %.",
-        "CIS baseline and vulnerability assessments on the domain controllers. Escalated unpatched critical CVEs, among them an RD Licensing RCE at CVSS 9.8.",
-        "Designed the log retention (90 days hot, 12 months of snapshots) and wrote the SIEM operations handbook. Put about 700 assets into Snipe-IT with a script. VLANs on HPE Aruba Instant On switches."
-      ]
-    }
-  ],
+  "experience": [],
   "projects": [
     {
       "name": "Own tools",
